@@ -1,5 +1,7 @@
 package com.adm.geoadm;
 
+import com.adm.geoadm.fragments.MapFragment;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -128,7 +130,7 @@ public class NuevoRecordatorio extends ActionBarActivity {
 			case 2:
 				return new ListViewStringSupportFragment();
 			case 3:
-				return new ListViewStringSupportFragment();			}
+				return new MapFragment();			}
 			return null;
 		}
 
