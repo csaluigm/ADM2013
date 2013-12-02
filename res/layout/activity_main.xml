@@ -18,9 +18,7 @@
     <ListView
         android:id="@+id/lista_recordatorios"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        
-         >
+        android:layout_height="wrap_content" >
     </ListView>
 
 </LinearLayout>
