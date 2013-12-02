@@ -3,9 +3,9 @@
 
     <item
         android:id="@+id/action_nuevo"
-        android:orderInCategory="100"
-        android:showAsAction="ifRoom"
         android:icon="@drawable/ic_action_content_new"
-        android:title="Agregar"/>
+        android:title="Actualizar"
+        app:showAsAction="ifRoom"/>
+
 
 </menu>
