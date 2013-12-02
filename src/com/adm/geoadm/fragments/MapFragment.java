@@ -1,6 +1,5 @@
 package com.adm.geoadm.fragments;
 
-import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,7 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.adm.geoadm.R;
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
