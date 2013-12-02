@@ -76,24 +76,24 @@ public class NuevoRecordatorio extends ActionBarActivity {
 		};
 		
 		Tab tab = getSupportActionBar().newTab();
-		tab.setText("tab1");
+		tab.setText("Ubicación");
 		tab.setTabListener(tabListener);
 		getSupportActionBar().addTab(tab);
 
 		tab = getSupportActionBar().newTab();
-		tab.setText("tab2");
+		tab.setText("Datos");
 		tab.setTabListener(tabListener);
 		getSupportActionBar().addTab(tab);
 
-		tab = getSupportActionBar().newTab();
-		tab.setText("tab3");
-		tab.setTabListener(tabListener);
-		getSupportActionBar().addTab(tab);
-
-		tab = getSupportActionBar().newTab();
-		tab.setText("tab4");
-		tab.setTabListener(tabListener);
-		getSupportActionBar().addTab(tab);
+//		tab = getSupportActionBar().newTab();
+//		tab.setText("tab3");
+//		tab.setTabListener(tabListener);
+//		getSupportActionBar().addTab(tab);
+//
+//		tab = getSupportActionBar().newTab();
+//		tab.setText("tab4");
+//		tab.setTabListener(tabListener);
+//		getSupportActionBar().addTab(tab);
 	}
 
 	@Override
@@ -124,20 +124,21 @@ public class NuevoRecordatorio extends ActionBarActivity {
 			// TODO Auto-generated method stub
 			switch(arg0) {
 			case 0:
-				return new ListViewStringSupportFragment();
+				return new MapFragment();
 			case 1:
 				return new ListViewStringSupportFragment();
-			case 2:
-				return new ListViewStringSupportFragment();
-			case 3:
-				return new MapFragment();			}
+//			case 2:
+//				return new ListViewStringSupportFragment();
+//			case 3:
+//				return new MapFragment();	
+				}
 			return null;
 		}
 
 		@Override
 		public int getCount() {
 			// TODO Auto-generated method stub
-			return 4;
+			return 2;
 		}
 
 		@Override
@@ -145,13 +146,10 @@ public class NuevoRecordatorio extends ActionBarActivity {
 			// TODO Auto-generated method stub
 			switch(position) {
 			case 0:
-				return "tab1";
+				return "Ubicación";
 			case 1:
-				return "tab2";
-			case 2:
-				return "tab3";
-			case 3:
-				return "tab4";
+				return "Datos";
+			
 			}
 			return null;
 		}
