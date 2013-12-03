@@ -32,8 +32,16 @@
         </activity>
         <activity
             android:name="com.adm.geoadm.NuevoRecordatorio"
-            android:label="Nuevo Recordatorio" >
-     
+            android:label="Nuevo Recordatorio"
+            android:parentActivityName="com.adm.geoadm.MainActivity" >
+     		<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <meta-data 
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.adm.geoadm.MainActivity" />
         </activity>
                 <meta-data
             android:name="com.google.android.gms.version"
@@ -41,6 +49,7 @@
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyD6VbHXlQsm3oc04mXCHG3i_vZ1pqujtMg"/>
+        
         
     </application>
 

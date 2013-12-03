@@ -2,6 +2,8 @@ package com.adm.geoadm;
 
 import java.util.ArrayList;
 
+import com.adm.geoadm.db.Recordatorio;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,9 +33,14 @@ public class MainActivity extends ActionBarActivity {
 		RecView=(ListView)findViewById(R.id.lista_recordatorios);
 		recordatorios=new ArrayList<Recordatorio>();
 		
-		
-		recordatorios.add(new Recordatorio("rec1", "acuerdate","hogar"));
-		recordatorios.add(new Recordatorio("rec2", "acuerdatexxxxx","hogar"));
+		Recordatorio r1 = new Recordatorio();
+		r1.setNombre("rec1");
+		r1.setDescripcion("acuerdate");
+		recordatorios.add(r1);
+		Recordatorio r2 = new Recordatorio();
+		r2.setNombre("rec2");
+		r2.setDescripcion("acuerdatexxxxx");
+		recordatorios.add(r2);
 		
 		asociarAdapter();
 		
@@ -99,10 +106,10 @@ public class MainActivity extends ActionBarActivity {
 					nombre.setText(rec.getNombre());
 				}
 				if (texto != null) {
-					texto.setText(rec.getTexto());
+					texto.setText(rec.getDescripcion());
 				}
 				if (categoria != null) {
-					categoria.setText(rec.getCategoria());
+					//categoria.setText(rec.getCategoria());
 				}
 		
 	
