@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import android.annotation.TargetApi;
+import android.graphics.Point;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -13,6 +14,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,9 +26,14 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
+import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
+import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoWindowClickListener {
 	//--- GUI ---
@@ -36,6 +43,9 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 	EditText etRadius;
 	Button btPlus;
 	Button btMinus;
+	Marker marker; 
+	Circle circle; 
+	LatLng center; // iremos guardando la posicion
 	
 	//--- Events ----
 	@Override
@@ -50,6 +60,8 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_map, null);
 		etAddress = (EditText) view.findViewById(R.id.etAddress);
+		etRadius = (EditText) view.findViewById(R.id.etRadius);
+		
 		
 		if (map == null) {
 			map = ((SupportMapFragment) getFragmentManager().findFragmentById(R.id.fMap)).getMap();
@@ -61,6 +73,28 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 		
 		}
 			}
+	
+		
+		//Metodo sobreescrito para cuando se haga un click en el mapa
+		map.setOnMapClickListener(new OnMapClickListener() {
+		    public void onMapClick(LatLng lat) {
+		    putMarker(lat);
+		    paintCircle(lat, Integer.parseInt(etRadius.getText().toString()), 0X3A59F44E);
+		    }
+			
+		});
+		
+		etRadius.setOnFocusChangeListener(new OnFocusChangeListener(){
+			
+			public void onFocusChange(View v, boolean hasFocus) {
+		            if(!hasFocus){
+		            	if(circle!=null){
+		            		paintCircle(center, Integer.parseInt(etRadius.getText().toString()), 0X3A59F44E);
+		            	}
+		            }
+		               //do job here owhen Edittext lose focus 
+			}
+		});
 		
 		
 		Button btGo = (Button) view.findViewById(R.id.btGo);
@@ -70,10 +104,37 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				new MyGeoder().execute();
-
 			}
+			
 		});
 		return view;
+	}
+	
+	
+	//quita el marker que haya y uno nuevo en latlng indicada
+	public void putMarker(LatLng center){
+		if (marker != null){
+			marker.remove();
+		}
+		this.center=center;
+		 marker=map.addMarker(new MarkerOptions()
+        .position(center));
+
+    }
+		
+	//quita el circulo que haya y uno nuevo en latlng indicada
+	public void paintCircle(LatLng lat, int radius, int color){
+		if (circle!=null){
+			circle.remove();
+		}
+		
+		CircleOptions circleOptions = new CircleOptions();
+		circleOptions.center(lat);
+		circleOptions.radius(radius); // In meters
+		circleOptions.fillColor(0X3A59F44E);
+		circleOptions.strokeColor(0X5A59F44E); //borde
+	// Get back the mutable Circle
+	 circle = map.addCircle(circleOptions);
 	}
 	
 	
@@ -125,8 +186,11 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 			if ((address != null) && (address.size() > 0)) {
-				LatLng lat= new LatLng(address.get(0).getLatitude(),address.get(0).getLongitude());
-				map.animateCamera(CameraUpdateFactory.newLatLngZoom(lat,17));
+				center= new LatLng(address.get(0).getLatitude(),address.get(0).getLongitude());
+				map.animateCamera(CameraUpdateFactory.newLatLngZoom(center,17));
+			    putMarker(center);
+			    paintCircle(center, Integer.parseInt(etRadius.getText().toString()), 0X3A59F44E);
+			    
 			}
 			else {
 				Toast.makeText(getActivity(), "Geocoder unavailable", Toast.LENGTH_SHORT).show();

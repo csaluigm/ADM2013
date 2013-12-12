@@ -58,8 +58,10 @@
 	        <EditText
 	            android:id="@+id/etRadius"
 	            android:layout_width="match_parent"
+	            android:minWidth="12dp"
 	            android:layout_height="match_parent"
 	            android:layout_weight="1"
+	            android:text="@integer/minRadius"
 	            android:inputType="number" />
 
 	        <LinearLayout
