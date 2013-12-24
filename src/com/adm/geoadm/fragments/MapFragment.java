@@ -12,7 +12,9 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.appcompat.R.bool;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
@@ -41,11 +43,13 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 	Button btGo;
 	GoogleMap map=null;
 	EditText etRadius;
+	int auxRadius;
 	Button btPlus;
 	Button btMinus;
 	Marker marker; 
 	Circle circle; 
 	LatLng center; // iremos guardando la posicion
+	boolean pressedUp = false;
 	
 	//--- Events ----
 	@Override
@@ -89,6 +93,7 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 			public void onFocusChange(View v, boolean hasFocus) {
 		            if(!hasFocus){
 		            	if(circle!=null){
+		            		
 		            		paintCircle(center, Integer.parseInt(etRadius.getText().toString()), 0X3A59F44E);
 		            	}
 		            }
@@ -107,9 +112,42 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 			}
 			
 		});
+		
+		Button btPlus = (Button) view.findViewById(R.id.btPlus);
+		btPlus.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		Button btMinus = (Button) view.findViewById(R.id.btMinus);
+		btMinus.setOnTouchListener(new View.OnTouchListener() {        
+		    @Override
+		    public boolean onTouch(View v, MotionEvent event) {
+		        switch(event.getAction()) {
+		            case MotionEvent.ACTION_DOWN:
+		            	 if(pressedUp == false){
+		                     pressedUp = true;
+		                     new incrementer().execute();
+		                 }
+		        		break;
+		                //return true; // if you want to handle the touch event
+		            case MotionEvent.ACTION_UP:
+		            	 pressedUp = false;
+		            	break;
+		        }
+		        return false;
+		    }
+		});
+		
 		return view;
 	}
+
 	
+
 	
 	//quita el marker que haya y uno nuevo en latlng indicada
 	public void putMarker(LatLng center){
@@ -137,7 +175,7 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 	 circle = map.addCircle(circleOptions);
 	}
 	
-	
+ 
 
 	@Override
 	public void onInfoWindowClick(Marker arg0) {
@@ -155,6 +193,35 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 	public View getInfoWindow(Marker marker) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	
+	
+	
+	private class incrementer extends AsyncTask<Void, Integer, Void> {
+
+	    @Override
+	    protected Void doInBackground(Void... arg0) {
+	        while(pressedUp) {
+	        	    auxRadius=Integer.parseInt(etRadius.getText().toString());
+	            	auxRadius= auxRadius + 5;
+	            	publishProgress(auxRadius);
+	            	try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	         // 	etRadius.setText(Integer.toString(auxRadius));
+	            
+	    }
+	    return null;
+	}
+	    protected void onProgressUpdate(Integer... progress) {
+	    	etRadius.setText(Integer.toString(auxRadius));
+	    	
+
+	     }
 	}
 	
 	@TargetApi(Build.VERSION_CODES.GINGERBREAD)
