@@ -97,12 +97,12 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 
 						paintCircle(center, Integer.parseInt(etRadius.getText().toString()));
 					}
-				}
+				}  
 				//do job here owhen Edittext lose focus 
 			}
 		});
 
-
+		
 		Button btGo = (Button) view.findViewById(R.id.btGo);
 		btGo.setOnClickListener(new View.OnClickListener() {
 

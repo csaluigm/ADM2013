@@ -33,7 +33,8 @@
         <activity
             android:name="com.adm.geoadm.NuevoRecordatorio"
             android:label="Nuevo Recordatorio"
-            android:parentActivityName="com.adm.geoadm.MainActivity" >
+            android:parentActivityName="com.adm.geoadm.MainActivity" 
+            android:windowSoftInputMode="stateHidden">
      		<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
