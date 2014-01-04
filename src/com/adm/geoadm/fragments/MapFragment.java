@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.graphics.Point;
 import android.location.Address;
 import android.location.Geocoder;
@@ -13,11 +14,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.appcompat.R.bool;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
+import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -48,9 +52,10 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 	Button btMinus;
 	Marker marker; 
 	Circle circle; 
-	LatLng center; // iremos guardando la posicion
+	LatLng center=null; // iremos guardando la posicion
 	boolean pressedUp = false;
 	int increment;
+	
 
 	//--- Events ----
 	@Override
@@ -63,18 +68,27 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_map, null);
+		final View view = inflater.inflate(R.layout.fragment_map, null);
 		etAddress = (EditText) view.findViewById(R.id.etAddress);
 		etRadius = (EditText) view.findViewById(R.id.etRadius);
-
+		   btPlus = (Button) view.findViewById(R.id.btPlus);
+		   btMinus = (Button) view.findViewById(R.id.btMinus);
+		  if (center==null){
+		   etRadius.setEnabled(false);
+		   btPlus.setEnabled(false);
+		   btMinus.setEnabled(false);
+		  }
 
 		if (map == null) {
 			map = ((SupportMapFragment) getFragmentManager().findFragmentById(R.id.fMap)).getMap();
-
-
+		
+			
+			
 			if (map != null) {
 				map.setInfoWindowAdapter(this);
 				map.setOnInfoWindowClickListener(this);
+				map.getUiSettings().setMyLocationButtonEnabled(true);
+
 
 			}
 		}
@@ -83,11 +97,17 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 		//Metodo sobreescrito para cuando se haga un click en el mapa
 		map.setOnMapClickListener(new OnMapClickListener() {
 			public void onMapClick(LatLng lat) {
+				if(center==null){
+					  etRadius.setEnabled(true);
+					   btPlus.setEnabled(true);
+					   btMinus.setEnabled(true);
+				}
 				putMarker(lat);
 				paintCircle(lat, Integer.parseInt(etRadius.getText().toString()));
 			}
 
 		});
+		
 
 		etRadius.setOnFocusChangeListener(new OnFocusChangeListener(){
 
@@ -98,23 +118,58 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 						paintCircle(center, Integer.parseInt(etRadius.getText().toString()));
 					}
 				}  
-				//do job here owhen Edittext lose focus 
+				//do job here owhen Edittext lose focus
 			}
 		});
-
 		
-		Button btGo = (Button) view.findViewById(R.id.btGo);
-		btGo.setOnClickListener(new View.OnClickListener() {
-
+		etRadius.setOnKeyListener(new OnKeyListener()
+		{
 			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				new MyGeoder().execute();
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				  if (keyCode ==  KeyEvent.KEYCODE_DPAD_CENTER
+					        || keyCode ==  KeyEvent.KEYCODE_ENTER) {
+
+					            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+	
+					            } else if (event.getAction() == KeyEvent.ACTION_UP) {
+					            	paintCircle(center, Integer.parseInt(etRadius.getText().toString()));
+					            	hidekeyboard(view);
+					            } 
+					            return true;
+
+					        } else {
+					            // it is not an Enter key - let others handle the event
+					            return false;
+					        }
 			}
 
 		});
+		etAddress.setOnKeyListener(new OnKeyListener()
+		{
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				  if (keyCode ==  KeyEvent.KEYCODE_DPAD_CENTER
+					        || keyCode ==  KeyEvent.KEYCODE_ENTER) {
 
-		Button btPlus = (Button) view.findViewById(R.id.btPlus);
+					            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+	
+					            } else if (event.getAction() == KeyEvent.ACTION_UP) {
+					            	new MyGeoder().execute();
+					            	hidekeyboard(view);
+					            } 
+					            return true;
+
+					        } else {
+					            // it is not an Enter key - let others handle the event
+					            return false;
+					        }
+			}
+
+		});
+		
+		
+	
+
 		btPlus.setOnTouchListener(new View.OnTouchListener() {        
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
@@ -123,7 +178,6 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 					if(pressedUp == false){
 						pressedUp = true;
 						increment= metersZoom(map.getCameraPosition().zoom);
-						//increment=(int)5;
 						new incrementer().execute();
 					}
 					break;
@@ -136,7 +190,7 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 			}
 		});
 
-		Button btMinus = (Button) view.findViewById(R.id.btMinus);
+		
 		btMinus.setOnTouchListener(new View.OnTouchListener() {        
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
@@ -163,7 +217,14 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 
 
 
+	//funcion para ocultar teclado
+	public void hidekeyboard(View view){
+		 InputMethodManager imm = (InputMethodManager) view.getContext()
+			        .getSystemService(Context.INPUT_METHOD_SERVICE);
+			     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+	}
 
+	
 	//quita el marker que haya y uno nuevo en latlng indicada
 	public void putMarker(LatLng center){
 		if (marker != null){
