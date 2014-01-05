@@ -5,21 +5,19 @@ import java.util.List;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.graphics.Point;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.appcompat.R.bool;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.view.View.OnKeyListener;
+import android.view.ViewDebug.IntToString;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -27,13 +25,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.adm.geoadm.R;
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
-import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
@@ -241,7 +237,8 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 		if (circle!=null){
 			circle.remove();
 		}
-
+		
+		
 		CircleOptions circleOptions = new CircleOptions();
 		circleOptions.center(lat);
 		circleOptions.radius(radius); // In meters
@@ -391,31 +388,51 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 			Geocoder geocoder = new Geocoder(getActivity());
 			try {
 				if (Geocoder.isPresent()) {
-					address = geocoder.getFromLocationName(etAddress.getText().toString(), 1);
+					//for(int i=0;i<10;i++){
+						if (address==null){
+							address = geocoder.getFromLocationName(etAddress.getText().toString(), 1);
+							Thread.sleep(500);				    
+					//	}
+					}
+									  
 				}
+				
+								
 			} catch (NumberFormatException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (IOException e) {
+			}
+			catch (IOException e) {
+				e.printStackTrace();
+			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return null;
 		}
-
+		
 		@Override
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 			if ((address != null) && (address.size() > 0)) {
+				//para el inicio, al haber una posicion ya, se habilitan los botones
+				if(center==null){
+					  etRadius.setEnabled(true);
+					   btPlus.setEnabled(true);
+					   btMinus.setEnabled(true);
+				}
 				center= new LatLng(address.get(0).getLatitude(),address.get(0).getLongitude());
 				map.animateCamera(CameraUpdateFactory.newLatLngZoom(center,17));
 				putMarker(center);
 				paintCircle(center, Integer.parseInt(etRadius.getText().toString()));
 
 			}
-			else {
-				Toast.makeText(getActivity(), "Geocoder unavailable", Toast.LENGTH_SHORT).show();
+			else if((address != null) && address.size()==0) {
+				Toast.makeText(getActivity(), "No se ha encontrado la ubicacion", Toast.LENGTH_SHORT).show();
+			}
+			else if (address==null){
+			Toast.makeText(getActivity(), "Problema de conexión", Toast.LENGTH_SHORT).show();
 			}
 		}
 
