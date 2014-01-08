@@ -1,13 +1,208 @@
 package com.adm.geoadm.services;
 
-import android.app.Service;
-import android.content.Intent;
-import android.os.IBinder;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import com.adm.geoadm.db.Recordatorio;
+import com.adm.geoadm.db.RecordatoriosDB;
+import com.adm.geoadm.fragments.MyErrorDialog;
+import com.adm.geoadm.DetailsFragment;
+import com.adm.geoadm.MainActivity;
+import com.adm.geoadm.NuevoRecordatorio;
+import com.adm.geoadm.R;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.location.Geofence;
+import com.google.android.gms.location.LocationClient;
+
+import android.app.Dialog;
+import android.app.IntentService;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.Service;
+import android.app.TaskStackBuilder;
+import android.content.Context;
+import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Bundle;
+import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
+import android.text.TextUtils;
+import android.util.Log;
+
+/**
+ * 
+ */
 public class NotificationService extends Service {
+	
+	public static final String LOG_TAG = "GeoADM.NotificationService";
+	public static final long UPDATE_PERIOD = 5000;
+	public static final float LOCATION_MIN_UPDATE = 5;
+	
+	NotificationManager nm;
+
+
 	@Override
 	public IBinder onBind(Intent intent) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
+	
+	
+	@Override
+	public void onCreate() {
+		nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+		super.onCreate();
+	}
+	
+	@Override
+	public void onDestroy() {
+		
+		super.onDestroy();
+	}
+	
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId) {
+		super.onStartCommand(intent, flags, startId);
+		
+		
+		LocationManager locManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+		locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+				UPDATE_PERIOD,
+				LOCATION_MIN_UPDATE,
+				locationListener);
+		
+		
+		return START_STICKY;
+	}
+	
+	/**
+	 * Reminders which is nearby our location and must be notified to user
+	 * @param loc Our Location. Must be passed by LocationManager
+	 * @return Array of Target Reminders
+	 */
+	private ArrayList<Recordatorio> recordatoriosToNotify(Location loc) {
+		ArrayList<Recordatorio> resRecordatorios = new ArrayList<Recordatorio>();
+		RecordatoriosDB recsDB = new RecordatoriosDB(getApplicationContext());
+		ArrayList<Recordatorio> activeRecordatorios = recsDB.listarRecordatoriosActivos();
+		
+		for (Recordatorio rec : activeRecordatorios) {
+			float[] results = new float[3];
+			Location.distanceBetween(loc.getLatitude(), loc.getLongitude(), rec.getLatitud(), rec.getLongitud(), results);
+			if (results[0]<=rec.getRadius())
+				resRecordatorios.add(rec);
+		}	
+		
+		return resRecordatorios;
+	}
+	
+	/**
+	 * Send a Notification in Android Notification Centre about Reminders
+	 * @param rec Reminder to notify
+	 */
+	private void sendNotification(Recordatorio rec) {
+		//Create notification
+		Notification notif =  new Notification(
+				R.drawable.ic_notification,
+				rec.getNombre(),
+				System.currentTimeMillis());
+
+		//Create Pending Intent what start Activity associated to Notification
+		Intent intent = new Intent(getApplicationContext(), NuevoRecordatorio.class);
+		intent.putExtra(NuevoRecordatorio.KEY_EDIT_RECORDATORIO, rec.getId());
+		PendingIntent pendInt = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
+		notif.setLatestEventInfo(getApplicationContext(), rec.getNombre(), rec.getDescripcion(), pendInt);
+		
+		nm.notify(rec.getId(), notif);
+	}
+	
+	
+	LocationListener locationListener = new LocationListener() {
+		
+		@Override
+		public void onStatusChanged(String provider, int status, Bundle extras) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void onProviderEnabled(String provider) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void onProviderDisabled(String provider) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void onLocationChanged(Location location) {
+			ArrayList<Recordatorio> recs = recordatoriosToNotify(location);
+			for (Recordatorio r : recs) 
+				sendNotification(r);
+		}
+	};
+	
+	
+	
+	
+    
+    
+    /*private void sendNotification(String[] geofenceIds) {
+    	// Create an explicit content Intent that starts the main Activity
+        Intent notificationIntent =
+                new Intent(getApplicationContext(),MainActivity.class);
+        
+        
+        // Construct a task stack
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+
+        // Adds the main Activity to the task stack as the parent
+        stackBuilder.addParentStack(MainActivity.class);
+
+        // Push the content Intent onto the stack
+        stackBuilder.addNextIntent(notificationIntent);
+        
+
+        // Get a PendingIntent containing the entire back stack
+        PendingIntent notificationPendingIntent =
+                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        
+
+        
+        
+        //Get Recordatorio Object based on Geofence Id
+        RecordatoriosDB recordatorios = new RecordatoriosDB(getApplicationContext());
+        Recordatorio[] listRecordatorio = new Recordatorio[geofenceIds.length];
+        for (int i = 0; i<geofenceIds.length; i++)
+        	listRecordatorio[i] = recordatorios.findByGeofenceId(geofenceIds[i]);
+        	
+        
+        
+        // Get an instance of the Notification manager
+        NotificationManager mNotificationManager =
+            (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        
+        // Set the notification contents
+        for (Recordatorio rec : listRecordatorio) {
+        	// Get a notification builder that's compatible with platform versions >= 4
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+            
+            //Set up notification
+	        builder.setSmallIcon(R.drawable.ic_notification)
+	               .setContentTitle(rec.getNombre())
+	               .setContentText(rec.getDescripcion())
+	               .setContentIntent(notificationPendingIntent);	        
+	
+	        // Issue the notification
+	        mNotificationManager.notify(0, builder.build());
+        }
+    }*/
 }

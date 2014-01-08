@@ -2,11 +2,19 @@ package com.adm.geoadm.db;
 
 import java.sql.Date;
 
+import com.google.android.gms.location.Geofence;
+
 public class Recordatorio {
 	public static final int DIARIA = 1;
 	public static final int SEMANAL = 2;
 	public static final int MENSUAL = 3;
 	public static final int ANUAL = 4;
+	
+	private static final long EXPIRATION_TIME = Geofence.NEVER_EXPIRE;
+	private static final long TRANSITION_TYPE = Geofence.GEOFENCE_TRANSITION_ENTER;
+	
+	private static long GEOFENCE_COUNTER = 1;
+	
 	
 	//-------  MEMBERS ----------
 	int id = -1;
@@ -265,5 +273,7 @@ public class Recordatorio {
 		this.idGeofence = idGeofence;
 	}
 	
+	
+	//------------  METHODS  ------------------
 	
 }

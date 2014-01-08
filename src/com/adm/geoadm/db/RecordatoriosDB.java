@@ -88,6 +88,26 @@ public class RecordatoriosDB {
 		return recordatorios;
 	}
 	
+	/**
+	 * List all Reminders of Database
+	 * @return ArrayList object with an array of all Reminders
+	 */
+	public ArrayList<Recordatorio> listarRecordatoriosActivos() {
+		ArrayList<Recordatorio> recordatorios = new ArrayList<Recordatorio>();
+		
+		Cursor c = db.query(RecordatoriosSQLHelper.RECORDATORIOS_TABLE,
+				null,
+				"activa=1", null, null, null, null);
+		
+		while (c.moveToNext()) {
+			Recordatorio rec = getARecordatorio(c);
+			recordatorios.add(rec);
+		}
+		
+		c.close();
+		return recordatorios;
+	}
+	
 	
 	/**
 	 * Obtain a Reminder with the id given
@@ -110,13 +130,35 @@ public class RecordatoriosDB {
 	}
 	
 	/**
+	 * Return a Recordatorio given by its geofence Id
+	 * @param geofenceId Geofence Id for search a Recordatorio
+	 * @return A Reminder object associated with Geofence Id given or null if no exists
+	 */
+	public Recordatorio findByGeofenceId(String geofenceId) {
+		Recordatorio rec = null;
+		
+		Cursor c = db.query(RecordatoriosSQLHelper.RECORDATORIOS_TABLE,
+				null, 
+				"idGeofence=?",
+				new String[]{geofenceId},
+				null, null, null
+		);
+		
+		while(c.moveToNext()) {
+			rec = getARecordatorio(c);
+		}
+		
+		return rec;
+	}
+	
+	/**
 	 * Insert a new Reminder into Database
 	 * @param rec Reminder object to insert
 	 * @return Returns a id (possitive number) if object was inserted succesfully or -1 if a error occurred
 	 */
 	public long insertar(Recordatorio rec) {
 		ContentValues cv = getContentValue(rec);
-		return db.insert(RecordatoriosSQLHelper.CATEGORIAS_TABLE,
+		return db.insert(RecordatoriosSQLHelper.RECORDATORIOS_TABLE,
 				null,
 				cv);
 	}
@@ -146,7 +188,7 @@ public class RecordatoriosDB {
 	}
 	
 	/**
-	 * Remove all Categories
+	 * Remove all Recordatorios
 	 */
 	public void borrarTodos() {
 		db.delete(RecordatoriosSQLHelper.RECORDATORIOS_TABLE, null, null);

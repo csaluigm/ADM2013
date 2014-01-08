@@ -52,6 +52,29 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 	boolean pressedUp = false;
 	int increment;
 	
+	/**
+	 * Estas funciones las hemos puesto para obtener los datos necesarios 
+	 * para crear el recordatorio
+	 * Angel y Antonio
+	 */
+	//---  Properties ---
+	public double getLatitud() {
+		return center.latitude;
+	}
+	
+	public double getLongitud() {
+		return center.longitude;
+	}
+	
+	public double getRadio() {
+		return Double.valueOf(etRadius.getText().toString());
+	}
+	
+	public String getDireccion() {
+		return etAddress.getText().toString();
+	}
+	
+	
 
 	//--- Events ----
 	@Override

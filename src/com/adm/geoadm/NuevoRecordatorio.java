@@ -1,7 +1,10 @@
 package com.adm.geoadm;
 
+import com.adm.geoadm.db.Recordatorio;
+import com.adm.geoadm.db.RecordatoriosDB;
 import com.adm.geoadm.fragments.MapFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,14 +20,39 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class NuevoRecordatorio extends ActionBarActivity {
-
+	//-------  TABS  ----------------
+	MapFragment tabMap;
+	DetailsFragment tabDetails;
+	//-------------------------------
+	
+	public static final String KEY_EDIT_RECORDATORIO = "edit_recordatorio";
+	public static final String KEY_NOTIFY_RECORDATORIO = "notify_recordatorio";
+	
+	//-------  TABS ADAPTER ---------
 	ViewPager pager;
 	MyPageAdapter adapter;
+	//-------------------------------
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_my_view_pager_action_bar);
+		
+		//Initialize tabs
+		tabMap = new MapFragment();
+		tabDetails = new DetailsFragment();
+		
+		//Distinguish between when user wants edit a Reminder or a Notification is launched
+		Intent intent = getIntent();
+		if (intent.hasExtra(KEY_NOTIFY_RECORDATORIO)) {
+			//This Activity was called for a Notification
+			RecordatoriosDB recDB = new RecordatoriosDB(this);
+			int id = intent.getIntExtra(KEY_NOTIFY_RECORDATORIO, -1);
+			Recordatorio rec = recDB.getRecordatorio(id);
+			rec.setActiva(false);
+			recDB.modificar(id, rec);
+		}
+		
 		// Show the Up button in the action bar.
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -76,12 +104,12 @@ public class NuevoRecordatorio extends ActionBarActivity {
 		};
 		
 		Tab tab = getSupportActionBar().newTab();
-		tab.setText("Ubicación");
+		tab.setText(getResources().getString(R.string.tab_map));
 		tab.setTabListener(tabListener);
 		getSupportActionBar().addTab(tab);
 
 		tab = getSupportActionBar().newTab();
-		tab.setText("Datos");
+		tab.setText(getResources().getString(R.string.tab_description));
 		tab.setTabListener(tabListener);
 		getSupportActionBar().addTab(tab);
 
@@ -98,7 +126,7 @@ public class NuevoRecordatorio extends ActionBarActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.nuevo_recordatorio, menu);
 		return true;
 	}
 
@@ -108,8 +136,30 @@ public class NuevoRecordatorio extends ActionBarActivity {
 		case android.R.id.home:
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
+		case R.id.save_recordatorio:
+			saveRecordatorio();
+			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	
+	private void saveRecordatorio() {
+		Recordatorio rec = new Recordatorio();
+		
+		//Fetch data from map tab
+		rec.setLongitud(tabMap.getLongitud());
+		rec.setLatitud(tabMap.getLatitud());
+		rec.setRadius(tabMap.getRadio());
+		rec.setDireccion(tabMap.getDireccion());
+		
+		//Fetch data from details tab
+		rec.setActiva(true);
+		//...
+		
+		RecordatoriosDB recDB = new RecordatoriosDB(this);
+		long id = recDB.insertar(rec);
+		
 	}
 
 	private class MyPageAdapter extends FragmentPagerAdapter {
@@ -124,9 +174,13 @@ public class NuevoRecordatorio extends ActionBarActivity {
 			// TODO Auto-generated method stub
 			switch(arg0) {
 			case 0:
-				return new MapFragment();
+				return tabMap;
 			case 1:
-				return new ListViewStringSupportFragment();
+				//Cambio esta linea porque creo que la segunda pesta�a debe ser
+				//el DetailsFragment que son los detalles del Recordatorio
+				//Angel y Antonio
+				//return new ListViewStringSupportFragment();
+				return tabDetails; 
 //			case 2:
 //				return new ListViewStringSupportFragment();
 //			case 3:
@@ -146,9 +200,9 @@ public class NuevoRecordatorio extends ActionBarActivity {
 			// TODO Auto-generated method stub
 			switch(position) {
 			case 0:
-				return "Ubicación";
+				return getResources().getString(R.string.tab_map);
 			case 1:
-				return "Datos";
+				return getResources().getString(R.string.tab_description);
 			
 			}
 			return null;
