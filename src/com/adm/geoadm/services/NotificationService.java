@@ -45,6 +45,7 @@ public class NotificationService extends Service {
 	public static final float LOCATION_MIN_UPDATE = 5;
 	
 	NotificationManager nm;
+	ArrayList<Integer> idsArray;
 
 
 	@Override
@@ -57,12 +58,14 @@ public class NotificationService extends Service {
 	@Override
 	public void onCreate() {
 		nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+		idsArray = new ArrayList<Integer>();
 		super.onCreate();
 	}
 	
 	@Override
 	public void onDestroy() {
-		
+		for (Integer id : idsArray) 
+			nm.cancel(id.intValue());
 		super.onDestroy();
 	}
 	
@@ -119,6 +122,8 @@ public class NotificationService extends Service {
 		notif.setLatestEventInfo(getApplicationContext(), rec.getNombre(), rec.getDescripcion(), pendInt);
 		
 		nm.notify(rec.getId(), notif);
+		
+		idsArray.add(Integer.valueOf(rec.getId()));
 	}
 	
 	
