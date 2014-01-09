@@ -17,7 +17,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.view.View.OnKeyListener;
-import android.view.ViewDebug.IntToString;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -25,6 +24,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.adm.geoadm.R;
+import com.adm.geoadm.db.Recordatorio;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
@@ -74,6 +74,14 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 		return etAddress.getText().toString();
 	}
 	
+	//funcion de recordatorio
+	public void setRecordatorioenmapa(Recordatorio rec){
+		center= new LatLng(rec.getLatitud(),rec.getLongitud());
+		etRadius.setText(String.valueOf(rec.getRadius()));
+		etAddress.setText(rec.getDireccion());
+		putMarker(center);
+		paintCircle(center, (int)rec.getRadius());
+	}
 	
 
 	//--- Events ----
@@ -84,6 +92,8 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 
 	}
 
+	
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -107,7 +117,6 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 				map.setInfoWindowAdapter(this);
 				map.setOnInfoWindowClickListener(this);
 				map.getUiSettings().setMyLocationButtonEnabled(true);
-
 
 			}
 		}
