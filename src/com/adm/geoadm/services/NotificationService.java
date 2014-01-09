@@ -71,14 +71,17 @@ public class NotificationService extends Service {
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		super.onStartCommand(intent, flags, startId);
+		//super.onStartCommand(intent, flags, startId);
 		
+		Log.d(LOG_TAG,"NotificationService started");
 		
 		LocationManager locManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 		locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
 				UPDATE_PERIOD,
 				LOCATION_MIN_UPDATE,
 				locationListener);
+		
+		Log.d(LOG_TAG,"Location Manager is registered");
 		
 		
 		return START_STICKY;
@@ -97,10 +100,15 @@ public class NotificationService extends Service {
 		for (Recordatorio rec : activeRecordatorios) {
 			float[] results = new float[3];
 			Location.distanceBetween(loc.getLatitude(), loc.getLongitude(), rec.getLatitud(), rec.getLongitud(), results);
-			if (results[0]<=rec.getRadius())
+			Log.d(LOG_TAG,"Active recordatorio");
+			Log.d(LOG_TAG,rec.toString());
+			Log.d(LOG_TAG,"Distance: " + String.valueOf(results[0]));
+			if (results[0]<=rec.getRadius()) {
+				Log.d(LOG_TAG,"Added to Active Recordatorio list");	
 				resRecordatorios.add(rec);
+			}
 		}	
-		
+		recsDB.close();
 		return resRecordatorios;
 	}
 	
@@ -121,6 +129,7 @@ public class NotificationService extends Service {
 		PendingIntent pendInt = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
 		notif.setLatestEventInfo(getApplicationContext(), rec.getNombre(), rec.getDescripcion(), pendInt);
 		
+		Log.d(LOG_TAG,"Sending notification for Recordatorio with name: " + rec.getNombre() + " and id: " + rec.getId() + " and address: " + rec.getDireccion());
 		nm.notify(rec.getId(), notif);
 		
 		idsArray.add(Integer.valueOf(rec.getId()));
@@ -149,6 +158,7 @@ public class NotificationService extends Service {
 		
 		@Override
 		public void onLocationChanged(Location location) {
+			Log.d(LOG_TAG,"Location changed is called");
 			ArrayList<Recordatorio> recs = recordatoriosToNotify(location);
 			for (Recordatorio r : recs) 
 				sendNotification(r);

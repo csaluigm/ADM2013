@@ -3,6 +3,8 @@ package com.adm.geoadm;
 import java.util.ArrayList;
 
 import com.adm.geoadm.db.Recordatorio;
+import com.adm.geoadm.db.RecordatoriosDB;
+import com.adm.geoadm.services.NotificationService;
 
 import android.content.Context;
 import android.content.Intent;
@@ -30,18 +32,19 @@ public class MainActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		//Initialize Notification Service
+		startService(new Intent(this,NotificationService.class));
+		
+		
 		RecView=(ListView)findViewById(R.id.lista_recordatorios);
-		recordatorios=new ArrayList<Recordatorio>();
+		RecordatoriosDB recDB = new RecordatoriosDB(this);
+		recordatorios=recDB.listarRecordatorios();
+		recDB.close();
 		
-		Recordatorio r1 = new Recordatorio();
-		r1.setNombre("rec1");
-		r1.setDescripcion("acuerdate");
-		recordatorios.add(r1);
-		Recordatorio r2 = new Recordatorio();
-		r2.setNombre("rec2");
-		r2.setDescripcion("acuerdatexxxxx");
-		recordatorios.add(r2);
-		
+		for (Recordatorio rec : recordatorios)
+			Log.d("RECORDATORIOS", rec.toString());
+				
 		asociarAdapter();
 		
 	}

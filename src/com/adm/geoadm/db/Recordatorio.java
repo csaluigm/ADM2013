@@ -21,7 +21,7 @@ public class Recordatorio {
 	String nombre = "";
 	String descripcion = "";
 	int categoria_id = -1;
-	Date fecha = null;
+	Date fecha = new Date(System.currentTimeMillis());
 	boolean todoElDia = false;
 	String horaInicio = "00:00";
 	String horaFin = "00:00";
@@ -29,7 +29,7 @@ public class Recordatorio {
 	int tipoPeriodicidad = 0;
 	int repetir = 0;
 	int diasSemana = 0;
-	Date fechaFinPeriodicidad = null;
+	Date fechaFinPeriodicidad = new Date(System.currentTimeMillis());
 	int prioridad = 0;
 	boolean activa = false;
 	double latitud = 0;
@@ -275,5 +275,19 @@ public class Recordatorio {
 	
 	
 	//------------  METHODS  ------------------
+	@Override
+	public String toString() {
+		String res = "";
+		String nl = "\n";
+		res += "Id: " + String.valueOf(id) + nl;
+		res += "Nombre: " + nombre + nl;
+		res += "Descripcion: " + descripcion + nl;
+		res += "Latitud: " + String.valueOf(latitud) + nl;
+		res += "Longitud: " + String.valueOf(longitud) + nl;
+		res += "Radius: " + String.valueOf(radius) + nl;
+		res += "Direccion: " + direccion + nl;
+		res += "Activa: " + activa + nl;
+		return res;
+	}
 	
 }

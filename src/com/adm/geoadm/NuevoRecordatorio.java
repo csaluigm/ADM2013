@@ -1,5 +1,8 @@
 package com.adm.geoadm;
 
+import java.sql.Date;
+
+import com.adm.geoadm.db.Categoria;
 import com.adm.geoadm.db.Recordatorio;
 import com.adm.geoadm.db.RecordatoriosDB;
 import com.adm.geoadm.fragments.MapFragment;
@@ -51,6 +54,19 @@ public class NuevoRecordatorio extends ActionBarActivity {
 			Recordatorio rec = recDB.getRecordatorio(id);
 			rec.setActiva(false);
 			recDB.modificar(id, rec);
+			recDB.close();
+			
+			//TODO Pasar al DetailsFragment
+			tabMap.setRecordatorioenmapa(rec);
+		}
+		else if (intent.hasExtra(KEY_EDIT_RECORDATORIO)) {
+			RecordatoriosDB recDB = new RecordatoriosDB(this);
+			int id = intent.getIntExtra(KEY_NOTIFY_RECORDATORIO, -1);
+			Recordatorio rec = recDB.getRecordatorio(id);
+			recDB.close();
+			
+			//TODO Pasar al DetailsFragment
+			tabMap.setRecordatorioenmapa(rec);
 		}
 		
 		// Show the Up button in the action bar.
@@ -143,22 +159,40 @@ public class NuevoRecordatorio extends ActionBarActivity {
 		return super.onOptionsItemSelected(item);
 	}
 	
-	
-	private void saveRecordatorio() {
-		Recordatorio rec = new Recordatorio();
-		
+	private void fetchRecordatorio(Recordatorio rec) {
 		//Fetch data from map tab
 		rec.setLongitud(tabMap.getLongitud());
 		rec.setLatitud(tabMap.getLatitud());
 		rec.setRadius(tabMap.getRadio());
 		rec.setDireccion(tabMap.getDireccion());
-		
 		//Fetch data from details tab
+		rec.setNombre("Prueba de Recordatorio");
+		rec.setDescripcion("Descripcion");		
+		rec.setCategoriaId(1);
 		rec.setActiva(true);
 		//...
-		
-		RecordatoriosDB recDB = new RecordatoriosDB(this);
-		long id = recDB.insertar(rec);
+	}
+	
+	private void saveRecordatorio() {
+		Intent intent = getIntent();
+		if (!intent.hasExtra(KEY_EDIT_RECORDATORIO) && !intent.hasExtra(KEY_NOTIFY_RECORDATORIO)) {
+			Recordatorio rec = new Recordatorio();
+			fetchRecordatorio(rec);
+			RecordatoriosDB recDB = new RecordatoriosDB(this);
+			long id = recDB.insertar(rec);
+			recDB.close();
+		}
+		else {
+			RecordatoriosDB recDB = new RecordatoriosDB(this);
+			int id;
+			id = (intent.hasExtra(KEY_EDIT_RECORDATORIO)) ? intent.getIntExtra(KEY_EDIT_RECORDATORIO, -1) : -1;
+			id = (intent.hasExtra(KEY_NOTIFY_RECORDATORIO)) ? intent.getIntExtra(KEY_NOTIFY_RECORDATORIO, -1) : -1;
+			
+			Recordatorio rec = recDB.getRecordatorio(id);
+			fetchRecordatorio(rec);
+			recDB.modificar(id, rec);
+			recDB.close();
+		}
 		
 	}
 

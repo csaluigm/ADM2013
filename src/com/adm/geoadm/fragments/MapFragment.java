@@ -58,18 +58,34 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 	 * Angel y Antonio
 	 */
 	//---  Properties ---
+	/**
+	 * Get Latitude
+	 * @return Double
+	 */
 	public double getLatitud() {
 		return center.latitude;
 	}
 	
+	/**
+	 * Get Longitude
+	 * @return Double
+	 */
 	public double getLongitud() {
 		return center.longitude;
 	}
 	
+	/**
+	 * Get radius of proximity detector
+	 * @return Double
+	 */
 	public double getRadio() {
 		return Double.valueOf(etRadius.getText().toString());
 	}
 	
+	/**
+	 * Get name of address
+	 * @return String
+	 */
 	public String getDireccion() {
 		return etAddress.getText().toString();
 	}

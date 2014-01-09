@@ -45,7 +45,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.adm.geoadm.MainActivity" />
         </activity>
-        <service android:name=".NotificationService">
+        <service android:name="com.adm.geoadm.services.NotificationService">
             <intent-filter>
                 <action android:name="NotificationService"></action>
             </intent-filter>
