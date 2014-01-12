@@ -100,9 +100,17 @@ public class NotificationService extends Service {
 		for (Recordatorio rec : activeRecordatorios) {
 			float[] results = new float[3];
 			Location.distanceBetween(loc.getLatitude(), loc.getLongitude(), rec.getLatitud(), rec.getLongitud(), results);
+			double metters = distanceBetween(loc.getLatitude(), loc.getLongitude(), rec.getLatitud(), rec.getLongitud());
 			Log.d(LOG_TAG,"Active recordatorio");
+			Log.d(LOG_TAG,"My location{ latitude:" + String.valueOf(loc.getLatitude()) + ", longitud:" + String.valueOf(loc.getLongitude())+ "}");
 			Log.d(LOG_TAG,rec.toString());
 			Log.d(LOG_TAG,"Distance: " + String.valueOf(results[0]));
+			Log.d(LOG_TAG,"Distance other: " + String.valueOf(metters));
+			Location locB = new Location("POINT B");
+			loc.setLatitude(rec.getLatitud());
+			loc.setLongitude(rec.getLongitud());
+			float distance = loc.distanceTo(locB);
+			Log.d(LOG_TAG,"Distance distanceTo: " + String.valueOf(distance));
 			if (results[0]<=rec.getRadius()) {
 				Log.d(LOG_TAG,"Added to Active Recordatorio list");	
 				resRecordatorios.add(rec);
@@ -110,6 +118,30 @@ public class NotificationService extends Service {
 		}	
 		recsDB.close();
 		return resRecordatorios;
+	}
+	
+	/**
+	 * Calculates distance between two geographics points
+	 * @param lat_a Latitude point A
+	 * @param lng_a Longitude point A
+	 * @param lat_b Latitude point B
+	 * @param lng_b Longitude point B
+	 * @return Meters between two points
+	 */
+	private double distanceBetween(double lat_a, double lng_a, double lat_b, double lng_b) {
+		double pk = (float) (180/3.14169);
+
+	    double a1 = lat_a / pk;
+	    double a2 = lng_a / pk;
+	    double b1 = lat_b / pk;
+	    double b2 = lng_b / pk;
+
+	    double t1 = Math.cos(a1)*Math.cos(a2)*Math.cos(b1)*Math.cos(b2);
+	    double t2 = Math.cos(a1)*Math.sin(a2)*Math.cos(b1)*Math.sin(b2);
+	    double t3 = Math.sin(a1)*Math.sin(b1);
+	    double tt = Math.acos(t1 + t2 + t3);
+
+	    return 6366000*tt;
 	}
 	
 	/**
@@ -125,7 +157,7 @@ public class NotificationService extends Service {
 
 		//Create Pending Intent what start Activity associated to Notification
 		Intent intent = new Intent(getApplicationContext(), NuevoRecordatorio.class);
-		intent.putExtra(NuevoRecordatorio.KEY_EDIT_RECORDATORIO, rec.getId());
+		intent.putExtra(NuevoRecordatorio.KEY_NOTIFY_RECORDATORIO, rec.getId());
 		PendingIntent pendInt = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
 		notif.setLatestEventInfo(getApplicationContext(), rec.getNombre(), rec.getDescripcion(), pendInt);
 		

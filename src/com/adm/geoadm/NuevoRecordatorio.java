@@ -61,7 +61,7 @@ public class NuevoRecordatorio extends ActionBarActivity {
 		}
 		else if (intent.hasExtra(KEY_EDIT_RECORDATORIO)) {
 			RecordatoriosDB recDB = new RecordatoriosDB(this);
-			int id = intent.getIntExtra(KEY_NOTIFY_RECORDATORIO, -1);
+			int id = intent.getIntExtra(KEY_EDIT_RECORDATORIO, -1);
 			Recordatorio rec = recDB.getRecordatorio(id);
 			recDB.close();
 			
