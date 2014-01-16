@@ -4,7 +4,7 @@
     <string name="app_name">Geoadm</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hola Mundo!</string>
-    
+
     <!-- Nuevo Recordatorio -->
     <string name="tab_map">Map</string>
     <string name="tab_description">Description</string>
@@ -20,5 +20,6 @@
     <string name="title_activity_nuevo_recordatoio">NuevoRecordatoio</string>
     <string name="fragment_details_categoria">Categoría</string>
     <string name="fragment_details_descripcion">Descripción</string>
+    <string name="title_activity_lista_categorias">Lista_categorias</string>
 
 </resources>

@@ -8,15 +8,15 @@
         android:minSdkVersion="8"
         android:targetSdkVersion="18" />
 
-	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -34,37 +34,44 @@
         <activity
             android:name="com.adm.geoadm.NuevoRecordatorio"
             android:label="Nuevo Recordatorio"
-            android:parentActivityName="com.adm.geoadm.MainActivity" 
-            android:windowSoftInputMode="adjustPan">
-     		<intent-filter>
+            android:parentActivityName="com.adm.geoadm.MainActivity"
+            android:windowSoftInputMode="adjustPan" >
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <meta-data 
+
+            <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.adm.geoadm.MainActivity" />
         </activity>
-        <service android:name="com.adm.geoadm.services.NotificationService">
+
+        <service android:name="com.adm.geoadm.services.NotificationService" >
             <intent-filter>
-                <action android:name="NotificationService"></action>
+                <action android:name="NotificationService" >
+                </action>
             </intent-filter>
         </service>
-        <receiver android:name=".InitializerService">
+
+        <receiver android:name="com.adm.geoadm.InitializerService" >
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+                <action android:name="android.intent.action.BOOT_COMPLETED" >
+                </action>
             </intent-filter>
         </receiver>
-                <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-                
 
         <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyD6VbHXlQsm3oc04mXCHG3i_vZ1pqujtMg"/>
-        
-        
+            android:value="AIzaSyD6VbHXlQsm3oc04mXCHG3i_vZ1pqujtMg" />
+
+        <activity
+            android:name="com.adm.geoadm.Lista_categorias"
+            android:label="@string/title_activity_lista_categorias" >
+        </activity>
     </application>
 
 </manifest>
