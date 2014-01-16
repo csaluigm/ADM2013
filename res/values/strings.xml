@@ -20,6 +20,8 @@
     <string name="title_activity_nuevo_recordatoio">New Reminder</string>
     <string name="fragment_details_categoria">Category</string>
     <string name="fragment_details_descripcion">Description</string>
+    
+    <!-- Manifest -->
     <string name="manifest_new_reminder">New Reminder</string>
-
+	<string name="manifest_list_reminder">List Reminder</string>
 </resources>
