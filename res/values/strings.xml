@@ -10,18 +10,25 @@
     <string name="tab_description">Description</string>
     <string name="save">Save</string>
 
-    <!-- Nuevo Recordatorio > Mapa -->
-    <string name="hint_address">Enter an Address</string>
+    <!-- Nuevo Recordatorio > Mapa y Detalle-->
     <string name="go">Go</string>
-    <string name="radius">Radius: </string>
-    <string name="meters">meters</string>
-    <string name="plus">+</string>
-    <string name="minus">-</string>
+    
+    <string name="fragment_maps_hint_address">Enter an Address</string>
+    <string name="fragment_maps_radius">Radius: </string>
+    <string name="fragment_maps_meters">meters</string>
+    <string name="fragment_maps_plus">+</string>
+    <string name="fragment_maps_minus">-</string>
+    
     <string name="title_activity_nuevo_recordatoio">New Reminder</string>
+    
     <string name="fragment_details_categoria">Category</string>
     <string name="fragment_details_descripcion">Description</string>
+    
     
     <!-- Manifest -->
     <string name="manifest_new_reminder">New Reminder</string>
 	<string name="manifest_list_reminder">List Reminder</string>
+	
+	
+	
 </resources>

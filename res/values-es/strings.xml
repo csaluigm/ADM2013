@@ -10,14 +10,17 @@
     <string name="tab_description">Descripción</string>
     <string name="save">Save</string>
 
-    <!-- Nuevo Recordatorio > Mapa -->
-    <string name="hint_address">Introduce dirección</string>
+    <!-- Nuevo Recordatorio > Mapa y Detalle-->
     <string name="go">Ir</string>
-    <string name="radius">Radio: </string>
-    <string name="meters">metros</string>
-    <string name="plus">+</string>
-    <string name="minus">-</string>
+    
+    <string name="fragment_maps_hint_address">Introduce dirección</string>
+    <string name="fragment_maps_radius">Radio: </string>
+    <string name="fragment_maps_meters">metros</string>
+    <string name="fragment_maps_plus">+</string>
+    <string name="fragment_maps_minus">-</string>
+    
     <string name="title_activity_nuevo_recordatoio">Nuevo Recordatorio</string>
+    
     <string name="fragment_details_categoria">Categoría</string>
     <string name="fragment_details_descripcion">Descripción</string>
     
