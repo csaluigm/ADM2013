@@ -28,6 +28,13 @@
     <string name="manifest_new_reminder">Nuevo Recordatorio</string>
 	<string name="manifest_list_reminder">Lista Recordatorio</string>
 
-
+	<!-- Dias semana -->
+	<string name="monday">L</string>
+	<string name="tuesday">M</string>
+	<string name="wednesday">X</string>
+	<string name="thursday">J</string>
+	<string name="fryday">V</string>
+	<string name="saturday">S</string>
+	<string name="sunday">D</string>
     
 </resources>

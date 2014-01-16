@@ -29,6 +29,15 @@
     <string name="manifest_new_reminder">New Reminder</string>
 	<string name="manifest_list_reminder">List Reminder</string>
 	
+	<!-- Dias semana -->
+	<string name="monday">M</string>
+	<string name="tuesday">T</string>
+	<string name="wednesday">W</string>
+	<string name="thursday">R</string>
+	<string name="fryday">F</string>
+	<string name="saturday">S</string>
+	<string name="sunday">U</string>
+	
 	
 	
 </resources>
