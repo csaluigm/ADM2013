@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Geoadm</string>
+    <string name="action_settings">Opciones</string>
+    <string name="hello_world">Hola Mundo!</string>
+    
+    <!-- Nuevo Recordatorio -->
+    <string name="tab_map">Mapa</string>
+    <string name="tab_description">Descripción</string>
+    <string name="save">Save</string>
+
+    <!-- Nuevo Recordatorio > Mapa -->
+    <string name="hint_address">Introduce dirección</string>
+    <string name="go">Ir</string>
+    <string name="radius">Radio: </string>
+    <string name="meters">metros</string>
+    <string name="plus">+</string>
+    <string name="minus">-</string>
+    <string name="title_activity_nuevo_recordatoio">Nuevo Recordatorio</string>
+    <string name="fragment_details_categoria">Categoría</string>
+    <string name="fragment_details_descripcion">Descripción</string>
+    <string name="manifest_new_reminder">Nuevo Recordatorio</string>
+
+
+    
+</resources>

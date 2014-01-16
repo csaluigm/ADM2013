@@ -17,8 +17,9 @@
     <string name="meters">meters</string>
     <string name="plus">+</string>
     <string name="minus">-</string>
-    <string name="title_activity_nuevo_recordatoio">NuevoRecordatoio</string>
-    <string name="fragment_details_categoria">Categoría</string>
-    <string name="fragment_details_descripcion">Descripción</string>
+    <string name="title_activity_nuevo_recordatoio">New Reminder</string>
+    <string name="fragment_details_categoria">Category</string>
+    <string name="fragment_details_descripcion">Description</string>
+    <string name="manifest_new_reminder">New Reminder</string>
 
 </resources>
