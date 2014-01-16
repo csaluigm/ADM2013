@@ -29,7 +29,7 @@
     
     <!-- Manifest -->
     <string name="manifest_new_reminder">Nuevo Recordatorio</string>
-	<string name="manifest_list_reminder">Lista Recordatorio</string>
+	<string name="manifest_list_reminder">Lista Recordatorios</string>
 
 	<!-- Dias semana -->
 	<string name="monday">L</string>

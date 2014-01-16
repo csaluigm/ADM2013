@@ -14,9 +14,10 @@
             android:id="@+id/nombre"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"
             android:padding="4dp"
             android:text="nombre"
-            android:layout_weight="1"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -24,159 +25,157 @@
             android:id="@+id/categoria"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginLeft="8dp"
+            android:layout_weight="1"
             android:padding="4dp"
+            android:shadowColor="@color/Black"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="1"
             android:text="#categoria"
             android:textColor="@color/Icverde"
             android:textSize="20sp" />
-
     </LinearLayout>
-    <View 
-       android:layout_width="fill_parent"
-       android:layout_height="2dp" 
-       android:background="@color/Icazul"
-        
-        />
- <LinearLayout
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="@color/Icazul" />
+
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp" >
 
-     <ImageView
-         android:id="@+id/ic_descripcion"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_weight="0"
-         android:src="@drawable/ic_description" />
+        <ImageView
+            android:id="@+id/ic_descripcion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:src="@drawable/ic_description" />
 
-    <TextView
-        android:id="@+id/texto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.2"
-        android:layout_marginTop="2dp"
-        android:padding="4dp"
-        android:text="textooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"
-        android:textSize="16sp"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:layout_gravity="center_vertical"
-        android:ellipsize="end" />
-</LinearLayout>
-<LinearLayout
+        <TextView
+            android:id="@+id/texto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="2dp"
+            android:layout_weight="0.2"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:padding="4dp"
+            android:singleLine="true"
+            android:text="textooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp" >
 
-     <ImageView
-         android:id="@+id/imreloj"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_weight="0"
-         android:src="@drawable/ic_reloj"
-         android:layout_gravity="center_vertical" />
+        <ImageView
+            android:id="@+id/imreloj"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0"
+            android:src="@drawable/ic_reloj" />
 
-    <TextView
-        android:id="@+id/hora"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginTop="2dp"
-        android:padding="4dp"
-        android:text="10:00 a 16:00"
-        android:textSize="24sp"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:ellipsize="end"
-        android:layout_gravity="center_vertical" />
+        <TextView
+            android:id="@+id/hora"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="2dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:padding="4dp"
+            android:singleLine="true"
+            android:text="10:00 a 16:00"
+            android:textSize="26sp" />
 
-    <ToggleButton
-        android:id="@+id/activo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ToggleButton"
-        android:textSize="14sp"
-        android:layout_weight="0"
-         />
+        <ToggleButton
+            android:id="@+id/activo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:text="ToggleButton"
+            android:textSize="14sp" />
+    </LinearLayout>
 
-</LinearLayout>
-
-<LinearLayout
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="3dp"
-        android:layout_gravity="center" >
+        android:padding="3dp" >
 
-    
         <TextView
             android:id="@+id/lunes"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:padding="4dp"
-            android:text="@string/monday"
             android:layout_weight="1"
-            android:textSize="18sp"
-             />
-        
+            android:gravity="center"
+            android:text="@string/monday"
+            android:textSize="19sp" />
+
         <TextView
             android:id="@+id/martes"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:padding="4dp"
-            android:text="@string/tuesday"
             android:layout_weight="1"
-            android:textSize="18sp"
-             />
+            android:gravity="center"
+            android:text="@string/tuesday"
+            android:textSize="19sp" />
+
         <TextView
             android:id="@+id/miercoles"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:padding="4dp"
-            android:text="@string/wednesday"
             android:layout_weight="1"
-            android:textSize="18sp"
-             />
+            android:gravity="center"
+            android:text="@string/wednesday"
+            android:textSize="19sp" />
+
         <TextView
             android:id="@+id/jueves"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:padding="4dp"
-            android:text="@string/thursday"
             android:layout_weight="1"
-            android:textSize="18sp"
-             />
+            android:gravity="center"
+            android:text="@string/thursday"
+            android:textSize="19sp" />
+
         <TextView
             android:id="@+id/viernes"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:padding="4dp"
-            android:text="@string/fryday"
             android:layout_weight="1"
-            android:textSize="18sp"
-             />
+            android:gravity="center"
+            android:text="@string/fryday"
+            android:textSize="19sp" />
+
         <TextView
             android:id="@+id/sabado"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:padding="4dp"
-            android:text="@string/saturday"
             android:layout_weight="1"
-            android:textSize="18sp"
-             />
-        
-           <TextView
+            android:gravity="center"
+            android:text="@string/saturday"
+            android:textSize="19sp" />
+
+        <TextView
             android:id="@+id/domingo"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:padding="4dp"
-            android:text="@string/sunday"
             android:layout_weight="1"
-            android:textSize="18sp"
-             />
- 
-</LinearLayout>
- 
- 
- 
+            android:gravity="center"
+            android:text="@string/sunday"
+            android:textSize="19sp" />
+    </LinearLayout>
+
 </LinearLayout>

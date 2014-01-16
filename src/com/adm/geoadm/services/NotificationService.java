@@ -1,39 +1,23 @@
 package com.adm.geoadm.services;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
-import com.adm.geoadm.db.Recordatorio;
-import com.adm.geoadm.db.RecordatoriosDB;
-import com.adm.geoadm.fragments.MyErrorDialog;
-import com.adm.geoadm.DetailsFragment;
-import com.adm.geoadm.MainActivity;
-import com.adm.geoadm.NuevoRecordatorio;
-import com.adm.geoadm.R;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.location.Geofence;
-import com.google.android.gms.location.LocationClient;
-
-import android.app.Dialog;
-import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.app.TaskStackBuilder;
-import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v4.app.NotificationCompat;
-import android.text.TextUtils;
 import android.util.Log;
+
+import com.adm.geoadm.NuevoRecordatorio;
+import com.adm.geoadm.R;
+import com.adm.geoadm.db.Recordatorio;
+import com.adm.geoadm.db.RecordatoriosDB;
 
 /**
  * 

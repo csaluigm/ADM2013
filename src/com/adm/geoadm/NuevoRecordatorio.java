@@ -1,12 +1,5 @@
 package com.adm.geoadm;
 
-import java.sql.Date;
-
-import com.adm.geoadm.db.Categoria;
-import com.adm.geoadm.db.Recordatorio;
-import com.adm.geoadm.db.RecordatoriosDB;
-import com.adm.geoadm.fragments.MapFragment;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,6 +14,11 @@ import android.support.v7.app.ActionBar.TabListener;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.adm.geoadm.db.Recordatorio;
+import com.adm.geoadm.db.RecordatoriosDB;
+import com.adm.geoadm.fragments.DetailsFragment;
+import com.adm.geoadm.fragments.MapFragment;
 
 public class NuevoRecordatorio extends ActionBarActivity {
 	//-------  TABS  ----------------
