@@ -13,7 +13,11 @@
         android:id="@+id/cabecera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lista de recordatorios" />
+        android:text="Tienes n recordatorios"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textStyle="italic"
+        android:textSize="14dp" />
 
     <ListView
         android:id="@+id/lista_recordatorios"

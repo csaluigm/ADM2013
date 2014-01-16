@@ -45,6 +45,7 @@ public class MainActivity extends ActionBarActivity {
 		rec.setDescripcion("textooo");
 		
 		recDB.insertar(rec);
+		//cambio
 		recordatorios=recDB.listarRecordatorios();
 		recDB.close();
 		
