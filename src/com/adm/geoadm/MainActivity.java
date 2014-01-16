@@ -26,12 +26,14 @@ import android.widget.TextView;
  */
 public class MainActivity extends ActionBarActivity {
 	ListView RecView;
+	TextView cabecera;
 	private AdaptadorRecordatorios Radapter;
 	ArrayList<Recordatorio> recordatorios;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		cabecera=(TextView)findViewById(R.id.cabecera);
 		
 		//Initialize Notification Service
 		startService(new Intent(this,NotificationService.class));
@@ -39,15 +41,17 @@ public class MainActivity extends ActionBarActivity {
 		
 		RecView=(ListView)findViewById(R.id.lista_recordatorios);
 		RecordatoriosDB recDB = new RecordatoriosDB(this);
-		Recordatorio rec=new Recordatorio();
-		rec.setActiva(true);
-		rec.setNombre("recordatoriotest");
-		rec.setDescripcion("textooo");
+//		Recordatorio rec=new Recordatorio();
+//		rec.setActiva(true);
+//		rec.setNombre("recordatoriotest");
+//		rec.setDescripcion("textooo");
 		
-		recDB.insertar(rec);
-		//cambio
+//		recDB.insertar(rec);
+		
 		recordatorios=recDB.listarRecordatorios();
 		recDB.close();
+		
+		cabecera.setText("Tienes "+recordatorios.size()+" recordatorios");
 		
 		for (Recordatorio reco : recordatorios)
 			Log.d("RECORDATORIOS", reco.toString());
