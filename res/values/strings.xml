@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Things and stuffs -->
     <string name="app_name">Geoadm</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hola Mundo!</string>
@@ -19,16 +20,25 @@
     <string name="fragment_maps_plus">+</string>
     <string name="fragment_maps_minus">-</string>
     
-    <string name="title_activity_nuevo_recordatoio">New Reminder</string>
-    
     <string name="fragment_details_categoria">Category</string>
     <string name="fragment_details_descripcion">Description</string>
     
+    <!-- Tittles -->
+    <string name="title_activity_nuevo_recordatoio">New Reminder</string>
+    <string name="title_activity_lista_categorias">Category List</string>
+
     
     <!-- Manifest -->
     <string name="manifest_new_reminder">New Reminder</string>
 	<string name="manifest_list_reminder">List Reminder</string>
 	
-	
+	<!-- Dias semana -->
+	<string name="monday">M</string>
+	<string name="tuesday">T</string>
+	<string name="wednesday">W</string>
+	<string name="thursday">R</string>
+	<string name="fryday">F</string>
+	<string name="saturday">S</string>
+	<string name="sunday">U</string>
 	
 </resources>

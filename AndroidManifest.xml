@@ -65,8 +65,11 @@
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyD6VbHXlQsm3oc04mXCHG3i_vZ1pqujtMg"/>
-        
-        
+
+        <activity
+            android:name="com.adm.geoadm.Lista_categorias"
+            android:label="@string/title_activity_lista_categorias" >
+        </activity>
     </application>
 
 </manifest>
