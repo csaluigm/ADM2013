@@ -54,7 +54,11 @@ public class MainActivity extends ActionBarActivity {
 				
 		asociarAdapter();
 		
+
+		
 	}
+	
+	
 	
 	public void asociarAdapter() {
 		Radapter = new AdaptadorRecordatorios(this, R.layout.elemento_fila,

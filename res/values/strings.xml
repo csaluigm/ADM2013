@@ -24,6 +24,7 @@
     
     <string name="fragment_details_categoria">Category</string>
     <string name="fragment_details_descripcion">Description</string>
+    <string name="title_activity_lista_categorias">Category List</string>
     
     
     <!-- Manifest -->
