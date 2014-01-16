@@ -17,23 +17,28 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/card_background_white"
                 android:orientation="horizontal" >
 
                 <TextView
-                    android:id="@+id/fd_textView_categoria"
+                    android:id="@+id/fd_textView_nombre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/fragment_details_categoria" />
+                    android:text="Nombre: " />
 
-                <Spinner
-                    android:id="@+id/fd_spinner_categoria"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                <EditText
+                    android:id="@+id/fragment_details_nombreEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10" />
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/card_background_white"
                 android:orientation="vertical" >
 
                 <TextView
@@ -43,7 +48,7 @@
                     android:text="@string/fragment_details_descripcion" />
 
                 <EditText
-                    android:id="@+id/fd_editText_descripcion"
+                    android:id="@+id/fragment_details_editText_descripcion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10" >
@@ -56,49 +61,152 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:background="@drawable/card_background_white"
+                android:orientation="horizontal" >
 
                 <TextView
-                    android:id="@+id/fd_textView_propiedades"
+                    android:id="@+id/fd_textView_categoria"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="TextView" />
+                    android:text="Categoría" />
 
-                <LinearLayout
+                <Spinner
+                    android:id="@+id/fragment_details_spinnerCategorias"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_background_white" >
+
+                <EditText
+                    android:id="@+id/fragment_details_datePicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Fecha" />
+
+                <CheckBox
+                    android:id="@+id/todoeldia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Diario" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_background_white" >
+
+                <EditText
+                    android:id="@+id/fragment_details_horaInicio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Hora inicio" />
+
+                <EditText
+                    android:id="@+id/fragment_details_horaFin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Hora fin" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/card_background_white" >
+
+                <TextView
+                    android:id="@+id/lunes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="L" />
+
+                <TextView
+                    android:id="@+id/martes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="M" />
+
+                <TextView
+                    android:id="@+id/miercoles"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="X" />
+
+                <TextView
+                    android:id="@+id/jueves"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="J" />
+
+                <TextView
+                    android:id="@+id/viernes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="V" />
+
+                <TextView
+                    android:id="@+id/sabado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="S" />
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="D" />
+
+                <CheckBox
+                    android:id="@+id/fragment_details_repetir"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Repetir" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_background_white" >
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Prioridad: " />
+
+                <SeekBar
+                    android:id="@+id/fragment_details_seekbar"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
-                    <TextView
-                        android:id="@+id/fd_textView_tonodellamada"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="TextView" />
+            </LinearLayout>
 
-                    <Button
-                        android:id="@+id/fd_button_buscartono"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Button" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
-
-                    <TextView
-                        android:id="@+id/textView_estadoalarma"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="TextView" />
-
-                    <CheckBox
-                        android:id="@+id/checkBox_alarma"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="CheckBox" />
-
-                </LinearLayout>
+                <Button
+                    android:id="@+id/fragment_details_agregar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Agregar Recordatorio" />
 
             </LinearLayout>
 
