@@ -24,7 +24,7 @@
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
         <activity
             android:name="com.adm.geoadm.MainActivity"
-            android:label="@string/app_name" >
+            android:label="Lista de recordatorios" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
