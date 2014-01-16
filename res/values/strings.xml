@@ -20,12 +20,13 @@
     <string name="fragment_maps_plus">+</string>
     <string name="fragment_maps_minus">-</string>
     
-    <string name="title_activity_nuevo_recordatoio">New Reminder</string>
-    
     <string name="fragment_details_categoria">Category</string>
     <string name="fragment_details_descripcion">Description</string>
-    <string name="title_activity_lista_categorias">Category List</string>
     
+    <!-- Tittles -->
+    <string name="title_activity_nuevo_recordatoio">New Reminder</string>
+    <string name="title_activity_lista_categorias">Category List</string>
+
     
     <!-- Manifest -->
     <string name="manifest_new_reminder">New Reminder</string>

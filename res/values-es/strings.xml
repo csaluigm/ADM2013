@@ -19,11 +19,13 @@
     <string name="fragment_maps_meters">metros</string>
     <string name="fragment_maps_plus">+</string>
     <string name="fragment_maps_minus">-</string>
-    
-    <string name="title_activity_nuevo_recordatoio">Nuevo Recordatorio</string>
-    
+     
     <string name="fragment_details_categoria">Categoría</string>
     <string name="fragment_details_descripcion">Descripción</string>
+
+        <!-- Tittles -->
+    <string name="title_activity_nuevo_recordatoio">Nuevo Recordatorio</string>
+    <string name="title_activity_lista_categorias">Lista de Categorias</string>
     
     <!-- Manifest -->
     <string name="manifest_new_reminder">Nuevo Recordatorio</string>
