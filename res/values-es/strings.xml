@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Things and stuffs -->
     <string name="app_name">Geoadm</string>
     <string name="action_settings">Opciones</string>
     <string name="hello_world">Hola Mundo!</string>
