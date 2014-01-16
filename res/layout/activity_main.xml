@@ -2,25 +2,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:orientation="vertical"
     tools:context=".MainActivity" >
 
     <TextView
         android:id="@+id/cabecera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lista de recordatorios" />
- 
-
+        android:text="Tienes n recordatorios"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textStyle="italic"
+        android:textSize="14dp" />
 
     <ListView
         android:id="@+id/lista_recordatorios"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:divider="@null"
+        android:dividerHeight="0dp" >
     </ListView>
 
 </LinearLayout>

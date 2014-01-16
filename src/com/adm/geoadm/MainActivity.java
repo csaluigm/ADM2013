@@ -39,11 +39,18 @@ public class MainActivity extends ActionBarActivity {
 		
 		RecView=(ListView)findViewById(R.id.lista_recordatorios);
 		RecordatoriosDB recDB = new RecordatoriosDB(this);
+		Recordatorio rec=new Recordatorio();
+		rec.setActiva(true);
+		rec.setNombre("recordatoriotest");
+		rec.setDescripcion("textooo");
+		
+		recDB.insertar(rec);
+		//cambio
 		recordatorios=recDB.listarRecordatorios();
 		recDB.close();
 		
-		for (Recordatorio rec : recordatorios)
-			Log.d("RECORDATORIOS", rec.toString());
+		for (Recordatorio reco : recordatorios)
+			Log.d("RECORDATORIOS", reco.toString());
 				
 		asociarAdapter();
 		
