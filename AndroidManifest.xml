@@ -24,7 +24,8 @@
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
         <activity
             android:name="com.adm.geoadm.MainActivity"
-            android:label="Lista de recordatorios" >
+            android:screenOrientation="portrait"
+            android:label="@string/manifest_list_reminder" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,7 +34,8 @@
         </activity>
         <activity
             android:name="com.adm.geoadm.NuevoRecordatorio"
-            android:label="Nuevo Recordatorio"
+            android:screenOrientation="portrait"
+            android:label="@string/manifest_new_reminder"
             android:parentActivityName="com.adm.geoadm.MainActivity" 
             android:windowSoftInputMode="adjustPan">
      		<intent-filter>
