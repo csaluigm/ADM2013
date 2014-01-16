@@ -38,8 +38,8 @@ public class MainActivity extends ActivityMenuLateral {
 	TextView cabecera;
 	private AdaptadorRecordatorios Radapter;
 	ArrayList<Recordatorio> recordatorios;
-	TextView aviso;
-	ImageView imremind;
+	TextView aviso,avisot;
+	ImageView imremind,imflecha;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +48,8 @@ public class MainActivity extends ActivityMenuLateral {
 		menu_lateral(R.array.lateral_lista_recordatorios, this);
 		cabecera = (TextView) findViewById(R.id.cabecera);
 		aviso = (TextView) findViewById(R.id.avisonuevo);
+		avisot = (TextView) findViewById(R.id.avisotoca);
+		//imflecha = (ImageView) findViewById(R.id.imflecha);
 		imremind = (ImageView) findViewById(R.id.imremind);
 		imremind.setOnClickListener(new OnClickListener() {
 
@@ -99,6 +101,8 @@ public class MainActivity extends ActivityMenuLateral {
 			cabecera.setVisibility(View.VISIBLE);
 			aviso.setVisibility(View.GONE);
 			imremind.setVisibility(View.GONE);
+			avisot.setVisibility(View.GONE);
+			//imflecha.setVisibility(View.GONE);
 
 		} else {
 
@@ -106,6 +110,8 @@ public class MainActivity extends ActivityMenuLateral {
 			cabecera.setVisibility(View.GONE);
 			aviso.setVisibility(View.VISIBLE);
 			imremind.setVisibility(View.VISIBLE);
+			avisot.setVisibility(View.VISIBLE);
+			//imflecha.setVisibility(View.VISIBLE);
 		}
 	}
 
