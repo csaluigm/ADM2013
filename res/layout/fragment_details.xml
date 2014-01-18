@@ -84,28 +84,6 @@
                 android:background="@drawable/card_background_white" >
 
                 <EditText
-                    android:id="@+id/fragment_details_datePicker"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="Fecha" />
-
-                <CheckBox
-                    android:id="@+id/todoeldia"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Diario" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/card_background_white" >
-
-                <EditText
                     android:id="@+id/fragment_details_horaInicio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -124,77 +102,73 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/card_background_white" >
+                android:layout_marginTop="3dp"
+                android:padding="3dp" >
 
                 <TextView
-                    android:id="@+id/lunes"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/fd_lunes"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="L" />
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/monday"
+                    android:textSize="19sp" />
 
                 <TextView
-                    android:id="@+id/martes"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/fd_martes"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="M" />
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/tuesday"
+                    android:textSize="19sp" />
 
                 <TextView
-                    android:id="@+id/miercoles"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/fd_miercoles"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="X" />
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/wednesday"
+                    android:textSize="19sp" />
 
                 <TextView
-                    android:id="@+id/jueves"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/fd_jueves"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="J" />
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/thursday"
+                    android:textSize="19sp" />
 
                 <TextView
-                    android:id="@+id/viernes"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/fd_viernes"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="V" />
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/fryday"
+                    android:textSize="19sp" />
 
                 <TextView
-                    android:id="@+id/sabado"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/fd_sabado"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="S" />
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/saturday"
+                    android:textSize="19sp" />
 
                 <TextView
-                    android:id="@+id/textView1"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/fd_domingo"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="D" />
-
-                <CheckBox
-                    android:id="@+id/fragment_details_repetir"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Repetir" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/card_background_white" >
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Prioridad: " />
-
-                <SeekBar
-                    android:id="@+id/fragment_details_seekbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/sunday"
+                    android:textSize="19sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -207,7 +181,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Agregar Recordatorio" />
-
             </LinearLayout>
 
         </LinearLayout>
