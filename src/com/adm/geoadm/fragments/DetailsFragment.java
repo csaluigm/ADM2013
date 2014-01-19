@@ -177,6 +177,7 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		recordatorio.setNombre("" + textonombre.getText());
 		recordatorio.setDescripcion("" + textodescripcion.getText());
 		recordatorio.setCategoria(categoriaInsertar);
+		recordatorio.setCategoriaId(categoriaInsertar.getId());
 		recordatorio.setHoraInicio(horaInicioEdit.getText().toString());
 		recordatorio.setHoraFin(horaFinEdit.getText().toString());
 		recordatorio.setDiasSemana(diasSemana);
@@ -198,6 +199,19 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 //		 Toast.makeText(getActivity().getApplicationContext(),"punt:"+diasSemana,Toast.LENGTH_LONG).show();
 
 		recordatoriosDB.insertar(recordatorio);
+		
+		//////////////////////
+		
+		
+		ArrayList<Recordatorio> recs = new ArrayList<Recordatorio>();
+		recs = recordatoriosDB.listarRecordatorios();
+		Recordatorio r1 = recs.get(categoriaInsertar.getId());
+		Categoria cat = r1.getCategoria();
+		String nombre = cat.getNombre();
+		
+		///////////////////////
+		
+		
 	}
 	}
 
