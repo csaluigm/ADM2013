@@ -1,5 +1,7 @@
 package com.adm.geoadm;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -22,6 +24,7 @@ AdapterView.OnItemClickListener {
 	  protected String[] navMenuTitles;
 	//private Object mTitle;
 	protected CharSequence mDrawerTitle;
+	public ArrayAdapter<String>tlateraladapter;
 	Context context;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,17 +41,18 @@ AdapterView.OnItemClickListener {
 	 * @param stringArrayId Id del array de strings que queremos poner en el navigation drawer
 	 * @param contexto activity actual para que se pueda modificar el action bar dinámicamente
 	 */
-	public void menu_lateral(int stringArrayId,Context contexto) {
+	public void menu_lateral(ArrayList<String> titulos,Context contexto) {
 		context=contexto;
 		mDrawerTitle = getTitle();
 		mDrawerOptions = (ListView) findViewById(R.id.left_drawer);
 		mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 		 // load slide menu items
-        navMenuTitles = getResources().getStringArray(stringArrayId);
-		mDrawerOptions
-				.setAdapter(new ArrayAdapter<String>(this,
-						android.R.layout.simple_list_item_1,
-						android.R.id.text1, navMenuTitles));
+        navMenuTitles = titulos.toArray(new String[titulos.size()]);
+		tlateraladapter=new ArrayAdapter<String>(this,
+				android.R.layout.simple_list_item_1,
+				android.R.id.text1, navMenuTitles);
+		
+        mDrawerOptions.setAdapter(tlateraladapter);
 		mDrawerOptions.setOnItemClickListener(this);
 	    mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer,
                 R.drawable.ic_navigation_drawer, //nav menu toggle icon

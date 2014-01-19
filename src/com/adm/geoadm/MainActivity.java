@@ -24,11 +24,16 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.adm.geoadm.R.color;
+import com.adm.geoadm.db.Categoria;
+import com.adm.geoadm.db.CategoriasDB;
 import com.adm.geoadm.db.Recordatorio;
 import com.adm.geoadm.db.RecordatoriosDB;
 import com.adm.geoadm.services.NotificationService;
 
 /**
+ * Activity principal de la aplicación , muestra los recordatorios
+ * creados.Puedes crear nuevos,borrar, filtrar por categoría y editar las
+ * categorias.
  * 
  * @author cesar
  * 
@@ -38,18 +43,19 @@ public class MainActivity extends ActivityMenuLateral {
 	TextView cabecera;
 	private AdaptadorRecordatorios Radapter;
 	ArrayList<Recordatorio> recordatorios;
-	TextView aviso,avisot;
-	ImageView imremind,imflecha;
+	TextView aviso, avisot;
+	ImageView imremind;
+	private ArrayList<String> latnames;
+	private ArrayList<Categoria> cats;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		menu_lateral(R.array.lateral_lista_recordatorios, this);
+		menu_lateral_categorias();
 		cabecera = (TextView) findViewById(R.id.cabecera);
 		aviso = (TextView) findViewById(R.id.avisonuevo);
 		avisot = (TextView) findViewById(R.id.avisotoca);
-		//imflecha = (ImageView) findViewById(R.id.imflecha);
 		imremind = (ImageView) findViewById(R.id.imremind);
 		imremind.setOnClickListener(new OnClickListener() {
 
@@ -66,19 +72,18 @@ public class MainActivity extends ActivityMenuLateral {
 		RecView = (ListView) findViewById(R.id.lista_recordatorios);
 		registerForContextMenu(RecView);
 
-		RecordatoriosDB recDB = new RecordatoriosDB(this);
+		listar();
+	}
 
-		// recordatoriotest();
-
-		recordatorios = recDB.listarRecordatorios();
-		recDB.close();
-
-		for (Recordatorio reco : recordatorios)
-			Log.d("RECORDATORIOS", reco.toString());
-
-		asociarAdapter();
-		actualizar_interfaz();
-
+	public void menu_lateral_categorias() {
+		latnames = new ArrayList<String>();
+		CategoriasDB catDB = new CategoriasDB(this);
+		cats = catDB.listarCategorias();
+		for (Categoria c : cats) {
+			latnames.add(c.getNombre());
+		}
+		latnames.add("Editar Categorias");
+		menu_lateral(latnames, this);
 	}
 
 	public void recordatoriotest() {
@@ -91,6 +96,11 @@ public class MainActivity extends ActivityMenuLateral {
 		recDB.insertar(rec);
 	}
 
+	/**
+	 * Refresca la interfaz : cambia la cabecera del listview para mostrar la
+	 * cuenta de items, además se encarga de cambiar la interfaz si no tenemos
+	 * ningún recordatorio creado para que creemos el primero.
+	 */
 	public void actualizar_interfaz() {
 
 		if (recordatorios.size() > 0) {
@@ -102,7 +112,6 @@ public class MainActivity extends ActivityMenuLateral {
 			aviso.setVisibility(View.GONE);
 			imremind.setVisibility(View.GONE);
 			avisot.setVisibility(View.GONE);
-			//imflecha.setVisibility(View.GONE);
 
 		} else {
 
@@ -111,15 +120,52 @@ public class MainActivity extends ActivityMenuLateral {
 			aviso.setVisibility(View.VISIBLE);
 			imremind.setVisibility(View.VISIBLE);
 			avisot.setVisibility(View.VISIBLE);
-			//imflecha.setVisibility(View.VISIBLE);
+
 		}
 	}
 
+	/**
+	 * intent para crear un recordatorio nuevo
+	 */
 	public void Lanzar_nuevo_recordatorio() {
 		Intent intent = new Intent(this, NuevoRecordatorio.class);
 		startActivity(intent);
 	}
 
+	/**
+	 * Lista todos los recordatorios de la DB de forma gráfica
+	 */
+	public void listar() {
+		RecordatoriosDB recDB = new RecordatoriosDB(this);
+
+		// recordatoriotest();
+
+		recordatorios = recDB.listarRecordatorios();
+		recDB.close();
+
+		for (Recordatorio reco : recordatorios)
+			Log.d("RECORDATORIOS", reco.toString());
+
+		asociarAdapter();
+		actualizar_interfaz();
+	}
+
+	/**
+	 * Lista los recordatorios pertenecientes a una categoría de forma gráfica
+	 * 
+	 * @param cat
+	 *            el nombre de la categoría que hace de filtro
+	 */
+	public void listar_por_categoria(String cat) {
+		RecordatoriosDB recDB = new RecordatoriosDB(this);
+		// filtrar por categoria
+	}
+
+	/**
+	 * Crea el adapter del ListView del Activity para asociarle el layout de
+	 * cada fila, onclicklistener adicional por si queremos agregar alguna
+	 * funcionalidad
+	 */
 	public void asociarAdapter() {
 		Radapter = new AdaptadorRecordatorios(this, R.layout.elemento_fila,
 				recordatorios);
@@ -133,6 +179,8 @@ public class MainActivity extends ActivityMenuLateral {
 		});
 	}
 
+	// Crear el menu contextual para la lista de recordatorios (Mantener pulsado
+	// encima de un item)
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
@@ -146,6 +194,8 @@ public class MainActivity extends ActivityMenuLateral {
 		}
 	}
 
+	// Salta cuando mantenemos presionado un item del ListView y gestiona la
+	// accion de cada elemento del menu contextual
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
@@ -169,6 +219,7 @@ public class MainActivity extends ActivityMenuLateral {
 
 	}
 
+	// Carga el menú de opciones del action bar
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -176,40 +227,22 @@ public class MainActivity extends ActivityMenuLateral {
 		return true;
 	}
 
-	// @Override
-	// public boolean onOptionsItemSelected(MenuItem item) {
-	// switch(item.getItemId()){
-	//
-	// case R.id.action_nuevo:
-	// Intent intent = new Intent(this, NuevoRecordatorio.class);
-	// startActivity(intent);
-	// return true;
-	//
-	// }
-	//
-	// return false;
-	// }
-
+	// Gestiona los clicks que se realicen en el NavigationDrawer (Menú
+	// lateral).
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
 		Log.d("posicion", "entra");
-		switch (i) {
-		case 0:
+		String elegido = latnames.get(i);
+		if (elegido.compareTo("Editar Categorias") == 0) {
 			Intent intent = new Intent(this, Lista_categorias.class);
 			startActivity(intent);
-			// intent
-			break;
-		case 1:
-			// intent
+		} else {
+			Categoria c = cats.get(i);
+			Log.d("Filtro", "" + c.getNombre());
 
-		case 2:
-			// intent
-
-			break;
-
-		default:
-			break;
 		}
+
 		mDrawer.closeDrawers();
 	}
 
@@ -241,6 +274,11 @@ public class MainActivity extends ActivityMenuLateral {
 		}
 	}
 
+	/**
+	 * 
+	 * Adapter del Listview de recordatorios ,
+	 * 
+	 */
 	public class AdaptadorRecordatorios extends ArrayAdapter<Recordatorio> {
 		private ArrayList<Recordatorio> items;
 
@@ -360,17 +398,34 @@ public class MainActivity extends ActivityMenuLateral {
 				if (hora != null) {
 					hora.setText(rec.getHoraInicio() + " a " + rec.getHoraFin());
 				}
-
+				if (categoria != null) {
+					categoria.setText("#");
+				}
 			}
 			return v;
 		}
 	}
 
+	/**
+	 * Cambia el color y pone en negrita el TexView que le pasemos
+	 * 
+	 * @param dia
+	 *            el textview con el dia de la semana para resaltar
+	 */
 	public void resaltar_dia(TextView dia) {
 		dia.setTextColor(getResources().getColor(color.Icazul));
 		dia.setTypeface(Typeface.DEFAULT_BOLD);
 	}
 
+	/**
+	 * Transforma un entero en un vector de 7 bools donde cada bool representa
+	 * una unidad del entero convertido a binario.true si es 1 false si es 0
+	 * 
+	 * @param binario
+	 *            entero que queremos convertir a binario y despues a vector de
+	 *            bools
+	 * @return vector de bools
+	 */
 	public ArrayList<Boolean> enterotodias(int binario) {
 		ArrayList<Boolean> semana = new ArrayList<Boolean>();
 		String bin = Integer.toBinaryString(binario);
@@ -390,11 +445,33 @@ public class MainActivity extends ActivityMenuLateral {
 		return semana;
 	}
 
+	/**
+	 * añade ceros por la izquierda para rellenar un numero binario en forma de
+	 * string
+	 * 
+	 * @param b
+	 *            String al que queremos añadir ceros por la izquierda
+	 * @return el String con los ceros añadidos
+	 */
 	public String addceros(String b) {
 		String ceros = "";
 		for (int i = 0; i < 7 - b.length(); i++) {
 			ceros = "0" + ceros;
 		}
 		return ceros + b;
+	}
+
+	// Refrescar el menú lateral
+	@Override
+	protected void onResume() {
+		super.onResume();
+		menu_lateral_categorias();
+	};
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		// finish();
 	}
 }

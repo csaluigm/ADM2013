@@ -69,6 +69,9 @@
         <activity
             android:name="com.adm.geoadm.Lista_categorias"
             android:label="@string/title_activity_lista_categorias" >
+              <meta-data 
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.adm.geoadm.MainActivity" />
         </activity>
     </application>
 
