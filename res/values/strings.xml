@@ -10,6 +10,13 @@
     <string name="tab_map">Map</string>
     <string name="tab_description">Description</string>
     <string name="save">Save</string>
+    
+         <!-- Nueva Categoria -->
+         
+    <string name="Dialog_categoria_title">New category</string>
+    <string name="Dialog_categoria_message">Fill the category name</string>
+    <string name="Dialog_categoria_positivo">Add</string>
+    <string name="Dialog_categoria_negativo">Cancel</string>
 
     <!-- Nuevo Recordatorio > Mapa y Detalle-->
     <string name="go">Go</string>

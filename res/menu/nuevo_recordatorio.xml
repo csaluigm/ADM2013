@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/save_recordatorio"
+<!--     <item android:id="@+id/save_recordatorio"
         android:title="@string/save"
         android:icon="@android:drawable/ic_menu_save"
-        ></item>
+        ></item> -->
 
 </menu>

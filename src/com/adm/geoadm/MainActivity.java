@@ -195,6 +195,8 @@ public class MainActivity extends ActivityMenuLateral {
 		Log.d("posicion", "entra");
 		switch (i) {
 		case 0:
+			Intent intent = new Intent(this, Lista_categorias.class);
+			startActivity(intent);
 			// intent
 			break;
 		case 1:

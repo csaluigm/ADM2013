@@ -2,36 +2,52 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/card_background_white"
     android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:weightSum="5">
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+       >
 
         <TextView
             android:id="@+id/name_category"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingTop="10dp"
-            android:text="categoria"
-            android:layout_weight="3" />
+            android:layout_weight="2"
+         	android:padding="2dp"
+            android:shadowColor="@color/Black"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="1"
+            android:text="#categoria"
+            android:layout_marginLeft="4dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/Icazul"
+            android:textSize="25sp" />
 
         <TextView
             android:id="@+id/count_cat"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="5"
-            android:layout_weight="1" />
-
-        <ImageView
-            android:id="@+id/remove_cat"
+            android:layout_weight="0.65"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="0"
+            android:textSize="20sp" />
+        
+        <TextView
+            android:id="@+id/trec"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_borrar" 
-            android:layout_weight="1"/>
-
+            android:layout_weight="1.67"
+            android:gravity="center_vertical"
+            android:padding="2dp"
+            android:text="recordatorios"
+            android:textSize="20sp" />
+       
     </LinearLayout>
 
 </LinearLayout>

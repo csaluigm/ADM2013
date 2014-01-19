@@ -163,9 +163,9 @@ public class NuevoRecordatorio extends ActionBarActivity implements OnClickListe
 		case android.R.id.home:
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
-		case R.id.save_recordatorio:
-			saveRecordatorio();
-			return true;
+//		case R.id.save_recordatorio:
+//			saveRecordatorio();
+//			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}

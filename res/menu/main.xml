@@ -4,8 +4,7 @@
     <item
         android:id="@+id/action_nuevo"
         android:icon="@drawable/ic_action_content_new"
-        android:title="Actualizar"
+        android:title="Agregar"
         app:showAsAction="ifRoom"/>
-
 
 </menu>

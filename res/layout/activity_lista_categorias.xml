@@ -7,13 +7,18 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
+    android:background="@color/LightGrey"
     tools:context=".MainActivity" >
 
     <TextView
         android:id="@+id/cabecera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Categorias" />
+        android:text="Categorias"
+        android:textStyle="italic"
+        android:textSize="16sp"
+        android:textColor="@color/Black"
+        android:layout_gravity="center" />
  
 
 
