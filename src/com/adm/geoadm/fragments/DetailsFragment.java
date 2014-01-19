@@ -177,7 +177,7 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		
 		recordatorio.setNombre("" + textonombre.getText());
 		recordatorio.setDescripcion("" + textodescripcion.getText());
-//		recordatorio.setCategoria(categoriaInsertar);
+		recordatorio.setCategoria(categoriaInsertar);
 		recordatorio.setHoraInicio(horaInicioEdit.getText().toString());
 		recordatorio.setHoraFin(horaFinEdit.getText().toString());
 		recordatorio.setDiasSemana(diasSemana);
