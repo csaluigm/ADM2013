@@ -15,6 +15,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.content.SharedPreferences;
 
 import com.adm.geoadm.R;
 import com.adm.geoadm.db.Recordatorio;
@@ -37,7 +39,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoWindowClickListener {
+public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoWindowClickListener , OnClickListener{
 	//--- GUI ---
 	EditText etAddress;
 	Button btGo;
@@ -46,6 +48,7 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 	int auxRadius;
 	Button btPlus;
 	Button btMinus;
+	Button guardar;
 	Marker marker; 
 	Circle circle; 
 	LatLng center=null; // iremos guardando la posicion
@@ -105,7 +108,6 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-
 	}
 
 	
@@ -116,8 +118,12 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 		final View view = inflater.inflate(R.layout.fragment_map, null);
 		etAddress = (EditText) view.findViewById(R.id.etAddress);
 		etRadius = (EditText) view.findViewById(R.id.etRadius);
-		   btPlus = (Button) view.findViewById(R.id.btPlus);
-		   btMinus = (Button) view.findViewById(R.id.btMinus);
+		btPlus = (Button) view.findViewById(R.id.btPlus);
+	  	btMinus = (Button) view.findViewById(R.id.btMinus);
+	  	guardar = (Button) view.findViewById(R.id.mf_guardar);
+	  	guardar.setOnClickListener(this);
+		   
+		   
 		  if (center==null){
 		   etRadius.setEnabled(false);
 		   btPlus.setEnabled(false);
@@ -484,6 +490,23 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 			}
 		}
 
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+	
+	
+		
+		if(v.getId()==guardar.getId()){
+			SharedPreferences preferences = this.getActivity().getSharedPreferences("mapPref",0);
+			SharedPreferences.Editor editor = preferences.edit();
+			editor.putFloat("lat",(float)getLatitud());
+			editor.putFloat("long",(float)getLongitud());
+			editor.putFloat("radio", (float)getRadio());
+			editor.commit();
+			Toast.makeText(getActivity().getApplicationContext(),"Punto guardado", Toast.LENGTH_SHORT).show();
+		} 
 	}
 
 }

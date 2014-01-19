@@ -14,13 +14,18 @@ import android.support.v7.app.ActionBar.TabListener;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 
 import com.adm.geoadm.db.Recordatorio;
 import com.adm.geoadm.db.RecordatoriosDB;
 import com.adm.geoadm.fragments.DetailsFragment;
 import com.adm.geoadm.fragments.MapFragment;
 
-public class NuevoRecordatorio extends ActionBarActivity {
+public class NuevoRecordatorio extends ActionBarActivity implements OnClickListener{
+	
+	
+	
 	//-------  TABS  ----------------
 	MapFragment tabMap;
 	DetailsFragment tabDetails;
@@ -240,5 +245,11 @@ public class NuevoRecordatorio extends ActionBarActivity {
 			return null;
 		}
 
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -10,6 +10,7 @@ import com.adm.geoadm.db.CategoriasDB;
 import com.adm.geoadm.db.Recordatorio;
 import com.adm.geoadm.db.RecordatoriosDB;
 
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -41,7 +42,6 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 	RecordatoriosDB recordatoriosDB;
 	Categoria categoriaEscogida;
 	CategoriasDB categoriasDB;
-	int diasSemana=0;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,6 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		final View view = inflater.inflate(R.layout.fragment_details, null);
-
 		textonombre = (TextView) view
 				.findViewById(R.id.fragment_details_nombreEdit);
 		textodescripcion = (TextView) view
@@ -128,36 +127,25 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 			if (dia.getTypeface() == Typeface.DEFAULT_BOLD) {
 				dia.setTextColor(getResources().getColor(color.Black));
 				dia.setTypeface(Typeface.DEFAULT);
-				int valor = obtenerValorDia(dia);
-				diasSemana = diasSemana - valor;
 			} else {
 
 				dia.setTextColor(getResources().getColor(color.Icazul));
 				dia.setTypeface(Typeface.DEFAULT_BOLD);
-				int valor = obtenerValorDia(dia);
-				diasSemana = diasSemana + valor;
 			}
 		}
 
 	}
 
-	private int obtenerValorDia(TextView dia) {
+	private int obtenerValorDias() {
 		// TODO Auto-generated method stub
 		int valor = 0;
-		if (dia.getId() == lunes.getId())
-			valor = 64;
-		else if (dia.getId() == martes.getId())
-			valor = 32;
-		else if (dia.getId() == miercoles.getId())
-			valor = 16;
-		else if (dia.getId() == jueves.getId())
-			valor = 8;
-		else if (dia.getId() == viernes.getId())
-			valor = 4;
-		else if (dia.getId() == sabado.getId())
-			valor = 2;
-		else if (dia.getId() == domingo.getId())
-			valor = 1;
+		if(lunes.getTypeface() == Typeface.DEFAULT_BOLD) valor+=64;
+		if(martes.getTypeface() == Typeface.DEFAULT_BOLD) valor+=32;
+		if(miercoles.getTypeface() == Typeface.DEFAULT_BOLD) valor+=16;
+		if(jueves.getTypeface() == Typeface.DEFAULT_BOLD) valor+=8;
+		if(viernes.getTypeface() == Typeface.DEFAULT_BOLD) valor+=4;
+		if(sabado.getTypeface() == Typeface.DEFAULT_BOLD) valor+=2;
+		if(domingo.getTypeface() == Typeface.DEFAULT_BOLD) valor+=1;
 		return valor;
 	}
 
@@ -167,8 +155,11 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		recordatoriosDB = new RecordatoriosDB(getActivity()
 				.getApplicationContext());
 		categoriaEscogida = (Categoria) categoriasSpinner.getSelectedItem();
-
+		
 		Recordatorio recordatorio = new Recordatorio();
+		int diasSemana = obtenerValorDias();
+		
+		
 		
 		recordatorio.setNombre("" + textonombre.getText());
 		recordatorio.setDescripcion("" + textodescripcion.getText());
@@ -179,11 +170,23 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		recordatorio.activar();
 
 		// CON RESPECTO AL MAPFRAGMENT
-		// recordatorio.setDireccion(direccion);
-		// recordatorio.setLatitud(latitud);
-		// recordatorio.setLongitud(longitud);
-		// recordatorio.setRadius(d);
-		// recordatorio.setIdGeofence(idGeofence);
+		SharedPreferences preferences = this.getActivity().getSharedPreferences("mapPref",0);
+		float latitudF  = preferences.getFloat("lat", (float) 0.0);
+		float longitudF = preferences.getFloat("long", (float) 0.0);
+		float radioF = preferences.getFloat("rad", (float) 0.0);
+		double latitud = (double) latitudF;
+		double longitud = (double) longitudF;
+		double radio = (double) radioF;
+		
+		
+//		 recordatorio.setDireccion(direccion);
+		 recordatorio.setLatitud(latitud);
+		 recordatorio.setLongitud(longitud);
+		 recordatorio.setRadius(radio);
+//		 recordatorio.setIdGeofence(idGeofence);
+		 
+		 Toast.makeText(getActivity().getApplicationContext(),"lat:"+latitud+"\nlong:"+longitud,Toast.LENGTH_LONG).show();
+		 Toast.makeText(getActivity().getApplicationContext(),"punt:"+diasSemana,Toast.LENGTH_LONG).show();
 
 		recordatoriosDB.insertar(recordatorio);
 	}
