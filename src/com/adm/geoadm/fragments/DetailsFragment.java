@@ -37,6 +37,7 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 	RecordatoriosDB recordatoriosDB;
 	Categoria categoriaEscogida;
 	CategoriasDB categoriasDB;
+	ArrayList<Categoria> categorias;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -81,8 +82,10 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		sabado.setOnClickListener(this);
 		domingo.setOnClickListener(this);
 		agregarButton.setOnClickListener(this);
-
-		// rellenarSpinner();
+		
+		categoriasDB = new CategoriasDB(getActivity().getApplicationContext());
+		
+		rellenarSpinner();
 
 		return view;
 	}
@@ -92,7 +95,10 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		ArrayList<Categoria> categorias = new ArrayList<Categoria>();
 		ArrayList<String> nombresCategorias = new ArrayList<String>();
 
-		categoriasDB = new CategoriasDB(getActivity().getApplicationContext());
+//		categorias = pruebaDemoCategorias();
+		
+		
+		
 		categorias = categoriasDB.listarCategorias();
 
 		for (int i = 0; i < categorias.size(); i++) {
@@ -104,6 +110,20 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 				nombresCategorias);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		categoriasSpinner.setAdapter(adapter);
+	}
+
+	private ArrayList<Categoria> pruebaDemoCategorias() {
+		// TODO Auto-generated method stub
+		ArrayList<Categoria> categorias2 = new ArrayList<Categoria>();
+		
+		for(int i =0;i<10;i++){
+			Categoria cat = new Categoria();
+			cat.setId(i);
+			cat.setNombre("Categoria"+i);
+			categorias2.add(cat);
+			categoriasDB.insertar(cat);
+		}
+		return categorias2;
 	}
 
 	@Override
@@ -147,18 +167,17 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 	private void agregarRecordatorio() {
 		// TODO Auto-generated method stub
 
-		recordatoriosDB = new RecordatoriosDB(getActivity()
-				.getApplicationContext());
-		categoriaEscogida = (Categoria) categoriasSpinner.getSelectedItem();
+		recordatoriosDB = new RecordatoriosDB(getActivity().getApplicationContext());
 		
 		Recordatorio recordatorio = new Recordatorio();
 		int diasSemana = obtenerValorDias();
-		
-		
+		Categoria categoriaInsertar = new Categoria();
+		String nomCategoria = (String) categoriasSpinner.getSelectedItem();
+		categoriaInsertar = categoriasDB.getCategoriaPorString(nomCategoria);
 		
 		recordatorio.setNombre("" + textonombre.getText());
 		recordatorio.setDescripcion("" + textodescripcion.getText());
-		// recordatorio.setCategoria(categoriaEscogida);
+//		recordatorio.setCategoria(categoriaInsertar);
 		recordatorio.setHoraInicio(horaInicioEdit.getText().toString());
 		recordatorio.setHoraFin(horaFinEdit.getText().toString());
 		recordatorio.setDiasSemana(diasSemana);
@@ -169,25 +188,15 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		MapFragment mf=((NuevoRecordatorio)getActivity()).getTabMap();
 		
 		recordatorio.setLatitud(mf.getLatitud());
-		 recordatorio.setLongitud(mf.getLongitud());
-		 recordatorio.setRadius(mf.getRadio());
-		
-		/*SharedPreferences preferences = this.getActivity().getSharedPreferences("mapPref",0);
-		float latitudF  = preferences.getFloat("lat", (float) 0.0);
-		float longitudF = preferences.getFloat("long", (float) 0.0);
-		float radioF = preferences.getFloat("rad", (float) 0.0);
-		double latitud = (double) latitudF;
-		double longitud = (double) longitudF;
-		double radio = (double) radioF;*/
-		
-		
+		recordatorio.setLongitud(mf.getLongitud());
+		recordatorio.setRadius(mf.getRadio());
 		 
-		 
+	
 //		 recordatorio.setDireccion(direccion);		 
 //		 recordatorio.setIdGeofence(idGeofence);
 		 
-		// Toast.makeText(getActivity().getApplicationContext(),"lat:"+latitud+"\nlong:"+longitud,Toast.LENGTH_LONG).show();
-		 //Toast.makeText(getActivity().getApplicationContext(),"punt:"+diasSemana,Toast.LENGTH_LONG).show();
+//		Toast.makeText(getActivity().getApplicationContext(),"catID seleccionada:"+categoriaInsertar.getId()+"\ncatNombre seleccionada:"+categoriaInsertar.getNombre(),Toast.LENGTH_LONG).show();
+//		 Toast.makeText(getActivity().getApplicationContext(),"punt:"+diasSemana,Toast.LENGTH_LONG).show();
 
 		recordatoriosDB.insertar(recordatorio);
 	}

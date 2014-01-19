@@ -67,6 +67,32 @@ public class CategoriasDB {
 		return cat;
 	}
 	
+	////////////////////////////////////
+	
+	/**
+	 * Obtain a Category with the id given
+	 * @param id Id of Category 
+	 * @return A Category object associated with id given or null if object wasnt founded
+	 */
+	public Categoria getCategoriaPorString(String nombre) {
+		Categoria cat = null;
+		String[] args = new String[] {""+nombre};
+		Cursor c = db.query(RecordatoriosSQLHelper.CATEGORIAS_TABLE,null, "nombre=?", args, null, null, null);
+		
+//		Cursor c = db.query(RecordatoriosSQLHelper.CATEGORIAS_TABLE,null,"nombre=?",new String[]{nombre},	null, null, null);
+		
+		
+		while (c.moveToNext()) {
+			cat = getACategory(c);
+		}
+		
+		return cat;
+	}
+	
+	
+	///////////////////////////////
+	
+	
 	/**
 	 * Insert a new Categoria into Database
 	 * @param categoria Category object to insert
