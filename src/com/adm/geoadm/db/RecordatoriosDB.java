@@ -31,6 +31,7 @@ public class RecordatoriosDB {
 		rec.setFecha(Date.valueOf(c.getString(i))); i++;
 		rec.setTodoElDia(c.getInt(i)==1); i++;
 		rec.setHoraInicio(c.getString(i)); i++;
+		rec.setHoraFin(c.getString(i)); i++;
 		rec.setTipoPeriodicidad(c.getInt(i)); i++;
 		rec.setEsPeriodica(c.getInt(i)==1); i++;
 		rec.setRepetir(c.getInt(i)); i++;
@@ -54,6 +55,7 @@ public class RecordatoriosDB {
 		cv.put("fecha", rec.getFecha().toString());
 		cv.put("todoElDia", (rec.isTodoElDia()) ? 1 : 0);
 		cv.put("horaInicio", rec.getHoraInicio());
+		cv.put("horaFin", rec.getHoraFin());
 		cv.put("tipoPeriodicidad", rec.getTipoPeriodicidad());
 		cv.put("esPeriodica", (rec.isEsPeriodica()) ? 1 : 0);
 		cv.put("repetir", rec.getRepetir());

@@ -1,7 +1,9 @@
 package com.adm.geoadm.fragments;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
+import android.app.TimePickerDialog;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.adm.geoadm.NuevoRecordatorio;
@@ -82,8 +85,14 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		sabado.setOnClickListener(this);
 		domingo.setOnClickListener(this);
 		agregarButton.setOnClickListener(this);
+		horaFinEdit.setOnClickListener(this);
+		horaInicioEdit.setOnClickListener(this);
+		
+
 		
 		categoriasDB = new CategoriasDB(getActivity().getApplicationContext());
+				
+		
 		
 		rellenarSpinner();
 
@@ -147,7 +156,34 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 				dia.setTypeface(Typeface.DEFAULT_BOLD);
 			}
 		}
-
+		if(argId == horaInicioEdit.getId()){
+			Calendar mcurrentTime = Calendar.getInstance();
+            int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+            int minute = mcurrentTime.get(Calendar.MINUTE);
+            TimePickerDialog mTimePicker;
+            mTimePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                @Override
+                public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                    horaInicioEdit.setText( selectedHour + ":" + selectedMinute);
+                }
+            }, hour, minute, true);//Yes 24 hour time
+            mTimePicker.setTitle("Select Time");
+            mTimePicker.show();
+		}
+		if(argId == horaFinEdit.getId()){
+			Calendar mcurrentTime = Calendar.getInstance();
+            int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+            int minute = mcurrentTime.get(Calendar.MINUTE);
+            TimePickerDialog mTimePicker;
+            mTimePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                @Override
+                public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                    horaFinEdit.setText( selectedHour + ":" + selectedMinute);
+                }
+            }, hour, minute, true);//Yes 24 hour time
+            mTimePicker.setTitle("Select Time");
+            mTimePicker.show();
+		}
 	}
 
 	private int obtenerValorDias() {
@@ -190,28 +226,13 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		recordatorio.setLatitud(mf.getLatitud());
 		recordatorio.setLongitud(mf.getLongitud());
 		recordatorio.setRadius(mf.getRadio());
-		 
-	
-//		 recordatorio.setDireccion(direccion);		 
+		recordatorio.setDireccion(mf.getDireccion()); 
 //		 recordatorio.setIdGeofence(idGeofence);
 		 
 //		Toast.makeText(getActivity().getApplicationContext(),"catID seleccionada:"+categoriaInsertar.getId()+"\ncatNombre seleccionada:"+categoriaInsertar.getNombre(),Toast.LENGTH_LONG).show();
 //		 Toast.makeText(getActivity().getApplicationContext(),"punt:"+diasSemana,Toast.LENGTH_LONG).show();
 
 		recordatoriosDB.insertar(recordatorio);
-		
-		//////////////////////
-		
-		
-		ArrayList<Recordatorio> recs = new ArrayList<Recordatorio>();
-		recs = recordatoriosDB.listarRecordatorios();
-		Recordatorio r1 = recs.get(categoriaInsertar.getId());
-		Categoria cat = r1.getCategoria();
-		String nombre = cat.getNombre();
-		
-		///////////////////////
-		
-		
 	}
 	}
 
