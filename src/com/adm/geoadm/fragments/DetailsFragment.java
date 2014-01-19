@@ -105,8 +105,7 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 			nombresCategorias.add(categorias.get(i).getNombre());
 		}
 
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity()
-				.getApplicationContext(), android.R.layout.simple_spinner_item,
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,
 				nombresCategorias);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		categoriasSpinner.setAdapter(adapter);

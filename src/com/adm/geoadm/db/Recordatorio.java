@@ -38,6 +38,8 @@ public class Recordatorio {
 	double radius = 0;
 	String idGeofence = "";
 	
+	Categoria categoria;
+	
 	
 	//-------  CONSTRUCTOR ------
 	public Recordatorio() {}
@@ -62,7 +64,7 @@ public class Recordatorio {
 	 * @return A Category object
 	 */
 	public Categoria getCategoria() {
-		return null;
+		return this.categoria;
 	}
 	
 	/**
@@ -70,7 +72,7 @@ public class Recordatorio {
 	 * @param categoria New Category object that will be associated
 	 */
 	public void setCategoria(Categoria categoria) {
-		this.categoria_id = categoria.getId();
+		this.categoria = categoria;
 	}
 
 	//-------  PROPERTIES  ------
