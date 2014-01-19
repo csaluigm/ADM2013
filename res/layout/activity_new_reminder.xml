@@ -4,6 +4,7 @@
     android:id="@+id/viewPager"
     android:layout_width="match_parent"
     android:layout_height="match_parent"    
-    tools:context=".NewReminderActivity" >
+    tools:context=".NewReminderActivity"
+    android:background="@color/LightGrey" >
     
 </android.support.v4.view.ViewPager>

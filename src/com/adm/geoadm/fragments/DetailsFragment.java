@@ -1,14 +1,6 @@
 package com.adm.geoadm.fragments;
 
-import java.sql.Date;
 import java.util.ArrayList;
-
-import com.adm.geoadm.R;
-import com.adm.geoadm.R.color;
-import com.adm.geoadm.db.Categoria;
-import com.adm.geoadm.db.CategoriasDB;
-import com.adm.geoadm.db.Recordatorio;
-import com.adm.geoadm.db.RecordatoriosDB;
 
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -18,18 +10,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.webkit.WebView.FindListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.adm.geoadm.NuevoRecordatorio;
+import com.adm.geoadm.R;
+import com.adm.geoadm.R.color;
+import com.adm.geoadm.db.Categoria;
+import com.adm.geoadm.db.CategoriasDB;
+import com.adm.geoadm.db.Recordatorio;
+import com.adm.geoadm.db.RecordatoriosDB;
 
 public class DetailsFragment extends Fragment implements OnClickListener {
 
@@ -170,23 +165,29 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		recordatorio.activar();
 
 		// CON RESPECTO AL MAPFRAGMENT
-		SharedPreferences preferences = this.getActivity().getSharedPreferences("mapPref",0);
+		
+		MapFragment mf=((NuevoRecordatorio)getActivity()).getTabMap();
+		
+		recordatorio.setLatitud(mf.getLatitud());
+		 recordatorio.setLongitud(mf.getLongitud());
+		 recordatorio.setRadius(mf.getRadio());
+		
+		/*SharedPreferences preferences = this.getActivity().getSharedPreferences("mapPref",0);
 		float latitudF  = preferences.getFloat("lat", (float) 0.0);
 		float longitudF = preferences.getFloat("long", (float) 0.0);
 		float radioF = preferences.getFloat("rad", (float) 0.0);
 		double latitud = (double) latitudF;
 		double longitud = (double) longitudF;
-		double radio = (double) radioF;
+		double radio = (double) radioF;*/
 		
 		
-//		 recordatorio.setDireccion(direccion);
-		 recordatorio.setLatitud(latitud);
-		 recordatorio.setLongitud(longitud);
-		 recordatorio.setRadius(radio);
+		 
+		 
+//		 recordatorio.setDireccion(direccion);		 
 //		 recordatorio.setIdGeofence(idGeofence);
 		 
-		 Toast.makeText(getActivity().getApplicationContext(),"lat:"+latitud+"\nlong:"+longitud,Toast.LENGTH_LONG).show();
-		 Toast.makeText(getActivity().getApplicationContext(),"punt:"+diasSemana,Toast.LENGTH_LONG).show();
+		// Toast.makeText(getActivity().getApplicationContext(),"lat:"+latitud+"\nlong:"+longitud,Toast.LENGTH_LONG).show();
+		 //Toast.makeText(getActivity().getApplicationContext(),"punt:"+diasSemana,Toast.LENGTH_LONG).show();
 
 		recordatoriosDB.insertar(recordatorio);
 	}

@@ -2,12 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+     >
 
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_weight="0.80" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -17,27 +19,35 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                 android:layout_marginBottom="8dp"
                 android:background="@drawable/card_background_white"
-                android:orientation="horizontal" >
+                android:orientation="vertical" >
 
                 <TextView
                     android:id="@+id/fd_textView_nombre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nombre: " />
+                    android:text="Título: "
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/fragment_details_nombreEdit"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:ems="10" />
+                    android:ems="10"
+                    
+                    android:inputType="textPersonName" />
 
+                    
+               
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/card_background_white"
                 android:orientation="vertical" >
 
@@ -45,42 +55,41 @@
                     android:id="@+id/fd_textView_descripcion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="16sp"
                     android:text="@string/fragment_details_descripcion" />
 
                 <EditText
                     android:id="@+id/fragment_details_editText_descripcion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="10" >
-
-                    <requestFocus />
-                </EditText>
-
+                    android:ems="10" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/card_background_white"
-                android:orientation="horizontal" >
+                android:orientation="vertical" >
 
                 <TextView
                     android:id="@+id/fd_textView_categoria"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Categoría" />
+                    android:textSize="16sp"
+                    android:text="Categoría:" />
 
                 <Spinner
                     android:id="@+id/fragment_details_spinnerCategorias"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
-
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/card_background_white" >
 
                 <EditText
@@ -89,6 +98,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
+                    android:textSize="16sp"
                     android:hint="Hora inicio" />
 
                 <EditText
@@ -97,14 +107,14 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
+                    android:textSize="16sp"
                     android:hint="Hora fin" />
-
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="8dp"
                 android:padding="3dp" >
 
                 <TextView
@@ -170,20 +180,20 @@
                     android:text="@string/sunday"
                     android:textSize="19sp" />
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" >
-
-                <Button
-                    android:id="@+id/fragment_details_agregar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Agregar Recordatorio" />
-            </LinearLayout>
-
         </LinearLayout>
     </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/fragment_details_agregar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Agregar Recordatorio" />
+    </LinearLayout>
 
 </LinearLayout>

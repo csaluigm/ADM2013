@@ -39,7 +39,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoWindowClickListener , OnClickListener{
+public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoWindowClickListener {
 	//--- GUI ---
 	EditText etAddress;
 	Button btGo;
@@ -120,8 +120,7 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 		etRadius = (EditText) view.findViewById(R.id.etRadius);
 		btPlus = (Button) view.findViewById(R.id.btPlus);
 	  	btMinus = (Button) view.findViewById(R.id.btMinus);
-	  	guardar = (Button) view.findViewById(R.id.mf_guardar);
-	  	guardar.setOnClickListener(this);
+	  	
 		   
 		   
 		  if (center==null){
@@ -138,6 +137,7 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 			if (map != null) {
 				map.setInfoWindowAdapter(this);
 				map.setOnInfoWindowClickListener(this);
+				map.setMyLocationEnabled(true);
 				map.getUiSettings().setMyLocationButtonEnabled(true);
 
 			}
@@ -492,21 +492,6 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 
 	}
 
-	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
-	
-	
-		
-		if(v.getId()==guardar.getId()){
-			SharedPreferences preferences = this.getActivity().getSharedPreferences("mapPref",0);
-			SharedPreferences.Editor editor = preferences.edit();
-			editor.putFloat("lat",(float)getLatitud());
-			editor.putFloat("long",(float)getLongitud());
-			editor.putFloat("radio", (float)getRadio());
-			editor.commit();
-			Toast.makeText(getActivity().getApplicationContext(),"Punto guardado", Toast.LENGTH_SHORT).show();
-		} 
-	}
+
 
 }

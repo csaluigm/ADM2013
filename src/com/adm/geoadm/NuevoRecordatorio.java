@@ -143,6 +143,14 @@ public class NuevoRecordatorio extends ActionBarActivity implements OnClickListe
 //		getSupportActionBar().addTab(tab);
 	}
 
+	public MapFragment getTabMap() {
+		return tabMap;
+	}
+
+	public void setTabMap(MapFragment tabMap) {
+		this.tabMap = tabMap;
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.nuevo_recordatorio, menu);
