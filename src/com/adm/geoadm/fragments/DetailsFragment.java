@@ -104,10 +104,6 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		ArrayList<Categoria> categorias = new ArrayList<Categoria>();
 		ArrayList<String> nombresCategorias = new ArrayList<String>();
 
-//		categorias = pruebaDemoCategorias();
-		
-		
-		
 		categorias = categoriasDB.listarCategorias();
 
 		for (int i = 0; i < categorias.size(); i++) {
@@ -120,19 +116,7 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		categoriasSpinner.setAdapter(adapter);
 	}
 
-	private ArrayList<Categoria> pruebaDemoCategorias() {
-		// TODO Auto-generated method stub
-		ArrayList<Categoria> categorias2 = new ArrayList<Categoria>();
-		
-		for(int i =0;i<10;i++){
-			Categoria cat = new Categoria();
-			cat.setId(i);
-			cat.setNombre("Categoria"+i);
-			categorias2.add(cat);
-			categoriasDB.insertar(cat);
-		}
-		return categorias2;
-	}
+
 
 	@Override
 	public void onClick(View arg0) {
@@ -210,10 +194,13 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		String nomCategoria = (String) categoriasSpinner.getSelectedItem();
 		categoriaInsertar = categoriasDB.getCategoriaPorString(nomCategoria);
 		
+		int idCat = categoriaInsertar.getId();
+		
+		
 		recordatorio.setNombre("" + textonombre.getText());
 		recordatorio.setDescripcion("" + textodescripcion.getText());
 		recordatorio.setCategoria(categoriaInsertar);
-		recordatorio.setCategoriaId(categoriaInsertar.getId());
+		recordatorio.setCategoriaId(idCat);
 		recordatorio.setHoraInicio(horaInicioEdit.getText().toString());
 		recordatorio.setHoraFin(horaFinEdit.getText().toString());
 		recordatorio.setDiasSemana(diasSemana);

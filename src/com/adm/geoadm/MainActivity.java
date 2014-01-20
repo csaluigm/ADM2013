@@ -47,6 +47,7 @@ public class MainActivity extends ActivityMenuLateral {
 	ImageView imremind;
 	private ArrayList<String> latnames;
 	private ArrayList<Categoria> cats;
+	CategoriasDB catDB;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +78,7 @@ public class MainActivity extends ActivityMenuLateral {
 
 	public void menu_lateral_categorias() {
 		latnames = new ArrayList<String>();
-		CategoriasDB catDB = new CategoriasDB(this);
+		catDB = new CategoriasDB(this);
 		cats = catDB.listarCategorias();
 		for (Categoria c : cats) {
 			latnames.add(c.getNombre());
@@ -143,8 +144,10 @@ public class MainActivity extends ActivityMenuLateral {
 		recordatorios = recDB.listarRecordatorios();
 		recDB.close();
 
-		for (Recordatorio reco : recordatorios)
+		for (Recordatorio reco : recordatorios){
 			Log.d("RECORDATORIOS", reco.toString());
+			Log.d("RECORDATORIOS", ""+reco.getDiasSemana());
+		}
 
 		asociarAdapter();
 		actualizar_interfaz();
@@ -356,7 +359,9 @@ public class MainActivity extends ActivityMenuLateral {
 					texto.setText(rec.getDescripcion());
 				}
 				if (categoria != null) {
-					// categoria.setText(rec.getCategoria());
+					Categoria cat = new Categoria();
+					cat = catDB.getCategoria(rec.getCategoriaId());
+					categoria.setText(""+cat.getNombre());
 				}
 				if (lunes != null) {
 					if (dias.get(0)) {
@@ -398,9 +403,9 @@ public class MainActivity extends ActivityMenuLateral {
 				if (hora != null) {
 					hora.setText(rec.getHoraInicio() + " a " + rec.getHoraFin());
 				}
-				if (categoria != null) {
-					categoria.setText("#");
-				}
+//				if (categoria != null) {
+//					categoria.setText("#");
+//				}
 			}
 			return v;
 		}

@@ -20,7 +20,7 @@ public class Recordatorio {
 	int id = -1;
 	String nombre = "";
 	String descripcion = "";
-	int categoria_id = -1;
+	int categoria_id;
 	Date fecha = new Date(System.currentTimeMillis());
 	boolean todoElDia = false;
 	String horaInicio = "00:00";
