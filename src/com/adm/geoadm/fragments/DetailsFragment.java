@@ -1,7 +1,9 @@
 package com.adm.geoadm.fragments;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
+import android.app.TimePickerDialog;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.adm.geoadm.NuevoRecordatorio;
@@ -82,8 +85,14 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		sabado.setOnClickListener(this);
 		domingo.setOnClickListener(this);
 		agregarButton.setOnClickListener(this);
+		horaFinEdit.setOnClickListener(this);
+		horaInicioEdit.setOnClickListener(this);
+		
+
 		
 		categoriasDB = new CategoriasDB(getActivity().getApplicationContext());
+				
+		
 		
 		rellenarSpinner();
 
@@ -95,10 +104,6 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		ArrayList<Categoria> categorias = new ArrayList<Categoria>();
 		ArrayList<String> nombresCategorias = new ArrayList<String>();
 
-//		categorias = pruebaDemoCategorias();
-		
-		
-		
 		categorias = categoriasDB.listarCategorias();
 
 		for (int i = 0; i < categorias.size(); i++) {
@@ -111,19 +116,7 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		categoriasSpinner.setAdapter(adapter);
 	}
 
-	private ArrayList<Categoria> pruebaDemoCategorias() {
-		// TODO Auto-generated method stub
-		ArrayList<Categoria> categorias2 = new ArrayList<Categoria>();
-		
-		for(int i =0;i<10;i++){
-			Categoria cat = new Categoria();
-			cat.setId(i);
-			cat.setNombre("Categoria"+i);
-			categorias2.add(cat);
-			categoriasDB.insertar(cat);
-		}
-		return categorias2;
-	}
+
 
 	@Override
 	public void onClick(View arg0) {
@@ -147,7 +140,34 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 				dia.setTypeface(Typeface.DEFAULT_BOLD);
 			}
 		}
-
+		if(argId == horaInicioEdit.getId()){
+			Calendar mcurrentTime = Calendar.getInstance();
+            int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+            int minute = mcurrentTime.get(Calendar.MINUTE);
+            TimePickerDialog mTimePicker;
+            mTimePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                @Override
+                public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                    horaInicioEdit.setText( selectedHour + ":" + selectedMinute);
+                }
+            }, hour, minute, true);//Yes 24 hour time
+            mTimePicker.setTitle("Select Time");
+            mTimePicker.show();
+		}
+		if(argId == horaFinEdit.getId()){
+			Calendar mcurrentTime = Calendar.getInstance();
+            int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+            int minute = mcurrentTime.get(Calendar.MINUTE);
+            TimePickerDialog mTimePicker;
+            mTimePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                @Override
+                public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                    horaFinEdit.setText( selectedHour + ":" + selectedMinute);
+                }
+            }, hour, minute, true);//Yes 24 hour time
+            mTimePicker.setTitle("Select Time");
+            mTimePicker.show();
+		}
 	}
 
 	private int obtenerValorDias() {
@@ -174,9 +194,13 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		String nomCategoria = (String) categoriasSpinner.getSelectedItem();
 		categoriaInsertar = categoriasDB.getCategoriaPorString(nomCategoria);
 		
+		int idCat = categoriaInsertar.getId();
+		
+		
 		recordatorio.setNombre("" + textonombre.getText());
 		recordatorio.setDescripcion("" + textodescripcion.getText());
 		recordatorio.setCategoria(categoriaInsertar);
+		recordatorio.setCategoriaId(idCat);
 		recordatorio.setHoraInicio(horaInicioEdit.getText().toString());
 		recordatorio.setHoraFin(horaFinEdit.getText().toString());
 		recordatorio.setDiasSemana(diasSemana);
@@ -189,9 +213,7 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		recordatorio.setLatitud(mf.getLatitud());
 		recordatorio.setLongitud(mf.getLongitud());
 		recordatorio.setRadius(mf.getRadio());
-		 
-	
-//		 recordatorio.setDireccion(direccion);		 
+		recordatorio.setDireccion(mf.getDireccion()); 
 //		 recordatorio.setIdGeofence(idGeofence);
 		 
 //		Toast.makeText(getActivity().getApplicationContext(),"catID seleccionada:"+categoriaInsertar.getId()+"\ncatNombre seleccionada:"+categoriaInsertar.getNombre(),Toast.LENGTH_LONG).show();

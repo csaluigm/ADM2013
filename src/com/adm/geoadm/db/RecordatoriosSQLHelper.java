@@ -19,6 +19,7 @@ public class RecordatoriosSQLHelper extends SQLiteOpenHelper {
 			"fecha TEXT, " +
 			"todoElDia INTEGER, " +
 			"horaInicio TEXT, " +
+			"horaFin TEXT, " +
 			"tipoPeriodicidad INTEGER, " +
 			"esPeriodica INTEGER, " +
 			"repetir INTEGER, " +
