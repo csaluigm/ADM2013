@@ -29,6 +29,7 @@ import com.adm.geoadm.db.Categoria;
 import com.adm.geoadm.db.CategoriasDB;
 import com.adm.geoadm.db.Recordatorio;
 import com.adm.geoadm.db.RecordatoriosDB;
+import com.larswerkman.holocolorpicker.ColorPicker;
 
 public class Lista_categorias extends ActionBarActivity {
 	ListView CatView;
@@ -46,19 +47,21 @@ public class Lista_categorias extends ActionBarActivity {
 		cabecera = (TextView) findViewById(R.id.cabecera);
 		CatView = (ListView) findViewById(R.id.lista_categorias);
 		registerForContextMenu(CatView);
+		
+		listar();
+
+	}
+	
+	public void listar(){
 		CategoriasDB catDB = new CategoriasDB(this);
 		categorias = catDB.listarCategorias();
 		catDB.close();
 
-		for (Categoria cat : categorias)
-			Log.d("CATEGORIAS", cat.toString());
+//		for (Categoria cat : categorias)
+//			Log.d("CATEGORIAS", cat.toString());
 
 		asociarAdapter();
 		actualizar_interfaz();
-		//RecordatoriosDB recDB = new RecordatoriosDB(this);
-		//recordatorios = recDB.listarRecordatorios();
-		//recDB.close();
-
 	}
 
 	public void asociarAdapter() {
@@ -110,6 +113,7 @@ public class Lista_categorias extends ActionBarActivity {
 
 				if (nombre_cat != null) {
 					nombre_cat.setText("#" + cat.getNombre());
+					nombre_cat.setTextColor(cat.getColor());
 				}
 				if (cantidad_cat != null) {
 					// TO DO
@@ -224,18 +228,63 @@ public class Lista_categorias extends ActionBarActivity {
 		if (v.getId() == R.id.lista_categorias) {
 
 			menu.setHeaderTitle("Acciones");
-			menu.add(Menu.NONE, 0, 0, "Borrar");
+			menu.add(Menu.NONE, 0, 0, "Cambiar color");
+			menu.add(Menu.NONE, 1, 0, "Borrar");
 
 		}
 	}
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
+		final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
 				.getMenuInfo();
 		int menuItemIndex = item.getItemId();
 		// check for selected option
-		if (menuItemIndex == 0) {
+		
+		if(menuItemIndex == 0) {
+			AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+			alert.setTitle(getResources().getString(
+					R.string.Dialog_colo_title));
+			alert.setMessage(getResources().getString(
+					R.string.Dialog_color_message));
+
+			
+			final ColorPicker colores=new ColorPicker(this);
+			
+			alert.setView(colores);
+
+			alert.setPositiveButton(
+					getResources()
+							.getString(R.string.Dialog_color_positivo),
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog,
+								int whichButton) {
+							Log.d("color", ""+colores.getColor());
+							int color=colores.getColor();
+							Categoria c = categorias.get(info.position);
+							c.setColor(color);
+							CategoriasDB catDB = new CategoriasDB(Lista_categorias.this);
+							catDB.modificar(c.getId(), c);
+							catDB.close();
+							listar();
+						
+						}
+					});
+
+			alert.setNegativeButton(
+					getResources()
+							.getString(R.string.Dialog_color_negativo),
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog,
+								int whichButton) {
+							// Canceled.
+						}
+					});
+			alert.setCancelable(false);
+			alert.show();
+		}
+		else if (menuItemIndex == 1) {
 			Categoria c = categorias.get(info.position);
 			borrar_recordatorios_categoria(c.getId());
 			CategoriasDB catDB = new CategoriasDB(Lista_categorias.this);

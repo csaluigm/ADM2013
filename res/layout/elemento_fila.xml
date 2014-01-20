@@ -38,9 +38,10 @@
     </LinearLayout>
 
     <View
+         android:id="@+id/separador"
         android:layout_width="fill_parent"
         android:layout_height="2dp"
-        android:background="@color/Icazul" />
+         />
 
     <LinearLayout
         android:layout_width="fill_parent"

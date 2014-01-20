@@ -18,6 +18,10 @@
     <string name="Dialog_categoria_positivo">Add</string>
     <string name="Dialog_categoria_negativo">Cancel</string>
 
+    <string name="Dialog_colo_title">Category color</string>
+    <string name="Dialog_color_message">Choose one color</string>
+    <string name="Dialog_color_positivo">Ok</string>
+    <string name="Dialog_color_negativo">Cancel</string>
     <!-- Nuevo Recordatorio > Mapa y Detalle-->
     <string name="go">Go</string>
     

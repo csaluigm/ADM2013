@@ -4,6 +4,7 @@ public class Categoria {
 	//-----  MEMBERS -----------
 	int id;
 	String nombre;
+	int color;
 	
 	//-----  CONSTRUCTOR -------
 	/**
@@ -12,6 +13,8 @@ public class Categoria {
 	public Categoria() {
 		this.id = 0;
 		this.nombre = "";
+		this.color=-16737281;//Azul holo
+		
 	}
 	
 	/**
@@ -19,12 +22,21 @@ public class Categoria {
 	 * @param id Id of Database
 	 * @param nombre Name of Category
 	 */
-	public Categoria (int id, String nombre) {
+	public Categoria (int id, String nombre,int color) {
 		this.id = id;
 		this.nombre = nombre;
+		this.color=color;
 	}
 	
 	
+	public int getColor() {
+		return color;
+	}
+
+	public void setColor(int color) {
+		this.color = color;
+	}
+
 	//-----  PROPERTIES  -------
 	/**
 	 * Get Id

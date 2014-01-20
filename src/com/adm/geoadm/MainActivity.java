@@ -302,7 +302,7 @@ public class MainActivity extends ActivityMenuLateral {
 		@Override
 		public View getView(final int position, View convertView,
 				ViewGroup parent) {
-
+			Categoria c=new Categoria();
 			View v = convertView;
 			if (v == null) {
 				Log.d("indice", "indice " + position);
@@ -312,6 +312,7 @@ public class MainActivity extends ActivityMenuLateral {
 			}
 			Recordatorio rec = items.get(position);
 			if (rec != null) {
+				View separador =v.findViewById(R.id.separador);
 				ImageView imdescrip=(ImageView)v.findViewById(R.id.ic_descripcion);
 				TextView nombre = (TextView) v.findViewById(R.id.nombre);
 				TextView texto = (TextView) v.findViewById(R.id.texto);
@@ -356,9 +357,11 @@ public class MainActivity extends ActivityMenuLateral {
 						}
 					});
 				}
-
+				
+				Log.d("Semana", ""+rec.getDiasSemana());
 				ArrayList<Boolean> dias = enterotodias(rec.getDiasSemana());
-
+				
+				Log.d("Semana", ""+" "+dias.get(0)+" "+dias.get(1)+" "+dias.get(2)+" "+dias.get(3)+" "+dias.get(4)+" "+dias.get(5)+" "+dias.get(6));
 				if (nombre != null) {
 					nombre.setText(rec.getNombre());
 				}
@@ -373,46 +376,51 @@ public class MainActivity extends ActivityMenuLateral {
 					}
 				}
 				if (categoria != null) {
-					Categoria cat;
+					//Categoria cat;
 					CategoriasDB catDB = new CategoriasDB(MainActivity.this);
-					cat = catDB.getCategoria(rec.getCategoriaId());
-					categoria.setText("#" + cat.getNombre());
+					c = catDB.getCategoria(rec.getCategoriaId());
+					categoria.setTextColor(c.getColor());
+					categoria.setText("#" + c.getNombre());
 					catDB.close();
+				}
+				
+				if(separador!=null){
+					separador.setBackgroundColor(c.getColor());
 				}
 				if (lunes != null) {
 					if (dias.get(0)) {
-						resaltar_dia(lunes);
+						resaltar_dia(lunes,c.getColor());
 					}
 				}
 				if (martes != null) {
 					if (dias.get(1)) {
-						resaltar_dia(martes);
+						resaltar_dia(martes,c.getColor());
 					}
 				}
 
 				if (miercoles != null) {
 					if (dias.get(2)) {
-						resaltar_dia(miercoles);
+						resaltar_dia(miercoles,c.getColor());
 					}
 				}
 				if (jueves != null) {
 					if (dias.get(3)) {
-						resaltar_dia(jueves);
+						resaltar_dia(jueves,c.getColor());
 					}
 				}
 				if (viernes != null) {
 					if (dias.get(4)) {
-						resaltar_dia(viernes);
+						resaltar_dia(viernes,c.getColor());
 					}
 				}
 				if (sabado != null) {
 					if (dias.get(5)) {
-						resaltar_dia(sabado);
+						resaltar_dia(sabado,c.getColor());
 					}
 				}
 				if (domingo != null) {
 					if (dias.get(6)) {
-						resaltar_dia(domingo);
+						resaltar_dia(domingo,c.getColor());
 
 					}
 				}
@@ -431,8 +439,8 @@ public class MainActivity extends ActivityMenuLateral {
 	 * @param dia
 	 *            el textview con el dia de la semana para resaltar
 	 */
-	public void resaltar_dia(TextView dia) {
-		dia.setTextColor(getResources().getColor(color.Icazul));
+	public void resaltar_dia(TextView dia,int color) {
+		dia.setTextColor(color);
 		dia.setTypeface(Typeface.DEFAULT_BOLD);
 	}
 

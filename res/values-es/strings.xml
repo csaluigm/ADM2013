@@ -16,6 +16,11 @@
     <string name="Dialog_categoria_message">Introduce el nombre de la categoría</string>
     <string name="Dialog_categoria_positivo">Agregar</string>
     <string name="Dialog_categoria_negativo">Cancelar</string>
+    
+    <string name="Dialog_colo_title">Color de la categoría</string>
+    <string name="Dialog_color_message">Escoge un color</string>
+    <string name="Dialog_color_positivo">Aceptar</string>
+    <string name="Dialog_color_negativo">Cancelar</string>
 
     <!-- Nuevo Recordatorio > Mapa y Detalle-->
     <string name="go">Ir</string>

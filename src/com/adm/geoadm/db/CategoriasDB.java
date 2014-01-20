@@ -25,6 +25,7 @@ public class CategoriasDB {
 		Categoria cat = new Categoria();
 		cat.setId(c.getInt(0));
 		cat.setNombre(c.getString(1));
+		cat.setColor(c.getInt(2));
 		return cat;
 	}
 	
@@ -101,6 +102,8 @@ public class CategoriasDB {
 	public long insertar(Categoria categoria) {
 		ContentValues cv = new ContentValues();
 		cv.put("nombre", categoria.getNombre());
+		cv.put("color", categoria.getColor());
+		
 		return db.insert(RecordatoriosSQLHelper.CATEGORIAS_TABLE,
 				null,
 				cv);
@@ -126,6 +129,7 @@ public class CategoriasDB {
 		ContentValues cv = new ContentValues();
 		cv.put("id", id);
 		cv.put("nombre", categoria.getNombre());
+		cv.put("color", categoria.getColor());
 		int count = db.update(RecordatoriosSQLHelper.CATEGORIAS_TABLE, cv, "id=?", new String[]{String.valueOf(id)});
 		return count==1;
 	}

@@ -36,7 +36,8 @@ public class RecordatoriosSQLHelper extends SQLiteOpenHelper {
 	
 	String createCategorias = "CREATE TABLE Categoria (" +
 			"id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-			"nombre TEXT" +
+			"nombre TEXT," +
+			"color INTEGER " + 
 	")";
 	
 	public RecordatoriosSQLHelper(Context contexto, String nombre, CursorFactory factory, int version) {

@@ -78,7 +78,7 @@
             <ListView
                 android:id="@+id/lista_recordatorios"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:clickable="true"
                 android:divider="@null"
                 android:dividerHeight="0dp" >
