@@ -399,7 +399,7 @@ public class MainActivity extends ActivityMenuLateral {
 					hora.setText(rec.getHoraInicio() + " a " + rec.getHoraFin());
 				}
 				if (categoria != null) {
-					categoria.setText("#");
+					categoria.setText("#"+rec.getCategoria().getNombre());
 				}
 			}
 			return v;
