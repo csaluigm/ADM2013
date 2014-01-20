@@ -41,6 +41,7 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 	Categoria categoriaEscogida;
 	CategoriasDB categoriasDB;
 	ArrayList<Categoria> categorias;
+	int horaInicio,horaFin,minutoInicio,minutoFin;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -165,6 +166,8 @@ public class DetailsFragment extends Fragment implements OnClickListener {
                 @Override
                 public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                     horaInicioEdit.setText( selectedHour + ":" + selectedMinute);
+                    minutoInicio=selectedMinute;
+                    horaInicio=selectedHour;
                 }
             }, hour, minute, true);//Yes 24 hour time
             mTimePicker.setTitle("Select Time");
@@ -179,6 +182,8 @@ public class DetailsFragment extends Fragment implements OnClickListener {
                 @Override
                 public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                     horaFinEdit.setText( selectedHour + ":" + selectedMinute);
+                    minutoFin=selectedMinute;
+                    minutoInicio=selectedHour;
                 }
             }, hour, minute, true);//Yes 24 hour time
             mTimePicker.setTitle("Select Time");
@@ -210,12 +215,33 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		String nomCategoria = (String) categoriasSpinner.getSelectedItem();
 		categoriaInsertar = categoriasDB.getCategoriaPorString(nomCategoria);
 		
+	
+		
 		recordatorio.setNombre("" + textonombre.getText());
+		if(recordatorio.getNombre()==""){
+			Toast.makeText(getActivity().getApplicationContext(), R.string.warning_not_name, Toast.LENGTH_LONG).show();
+		}
+		else{
 		recordatorio.setDescripcion("" + textodescripcion.getText());
 		recordatorio.setCategoria(categoriaInsertar);
 		recordatorio.setCategoriaId(categoriaInsertar.getId());
+	
+		if(horaInicioEdit.getText().length()==0 || horaFinEdit.getText().length()==0){
+			Toast.makeText(getActivity().getApplicationContext(), R.string.warning_not_hour, Toast.LENGTH_LONG).show();
+		}
+		else{
+		
+		if(!comprobarHoraFinPosterior()){
+			Toast.makeText(getActivity().getApplicationContext(), R.string.warning_hour_not_posterior, Toast.LENGTH_LONG).show();
+		}
+		else{
 		recordatorio.setHoraInicio(horaInicioEdit.getText().toString());
 		recordatorio.setHoraFin(horaFinEdit.getText().toString());
+		
+		if (diasSemana==0){
+			Toast.makeText(getActivity().getApplicationContext(), R.string.warning_not_day, Toast.LENGTH_LONG).show();
+		}
+		else{
 		recordatorio.setDiasSemana(diasSemana);
 		recordatorio.activar();
 
@@ -223,16 +249,38 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		
 		MapFragment mf=((NuevoRecordatorio)getActivity()).getTabMap();
 		
+		if(mf.getLatitud()==-200){
+			Toast.makeText(getActivity().getApplicationContext(), R.string.warning_not_location, Toast.LENGTH_LONG).show();
+			}
+		else{
 		recordatorio.setLatitud(mf.getLatitud());
 		recordatorio.setLongitud(mf.getLongitud());
 		recordatorio.setRadius(mf.getRadio());
 		recordatorio.setDireccion(mf.getDireccion()); 
+
+
 //		 recordatorio.setIdGeofence(idGeofence);
 		 
 //		Toast.makeText(getActivity().getApplicationContext(),"catID seleccionada:"+categoriaInsertar.getId()+"\ncatNombre seleccionada:"+categoriaInsertar.getNombre(),Toast.LENGTH_LONG).show();
 //		 Toast.makeText(getActivity().getApplicationContext(),"punt:"+diasSemana,Toast.LENGTH_LONG).show();
-
+		
 		recordatoriosDB.insertar(recordatorio);
+	    }
+		
+		}	
+		}
+		}
+		}
+	}
+	
+	private boolean comprobarHoraFinPosterior() {
+		if(horaFin<=horaInicio)
+			if(minutoFin<=minutoInicio)
+				return false;
+		
+		return true;
 	}
 	}
+
+
 

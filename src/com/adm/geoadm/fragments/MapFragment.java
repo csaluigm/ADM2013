@@ -64,7 +64,13 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 	 * @return Double
 	 */
 	public double getLatitud() {
+		//si no hay seleccionada una localizacion ponemos un valor conocido, inalcanzable para 
+		//la latitud, y despues comprobamos si hemos recibido este valor.
+		if (center==null)
+		return -200;
+		
 		return center.latitude;
+		
 	}
 	
 	/**
@@ -72,6 +78,10 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 	 * @return Double
 	 */
 	public double getLongitud() {
+		//si no hay seleccionada una localizacion ponemos un valor conocido, inalcanzable para 
+		//la longitud, y despues comprobamos si hemos recibido este valor. 
+		if (center==null)
+			return -200;
 		return center.longitude;
 	}
 	
