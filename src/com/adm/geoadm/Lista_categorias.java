@@ -55,9 +55,9 @@ public class Lista_categorias extends ActionBarActivity {
 
 		asociarAdapter();
 		actualizar_interfaz();
-		RecordatoriosDB recDB = new RecordatoriosDB(this);
-		recordatorios = recDB.listarRecordatorios();
-		recDB.close();
+		//RecordatoriosDB recDB = new RecordatoriosDB(this);
+		//recordatorios = recDB.listarRecordatorios();
+		//recDB.close();
 
 	}
 
@@ -113,7 +113,7 @@ public class Lista_categorias extends ActionBarActivity {
 				}
 				if (cantidad_cat != null) {
 					// TO DO
-					cantidad_cat.setText("" + 0);
+					cantidad_cat.setText("" + contar_recordatorios_categoria(cat.getId()));
 
 				}
 
@@ -202,16 +202,18 @@ public class Lista_categorias extends ActionBarActivity {
 	}
 
 	public int contar_recordatorios_categoria(int cid) {
-		int i = 0;
-		for (Recordatorio r : recordatorios) {
-			if (r.getCategoriaId() == cid)
-				i++;
-		}
-		return i;
+				RecordatoriosDB recDb=new RecordatoriosDB(Lista_categorias.this);
+				int nr= recDb.listarRecordatoriosByCat(cid).size();
+				recDb.close();
+				return nr;
 	}
 
 	public void borrar_recordatorios_categoria(int cid) {
-
+		
+		RecordatoriosDB recDB=new RecordatoriosDB(Lista_categorias.this);
+		recDB.borrarByCatId(cid);
+		recDB.close();
+			
 	}
 
 	@Override

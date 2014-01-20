@@ -47,7 +47,6 @@ public class MainActivity extends ActivityMenuLateral {
 	ImageView imremind;
 	private ArrayList<String> latnames;
 	private ArrayList<Categoria> cats;
-	CategoriasDB catDB;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,12 +77,14 @@ public class MainActivity extends ActivityMenuLateral {
 
 	public void menu_lateral_categorias() {
 		latnames = new ArrayList<String>();
-		catDB = new CategoriasDB(this);
+		CategoriasDB catDB = new CategoriasDB(this);
 		cats = catDB.listarCategorias();
+		latnames.add("Todos");
 		for (Categoria c : cats) {
 			latnames.add(c.getNombre());
 		}
 		latnames.add("Editar Categorias");
+		catDB.close();
 		menu_lateral(latnames, this);
 	}
 
@@ -144,11 +145,6 @@ public class MainActivity extends ActivityMenuLateral {
 		recordatorios = recDB.listarRecordatorios();
 		recDB.close();
 
-		for (Recordatorio reco : recordatorios){
-			Log.d("RECORDATORIOS", reco.toString());
-			Log.d("RECORDATORIOS", ""+reco.getDiasSemana());
-		}
-
 		asociarAdapter();
 		actualizar_interfaz();
 	}
@@ -159,9 +155,13 @@ public class MainActivity extends ActivityMenuLateral {
 	 * @param cat
 	 *            el nombre de la categoría que hace de filtro
 	 */
-	public void listar_por_categoria(String cat) {
+	public void listar_por_categoria(int cid) {
 		RecordatoriosDB recDB = new RecordatoriosDB(this);
 		// filtrar por categoria
+
+		recordatorios = recDB.listarRecordatoriosByCat(cid);
+		asociarAdapter();
+		actualizar_interfaz();
 	}
 
 	/**
@@ -240,10 +240,17 @@ public class MainActivity extends ActivityMenuLateral {
 		if (elegido.compareTo("Editar Categorias") == 0) {
 			Intent intent = new Intent(this, Lista_categorias.class);
 			startActivity(intent);
-		} else {
-			Categoria c = cats.get(i);
-			Log.d("Filtro", "" + c.getNombre());
-
+		} 
+		
+		else if(elegido.compareTo("Todos") == 0){
+			listar();
+		}
+		
+		else {
+			Categoria c = cats.get(i-1);
+			Log.d("Filtro", "nombre de la categoría: " + c.getNombre() + "Id: "
+					+ c.getId());
+			listar_por_categoria(c.getId());
 		}
 
 		mDrawer.closeDrawers();
@@ -305,7 +312,7 @@ public class MainActivity extends ActivityMenuLateral {
 			}
 			Recordatorio rec = items.get(position);
 			if (rec != null) {
-
+				ImageView imdescrip=(ImageView)v.findViewById(R.id.ic_descripcion);
 				TextView nombre = (TextView) v.findViewById(R.id.nombre);
 				TextView texto = (TextView) v.findViewById(R.id.texto);
 				TextView categoria = (TextView) v.findViewById(R.id.categoria);
@@ -356,12 +363,21 @@ public class MainActivity extends ActivityMenuLateral {
 					nombre.setText(rec.getNombre());
 				}
 				if (texto != null) {
-					texto.setText(rec.getDescripcion());
+					String t=rec.getDescripcion();
+					if(t==null || t.compareTo("")==0){
+						imdescrip.setVisibility(View.GONE);
+						texto.setVisibility(View.GONE);
+					}
+					else{
+					texto.setText(t);
+					}
 				}
 				if (categoria != null) {
-					Categoria cat = new Categoria();
+					Categoria cat;
+					CategoriasDB catDB = new CategoriasDB(MainActivity.this);
 					cat = catDB.getCategoria(rec.getCategoriaId());
-					categoria.setText(""+cat.getNombre());
+					categoria.setText("#" + cat.getNombre());
+					catDB.close();
 				}
 				if (lunes != null) {
 					if (dias.get(0)) {
@@ -403,15 +419,7 @@ public class MainActivity extends ActivityMenuLateral {
 				if (hora != null) {
 					hora.setText(rec.getHoraInicio() + " a " + rec.getHoraFin());
 				}
-<<<<<<< HEAD
-				if (categoria != null) {
-					categoria.setText("#"+rec.getCategoria().getNombre());
-				}
-=======
-//				if (categoria != null) {
-//					categoria.setText("#");
-//				}
->>>>>>> branch 'master' of https://github.com/csaluigm/ADM2013.git
+
 			}
 			return v;
 		}

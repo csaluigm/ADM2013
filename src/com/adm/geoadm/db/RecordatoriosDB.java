@@ -91,7 +91,7 @@ public class RecordatoriosDB {
 	}
 	
 	/**
-	 * List all Reminders of Database
+	 * List all active Reminders of Database
 	 * @return ArrayList object with an array of all Reminders
 	 */
 	public ArrayList<Recordatorio> listarRecordatoriosActivos() {
@@ -110,6 +110,25 @@ public class RecordatoriosDB {
 		return recordatorios;
 	}
 	
+	/**
+	 * List  Reminders by categoryId
+	 * @return ArrayList object with an array of all Reminders
+	 */
+	public ArrayList<Recordatorio> listarRecordatoriosByCat(int catid) {
+		ArrayList<Recordatorio> recordatorios = new ArrayList<Recordatorio>();
+		
+		Cursor c = db.query(RecordatoriosSQLHelper.RECORDATORIOS_TABLE,
+				null,
+				"categoria="+catid, null, null, null, null);
+		
+		while (c.moveToNext()) {
+			Recordatorio rec = getARecordatorio(c);
+			recordatorios.add(rec);
+		}
+		
+		c.close();
+		return recordatorios;
+	}
 	
 	/**
 	 * Obtain a Reminder with the id given
@@ -194,6 +213,12 @@ public class RecordatoriosDB {
 	 */
 	public void borrarTodos() {
 		db.delete(RecordatoriosSQLHelper.RECORDATORIOS_TABLE, null, null);
+	}
+	/**
+	 * Remove by category Id
+	 */
+	public void borrarByCatId(int cid) {
+		db.delete(RecordatoriosSQLHelper.RECORDATORIOS_TABLE, "categoria=?", new String[] {""+cid} );
 	}
 	
 	/**
