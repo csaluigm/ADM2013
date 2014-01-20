@@ -258,7 +258,7 @@ public class DetailsFragment extends Fragment implements OnClickListener {
                 public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                     horaFinEdit.setText( selectedHour + ":" + selectedMinute);
                     minutoFin=selectedMinute;
-                    minutoInicio=selectedHour;
+                    horaFin=selectedHour;
                 }
             }, hour, minute, true);//Yes 24 hour time
             mTimePicker.setTitle("Select Time");
