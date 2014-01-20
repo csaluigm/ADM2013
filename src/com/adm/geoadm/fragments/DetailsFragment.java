@@ -3,15 +3,23 @@ package com.adm.geoadm.fragments;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import android.app.AlertDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +29,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.adm.geoadm.Lista_categorias;
+import com.adm.geoadm.MainActivity;
 import com.adm.geoadm.NuevoRecordatorio;
 import com.adm.geoadm.R;
 import com.adm.geoadm.R.color;
@@ -41,6 +51,8 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 	Categoria categoriaEscogida;
 	CategoriasDB categoriasDB;
 	ArrayList<Categoria> categorias;
+	int horaInicio,horaFin,minutoInicio,minutoFin;
+	ArrayAdapter<String> adapter;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -95,6 +107,84 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		
 		
 		rellenarSpinner();
+		
+		categoriasSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1,
+                    int arg2, long arg3) {
+                // TODO Auto-generated method stub
+                String nueva=categoriasSpinner.getSelectedItem().toString();
+                if(nueva.equals("Nueva...")) dialogoNuevaCategoria();
+
+            }
+
+            private void dialogoNuevaCategoria() {
+				// TODO Auto-generated method stub
+            	AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+
+    			alert.setTitle(getResources().getString(
+    					R.string.Dialog_categoria_title));
+    			alert.setMessage(getResources().getString(
+    					R.string.Dialog_categoria_message));
+
+    			// Set an EditText view to get user input
+    			final EditText input = new EditText(getActivity());
+    			input.setInputType(InputType.TYPE_CLASS_TEXT);
+    			input.requestFocus();
+    			alert.setView(input);
+
+    			alert.setPositiveButton(
+    					getResources()
+    							.getString(R.string.Dialog_categoria_positivo),
+    					new DialogInterface.OnClickListener() {
+    						public void onClick(DialogInterface dialog,
+    								int whichButton) {
+    							if (input.getText().toString().length() > 0) {
+    								// recoger texto
+
+    								CategoriasDB catDB = new CategoriasDB(getActivity().getApplicationContext());
+    								Categoria c = new Categoria();
+    								c.setNombre(input.getText().toString());
+    								catDB.insertar(c);
+    								// categorias=catDB.listarCategorias();
+    								catDB.close();
+//    								adapter.add((String) input.getText().toString());
+    								rellenarSpinner();
+    								
+    							}
+
+    							// ocultar teclado
+//    							InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//    							imm.hideSoftInputFromWindow(input.getWindowToken(),
+//    									0);
+    						}
+    					});
+
+    			alert.setNegativeButton(
+    					getResources()
+    							.getString(R.string.Dialog_categoria_negativo),
+    					new DialogInterface.OnClickListener() {
+    						public void onClick(DialogInterface dialog,
+    								int whichButton) {
+    							// Canceled.
+    						}
+    					});
+    			alert.setCancelable(false);
+    			alert.show();
+
+				
+			}
+
+			@Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+		
+		
+		
 
 		return view;
 	}
@@ -109,11 +199,12 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		for (int i = 0; i < categorias.size(); i++) {
 			nombresCategorias.add(categorias.get(i).getNombre());
 		}
-
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,
+		nombresCategorias.add("Nueva...");
+		adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,
 				nombresCategorias);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		categoriasSpinner.setAdapter(adapter);
+		adapter.notifyDataSetChanged();
 	}
 
 
@@ -124,6 +215,7 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		int argId = arg0.getId();
 		if (argId == agregarButton.getId()) {
 			agregarRecordatorio();
+			
 		}
 		if (argId == lunes.getId() || argId == martes.getId()
 				|| argId == miercoles.getId() || argId == jueves.getId()
@@ -149,6 +241,8 @@ public class DetailsFragment extends Fragment implements OnClickListener {
                 @Override
                 public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                     horaInicioEdit.setText( selectedHour + ":" + selectedMinute);
+                    minutoInicio=selectedMinute;
+                    horaInicio=selectedHour;
                 }
             }, hour, minute, true);//Yes 24 hour time
             mTimePicker.setTitle("Select Time");
@@ -163,6 +257,8 @@ public class DetailsFragment extends Fragment implements OnClickListener {
                 @Override
                 public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                     horaFinEdit.setText( selectedHour + ":" + selectedMinute);
+                    minutoFin=selectedMinute;
+                    horaFin=selectedHour;
                 }
             }, hour, minute, true);//Yes 24 hour time
             mTimePicker.setTitle("Select Time");
@@ -194,15 +290,36 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		String nomCategoria = (String) categoriasSpinner.getSelectedItem();
 		categoriaInsertar = categoriasDB.getCategoriaPorString(nomCategoria);
 		
+	
+		
 		int idCat = categoriaInsertar.getId();
 		
 		
 		recordatorio.setNombre("" + textonombre.getText());
+		if(recordatorio.getNombre()==""){
+			Toast.makeText(getActivity().getApplicationContext(), R.string.warning_not_name, Toast.LENGTH_LONG).show();
+		}
+		else{
 		recordatorio.setDescripcion("" + textodescripcion.getText());
 		recordatorio.setCategoria(categoriaInsertar);
 		recordatorio.setCategoriaId(idCat);
+	
+		if(horaInicioEdit.getText().length()==0 || horaFinEdit.getText().length()==0){
+			Toast.makeText(getActivity().getApplicationContext(), R.string.warning_not_hour, Toast.LENGTH_LONG).show();
+		}
+		else{
+		
+		if(!comprobarHoraFinPosterior()){
+			Toast.makeText(getActivity().getApplicationContext(), R.string.warning_hour_not_posterior, Toast.LENGTH_LONG).show();
+		}
+		else{
 		recordatorio.setHoraInicio(horaInicioEdit.getText().toString());
 		recordatorio.setHoraFin(horaFinEdit.getText().toString());
+		
+		if (diasSemana==0){
+			Toast.makeText(getActivity().getApplicationContext(), R.string.warning_not_day, Toast.LENGTH_LONG).show();
+		}
+		else{
 		recordatorio.setDiasSemana(diasSemana);
 		recordatorio.activar();
 
@@ -210,16 +327,40 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		
 		MapFragment mf=((NuevoRecordatorio)getActivity()).getTabMap();
 		
+		if(mf.getLatitud()==-200){
+			Toast.makeText(getActivity().getApplicationContext(), R.string.warning_not_location, Toast.LENGTH_LONG).show();
+			}
+		else{
 		recordatorio.setLatitud(mf.getLatitud());
 		recordatorio.setLongitud(mf.getLongitud());
 		recordatorio.setRadius(mf.getRadio());
 		recordatorio.setDireccion(mf.getDireccion()); 
+
+
 //		 recordatorio.setIdGeofence(idGeofence);
 		 
 //		Toast.makeText(getActivity().getApplicationContext(),"catID seleccionada:"+categoriaInsertar.getId()+"\ncatNombre seleccionada:"+categoriaInsertar.getNombre(),Toast.LENGTH_LONG).show();
 //		 Toast.makeText(getActivity().getApplicationContext(),"punt:"+diasSemana,Toast.LENGTH_LONG).show();
-
+		
 		recordatoriosDB.insertar(recordatorio);
+		Intent intent = new Intent(getActivity(),MainActivity.class);
+		startActivity(intent);
+	    }
+		
+		}	
+		}
+		}
+		}
+	}
+	
+	private boolean comprobarHoraFinPosterior() {
+		if(horaFin<=horaInicio)
+			if(minutoFin<=minutoInicio)
+				return false;
+		
+		return true;
 	}
 	}
+
+
 

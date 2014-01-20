@@ -28,7 +28,13 @@
      
     <string name="fragment_details_categoria">Categoría</string>
     <string name="fragment_details_descripcion">Descripción</string>
-
+    
+    <string name="warning_not_location">Tienes que seleccionar una localización en la pestaña mapa para poder agregar el recordatorio</string>
+    <string name="warning_not_name">El recordatorio debe tener un título</string>
+    <string name="warning_hour_not_posterior">La hora de fin tiene que ser posterior a la de inicio</string>
+    <string name="warning_not_hour">Debes seleccionar una hora de inicio y una hora de fin</string>
+    <string name="warning_not_day">Debes seleccionar al menos un día de la semana</string>
+        
         <!-- Tittles -->
     <string name="title_activity_nuevo_recordatoio">Nuevo Recordatorio</string>
     <string name="title_activity_lista_categorias">Lista de Categorias</string>

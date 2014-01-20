@@ -34,7 +34,6 @@
     <string name="title_activity_nuevo_recordatoio">New Reminder</string>
     <string name="title_activity_lista_categorias">Category List</string>
 
-    
     <!-- Manifest -->
     <string name="manifest_new_reminder">New Reminder</string>
 	<string name="manifest_list_reminder">List Reminder</string>
