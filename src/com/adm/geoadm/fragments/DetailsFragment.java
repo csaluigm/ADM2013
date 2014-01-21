@@ -51,7 +51,7 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 	Categoria categoriaEscogida;
 	CategoriasDB categoriasDB;
 	ArrayList<Categoria> categorias;
-	int horaInicio,horaFin,minutoInicio,minutoFin;
+	Integer horaInicio,horaFin,minutoInicio,minutoFin;
 	ArrayAdapter<String> adapter;
 
 	@Override
@@ -240,9 +240,10 @@ public class DetailsFragment extends Fragment implements OnClickListener {
             mTimePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                    horaInicioEdit.setText( selectedHour + ":" + selectedMinute);
-                    minutoInicio=selectedMinute;
-                    horaInicio=selectedHour;
+                	minutoInicio=selectedMinute;
+                	horaInicio=selectedHour;
+                	horaInicioEdit.setText( horaInicio.toString().format("%02d", horaInicio) + ":" + minutoInicio.toString().format("%02d",minutoInicio));
+                   
                 }
             }, hour, minute, true);//Yes 24 hour time
             mTimePicker.setTitle("Select Time");
@@ -256,9 +257,10 @@ public class DetailsFragment extends Fragment implements OnClickListener {
             mTimePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                    horaFinEdit.setText( selectedHour + ":" + selectedMinute);
-                    minutoFin=selectedMinute;
+                	minutoFin=selectedMinute;
                     horaFin=selectedHour;
+                    horaFinEdit.setText( horaFin.toString().format("%02d", horaFin) + ":" + minutoFin.toString().format("%02d",minutoFin));
+                  
                 }
             }, hour, minute, true);//Yes 24 hour time
             mTimePicker.setTitle("Select Time");
