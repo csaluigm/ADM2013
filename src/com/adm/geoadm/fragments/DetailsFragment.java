@@ -151,6 +151,7 @@ public class DetailsFragment extends Fragment implements OnClickListener {
     								catDB.close();
 //    								adapter.add((String) input.getText().toString());
     								rellenarSpinner();
+    								categoriasSpinner.setSelection(categoriasSpinner.getCount()-2);
     								
     							}
 
@@ -193,7 +194,7 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		// TODO Auto-generated method stub
 		ArrayList<Categoria> categorias = new ArrayList<Categoria>();
 		ArrayList<String> nombresCategorias = new ArrayList<String>();
-
+		nombresCategorias.add("Sin categoria");
 		categorias = categoriasDB.listarCategorias();
 
 		for (int i = 0; i < categorias.size(); i++) {
@@ -288,13 +289,13 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		
 		Recordatorio recordatorio = new Recordatorio();
 		int diasSemana = obtenerValorDias();
-		Categoria categoriaInsertar = new Categoria();
-		String nomCategoria = (String) categoriasSpinner.getSelectedItem();
-		categoriaInsertar = categoriasDB.getCategoriaPorString(nomCategoria);
-		
-	
-		
-		int idCat = categoriaInsertar.getId();
+//		Categoria categoriaInsertar = new Categoria();
+//		String nomCategoria = (String) categoriasSpinner.getSelectedItem();
+//		categoriaInsertar = categoriasDB.getCategoriaPorString(nomCategoria);
+//		
+//	
+//		
+//		int idCat = categoriaInsertar.getId();
 		
 		
 		recordatorio.setNombre("" + textonombre.getText());
@@ -303,8 +304,19 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		}
 		else{
 		recordatorio.setDescripcion("" + textodescripcion.getText());
-		recordatorio.setCategoria(categoriaInsertar);
+		String nomCategoria = (String) categoriasSpinner.getSelectedItem();
+		
+		//control de la categoria
+		if(hay_categoria(nomCategoria)){
+		Categoria categoriaInsertar = categoriasDB.getCategoriaPorString(nomCategoria);
+		int idCat = categoriaInsertar.getId();
+		recordatorio.setCategoria(categoriaInsertar);	
 		recordatorio.setCategoriaId(idCat);
+		}
+		else{
+		recordatorio.setCategoriaId(-1);	
+		}
+		//recordatorio.setCategoriaId(idCat);
 	
 		if(horaInicioEdit.getText().length()==0 || horaFinEdit.getText().length()==0){
 			Toast.makeText(getActivity().getApplicationContext(), R.string.warning_not_hour, Toast.LENGTH_LONG).show();
@@ -355,6 +367,16 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		}
 	}
 	
+	private boolean hay_categoria(String nomCategoria) {
+				
+		if (nomCategoria.compareTo("Sin categoria")==0){
+			return false;
+		}
+		else {
+			return true;
+		}		
+	}
+
 	private boolean comprobarHoraFinPosterior() {
 		if(horaFin<=horaInicio)
 			if(minutoFin<=minutoInicio)
