@@ -2,11 +2,13 @@ package com.adm.geoadm.db;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class RecordatoriosDB {
 	//-----  MEMBERS  -------------
@@ -101,13 +103,84 @@ public class RecordatoriosDB {
 				null,
 				"activa=1", null, null, null, null);
 		
+		
+		Calendar today = Calendar.getInstance();
+		Log.d("RECSDB","Calendar: " + today.toString());
+		
 		while (c.moveToNext()) {
 			Recordatorio rec = getARecordatorio(c);
-			recordatorios.add(rec);
+			Log.d("RECSDB","Recordatorio: " + rec.toString());
+			
+			switch(today.get(Calendar.DAY_OF_WEEK)) {
+			case Calendar.SUNDAY:
+				
+				if ((rec.getDiasSemana()&1)==1) {
+					if (estaEntreLasHoras(today, rec)) {						
+						recordatorios.add(rec);
+					}
+				}					
+				break;
+			case Calendar.SATURDAY:
+				if ((rec.getDiasSemana()&2)==2) {
+					if (estaEntreLasHoras(today, rec))
+						recordatorios.add(rec);
+				}					
+				break;
+			case Calendar.FRIDAY:
+				if ((rec.getDiasSemana()&4)==4) {
+					if (estaEntreLasHoras(today, rec))
+						recordatorios.add(rec);
+				}					
+				break;
+			case Calendar.THURSDAY:
+				if ((rec.getDiasSemana()&8)==8) {
+					if (estaEntreLasHoras(today, rec))
+						recordatorios.add(rec);
+				}					
+				break;
+			case Calendar.WEDNESDAY:
+				if ((rec.getDiasSemana()&16)==16) {
+					if (estaEntreLasHoras(today, rec))
+						recordatorios.add(rec);
+				}					
+				break;
+			case Calendar.TUESDAY:
+				if ((rec.getDiasSemana()&32)==32) {
+					if (estaEntreLasHoras(today, rec))
+						recordatorios.add(rec);
+				}					
+				break;
+			case Calendar.MONDAY:
+				if ((rec.getDiasSemana()&64)==64) {
+					if (estaEntreLasHoras(today, rec))
+						recordatorios.add(rec);
+				}					
+				break;
+			}			
+			
 		}
-		
 		c.close();
+			
 		return recordatorios;
+	}
+	
+	
+	private boolean estaEntreLasHoras(Calendar fecha, Recordatorio rec) {
+		int hora = fecha.get(Calendar.HOUR_OF_DAY);
+		int minuto = fecha.get(Calendar.MINUTE);
+		
+		String[] horaInicioStr = rec.getHoraInicio().split(":");
+		String[] horaFinStr = rec.getHoraFin().split(":");
+		
+		int[] horaInicio = new int[]{Integer.valueOf(horaInicioStr[0]), Integer.valueOf(horaInicioStr[1])};
+		int[] horaFin = new int[]{Integer.valueOf(horaFinStr[0]), Integer.valueOf(horaFinStr[1])};
+		
+		
+		if ((hora>horaInicio[0] || (hora==horaInicio[0] && minuto>=horaInicio[1])) && (hora<horaFin[0] || (hora==horaInicio[0] && minuto<=horaInicio[1]))) {
+			return true;
+		}
+		else 
+			return false;
 	}
 	
 	/**
