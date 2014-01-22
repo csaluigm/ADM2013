@@ -126,8 +126,8 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 		final View view = inflater.inflate(R.layout.fragment_map, null);
 		etAddress = (EditText) view.findViewById(R.id.etAddress);
 		etRadius = (EditText) view.findViewById(R.id.etRadius);
-		btPlus = (Button) view.findViewById(R.id.btPlus);
-	  	btMinus = (Button) view.findViewById(R.id.btMinus);
+		btPlus = (Button) view.findViewById(R.id.btPlusx);
+	  	btMinus = (Button) view.findViewById(R.id.btMinusx);
 	  	
 		   
 		   
@@ -257,7 +257,6 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 					if(pressedUp == false){
 						pressedUp = true;
 						increment= - metersZoom(map.getCameraPosition().zoom);
-					//	increment=-5;
 						new incrementer().execute();
 					}
 					break;
@@ -436,7 +435,7 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 		protected void onPostExecute(Void result) {
 			paintCircle(center, auxRadius);
 		}
-	}
+	}  
 
 	@TargetApi(Build.VERSION_CODES.GINGERBREAD)
 	private class MyGeoder extends AsyncTask<Void, Void, Void> {

@@ -47,39 +47,35 @@
 	        android:text="@string/fragment_maps_radius" />
 
 	    <LinearLayout
-	        android:layout_width="wrap_content"
+	        android:layout_width="match_parent"
 	        android:layout_height="match_parent" >
 
 	        <EditText
 	            android:id="@+id/etRadius"
-	            android:minWidth="150dp"
-	            android:layout_width="wrap_content"
+	            android:minWidth="200dp"
+	            android:layout_width="0dp"
+	             android:layout_weight="1"
 	            android:layout_height="match_parent"
-	            android:layout_weight="1"
-	            android:text="@integer/minRadius"
+	           android:text="@integer/minRadius"
 	            android:inputType="number" />
+	        
+	         <Button
+	            android:id="@+id/btMinusx"
+	            style="?android:attr/buttonStyleSmall"
+	            android:layout_width="0dp"
+	             android:layout_weight="1"
+	            android:layout_height="50dp"
+	            android:text="@string/fragment_maps_minus" />
 
-	        <LinearLayout
-	            android:layout_width="match_parent"
-	            android:layout_height="match_parent"
-	            android:layout_weight="1"
-	            android:orientation="vertical" >
+	          <Button
+	            android:id="@+id/btPlusx"
+	            style="?android:attr/buttonStyleSmall"
+	            android:layout_width="0dp"
+	             android:layout_weight="1"
+	            android:layout_height="50dp"
+	            android:text="@string/fragment_maps_plus" />
+	         
 
-	            <Button
-	                android:id="@+id/btPlus"
-	                style="?android:attr/buttonStyleSmall"
-	                android:layout_width="wrap_content"
-	                android:layout_height="31dp"
-	                android:text="@string/fragment_maps_plus" />
-
-	            <Button
-	                android:id="@+id/btMinus"
-	                style="?android:attr/buttonStyleSmall"
-	                android:layout_width="wrap_content"
-	                android:layout_height="31dp"
-	                android:text="@string/fragment_maps_minus" />
-
-	        </LinearLayout>
 
 	    </LinearLayout>
 
