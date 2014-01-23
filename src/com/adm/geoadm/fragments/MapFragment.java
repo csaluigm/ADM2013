@@ -23,8 +23,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.adm.geoadm.NuevoRecordatorio;
 import com.adm.geoadm.R;
 import com.adm.geoadm.db.Recordatorio;
+import com.adm.geoadm.db.RecordatoriosDB;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
@@ -52,6 +54,8 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 	LatLng center=null; // iremos guardando la posicion
 	boolean pressedUp = false;
 	int increment;
+	private boolean modificar;
+	private RecordatoriosDB recordatoriosDB;
 	
 	/**
 	 * Estas funciones las hemos puesto para obtener los datos necesarios 
@@ -104,7 +108,7 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 	//funcion de recordatorio
 	public void setRecordatorioenmapa(Recordatorio rec){
 		center= new LatLng(rec.getLatitud(),rec.getLongitud());
-		etRadius.setText(String.valueOf(rec.getRadius()));
+		etRadius.setText(String.valueOf((int)rec.getRadius()));
 		etAddress.setText(rec.getDireccion());
 		putMarker(center);
 		paintCircle(center, (int)rec.getRadius());
@@ -116,6 +120,12 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		if(((NuevoRecordatorio)getActivity()).getRecId()!=-1){
+			modificar=true;
+		}
+		else{
+			modificar=false;
+		}
 	}
 
 	
@@ -165,6 +175,8 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 			}
 
 		});
+		
+		
 		
 
 		etRadius.setOnFocusChangeListener(new OnFocusChangeListener(){
@@ -268,11 +280,27 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 				return false;
 			}
 		});
+		
+		
+		if(modificar){
+			situa_punto();
+			 etRadius.setEnabled(true);
+			   btPlus.setEnabled(true);
+			   btMinus.setEnabled(true);
+		}
 
 		return view;
 	}
 
 
+
+	private void situa_punto() {
+		recordatoriosDB = new RecordatoriosDB(getActivity().getApplicationContext());
+		Recordatorio rmod=recordatoriosDB.getRecordatorio(((NuevoRecordatorio)getActivity()).getRecId());
+		setRecordatorioenmapa(rmod);
+		
+		
+	}
 
 	//funcion para ocultar teclado
 	public void hidekeyboard(View view){
@@ -493,7 +521,7 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 				Toast.makeText(getActivity(), "No se ha encontrado la ubicacion", Toast.LENGTH_SHORT).show();
 			}
 			else if (address==null){
-			Toast.makeText(getActivity(), "Problema de conexión", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getActivity(), "Problema de conexiï¿½n", Toast.LENGTH_SHORT).show();
 			}
 		}
 

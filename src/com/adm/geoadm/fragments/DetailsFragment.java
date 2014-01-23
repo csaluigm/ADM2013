@@ -5,10 +5,8 @@ import java.util.Calendar;
 
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,7 +14,6 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.InputMethodManager;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -29,7 +26,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.adm.geoadm.Lista_categorias;
 import com.adm.geoadm.MainActivity;
 import com.adm.geoadm.NuevoRecordatorio;
 import com.adm.geoadm.R;
@@ -41,9 +37,8 @@ import com.adm.geoadm.db.RecordatoriosDB;
 
 public class DetailsFragment extends Fragment implements OnClickListener {
 
-	TextView textonombre, textodescripcion, textocategoria, textoprioridad,
-			lunes, martes, miercoles, jueves, viernes, sabado, domingo;
-	EditText descripcionEdit, horaInicioEdit, horaFinEdit;
+	TextView lunes, martes, miercoles, jueves, viernes, sabado, domingo;
+	EditText descripcionEdit, horaInicioEdit, horaFinEdit,textonombre, textodescripcion;
 	Button agregarButton;
 	SeekBar prioridadSeekBar;
 	Spinner categoriasSpinner;
@@ -53,34 +48,39 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 	ArrayList<Categoria> categorias;
 	Integer horaInicio,horaFin,minutoInicio,minutoFin;
 	ArrayAdapter<String> adapter;
+	boolean modificar;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-
+		if(((NuevoRecordatorio)getActivity()).getRecId()!=-1){
+			modificar=true;
+		}
+		else{
+			modificar=false;
+		}
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		final View view = inflater.inflate(R.layout.fragment_details, null);
-		textonombre = (TextView) view
+		textonombre = (EditText) view
 				.findViewById(R.id.fragment_details_nombreEdit);
-		textodescripcion = (TextView) view
+		textodescripcion = (EditText) view
 				.findViewById(R.id.fragment_details_editText_descripcion);
+		
 		categoriasSpinner = (Spinner) view
 				.findViewById(R.id.fragment_details_spinnerCategorias);
-		descripcionEdit = (EditText) view
-				.findViewById(R.id.fragment_details_nombreEdit);
+		
 		horaInicioEdit = (EditText) view
 				.findViewById(R.id.fragment_details_horaInicio);
 		horaFinEdit = (EditText) view
 				.findViewById(R.id.fragment_details_horaFin);
 		agregarButton = (Button) view
 				.findViewById(R.id.fragment_details_agregar);
-		descripcionEdit = (EditText) view
-				.findViewById(R.id.fragment_details_nombreEdit);
+		
 		lunes = (TextView) view.findViewById(R.id.fd_lunes);
 		martes = (TextView) view.findViewById(R.id.fd_martes);
 		miercoles = (TextView) view.findViewById(R.id.fd_miercoles);
@@ -145,7 +145,7 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 
     								CategoriasDB catDB = new CategoriasDB(getActivity().getApplicationContext());
     								Categoria c = new Categoria();
-    								c.setNombre(input.getText().toString());
+    								c.setNombre("#"+input.getText().toString());
     								catDB.insertar(c);
     								// categorias=catDB.listarCategorias();
     								catDB.close();
@@ -185,13 +185,126 @@ public class DetailsFragment extends Fragment implements OnClickListener {
         });
 		
 		
-		
+		if(modificar){
+			rellenar_info_rec();
+		}
 
 		return view;
 	}
+	
+	public void rellenar_info_rec(){
+	recordatoriosDB = new RecordatoriosDB(getActivity().getApplicationContext());
+	Recordatorio rmod=recordatoriosDB.getRecordatorio(((NuevoRecordatorio)getActivity()).getRecId());
+	textonombre.setText(rmod.getNombre());
+	textodescripcion.setText(rmod.getDescripcion());
+	horaInicioEdit.setText(rmod.getHoraInicio());
+	horaFinEdit.setText(rmod.getHoraFin());
+	horaInicio=Integer.parseInt(rmod.getHoraInicio().split(":")[0]);
+	minutoInicio=Integer.parseInt(rmod.getHoraInicio().split(":")[1]);
+	horaFin=Integer.parseInt(rmod.getHoraFin().split(":")[0]);
+	minutoFin=Integer.parseInt(rmod.getHoraFin().split(":")[1]);
+	
+	agregarButton.setText("Modificar");	
+	categoriasSpinner.setSelection(rmod.getCategoriaId());
+	rellenar_dias(rmod.getDiasSemana());
+	}
+	public void rellenar_dias(int valor){
+	ArrayList<Boolean> dias = enterotodias(valor);
+	
+		if (dias.get(0)) {
+			resaltar_dia(lunes);
+		}
+	
 
+		if (dias.get(1)) {
+			resaltar_dia(martes);
+		}
+	
+
+	
+		if (dias.get(2)) {
+			resaltar_dia(miercoles);
+		}
+	
+	
+		if (dias.get(3)) {
+			resaltar_dia(jueves);
+		}
+	
+	
+		if (dias.get(4)) {
+			resaltar_dia(viernes);
+		}
+	
+	
+		if (dias.get(5)) {
+			resaltar_dia(sabado);
+		}
+	
+	
+		if (dias.get(6)) {
+			resaltar_dia(domingo);
+		
+		}
+	}
+	
+	/**
+	 * Cambia el color y pone en negrita el TexView que le pasemos
+	 * 
+	 * @param dia
+	 *            el textview con el dia de la semana para resaltar
+	 */
+	public void resaltar_dia(TextView dia,int color) {
+		dia.setTextColor(color);
+		dia.setTypeface(Typeface.DEFAULT_BOLD);
+	}
+
+	/**
+	 * Transforma un entero en un vector de 7 bools donde cada bool representa
+	 * una unidad del entero convertido a binario.true si es 1 false si es 0
+	 * 
+	 * @param binario
+	 *            entero que queremos convertir a binario y despues a vector de
+	 *            bools
+	 * @return vector de bools
+	 */
+	public ArrayList<Boolean> enterotodias(int binario) {
+		ArrayList<Boolean> semana = new ArrayList<Boolean>();
+		String bin = Integer.toBinaryString(binario);
+
+		bin = addceros(bin);
+		String[] valores = bin.split("");
+
+		for (int i = 1; i < valores.length; i++) {
+
+			if (valores[i].compareTo("1") == 0) {
+
+				semana.add(true);
+			} else {
+				semana.add(false);
+			}
+		}
+		return semana;
+	}
+
+	/**
+	 * a�ade ceros por la izquierda para rellenar un numero binario en forma de
+	 * string
+	 * 
+	 * @param b
+	 *            String al que queremos a�adir ceros por la izquierda
+	 * @return el String con los ceros a�adidos
+	 */
+	public String addceros(String b) {
+		String ceros = "";
+		for (int i = 0; i < 7 - b.length(); i++) {
+			ceros = "0" + ceros;
+		}
+		return ceros + b;
+	}
+	
 	private void rellenarSpinner() {
-		// TODO Auto-generated method stub
+		
 		ArrayList<Categoria> categorias = new ArrayList<Categoria>();
 		ArrayList<String> nombresCategorias = new ArrayList<String>();
 		nombresCategorias.add("Sin categoria");
@@ -224,14 +337,8 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 				|| argId == domingo.getId()) {
 
 			TextView dia = (TextView) arg0;
-			if (dia.getTypeface() == Typeface.DEFAULT_BOLD) {
-				dia.setTextColor(getResources().getColor(color.Black));
-				dia.setTypeface(Typeface.DEFAULT);
-			} else {
-
-				dia.setTextColor(getResources().getColor(color.Icazul));
-				dia.setTypeface(Typeface.DEFAULT_BOLD);
-			}
+			resaltar_dia(dia);
+		
 		}
 		if(argId == horaInicioEdit.getId()){
 			Calendar mcurrentTime = Calendar.getInstance();
@@ -269,6 +376,17 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		}
 	}
 
+	private void resaltar_dia(TextView dia) {
+		if (dia.getTypeface() == Typeface.DEFAULT_BOLD) {
+			dia.setTextColor(getResources().getColor(color.Black));
+			dia.setTypeface(Typeface.DEFAULT);
+		} else {
+			dia.setTextColor(getResources().getColor(color.Icazul));
+			dia.setTypeface(Typeface.DEFAULT_BOLD);
+		}
+		
+	}
+
 	private int obtenerValorDias() {
 		// TODO Auto-generated method stub
 		int valor = 0;
@@ -283,92 +401,93 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 	}
 
 	private void agregarRecordatorio() {
-		// TODO Auto-generated method stub
+	
+		recordatoriosDB = new RecordatoriosDB(getActivity()
+				.getApplicationContext());
 
-		recordatoriosDB = new RecordatoriosDB(getActivity().getApplicationContext());
-		
 		Recordatorio recordatorio = new Recordatorio();
 		int diasSemana = obtenerValorDias();
-//		Categoria categoriaInsertar = new Categoria();
-//		String nomCategoria = (String) categoriasSpinner.getSelectedItem();
-//		categoriaInsertar = categoriasDB.getCategoriaPorString(nomCategoria);
-//		
-//	
-//		
-//		int idCat = categoriaInsertar.getId();
-		
-		
+
+
 		recordatorio.setNombre("" + textonombre.getText());
-		if(recordatorio.getNombre()==""){
-			Toast.makeText(getActivity().getApplicationContext(), R.string.warning_not_name, Toast.LENGTH_LONG).show();
-		}
-		else{
-		recordatorio.setDescripcion("" + textodescripcion.getText());
-		String nomCategoria = (String) categoriasSpinner.getSelectedItem();
-		
-		//control de la categoria
-		if(hay_categoria(nomCategoria)){
-		Categoria categoriaInsertar = categoriasDB.getCategoriaPorString(nomCategoria);
-		int idCat = categoriaInsertar.getId();
-		recordatorio.setCategoria(categoriaInsertar);	
-		recordatorio.setCategoriaId(idCat);
-		}
-		else{
-		recordatorio.setCategoriaId(-1);	
-		}
-		//recordatorio.setCategoriaId(idCat);
-	
-		if(horaInicioEdit.getText().length()==0 || horaFinEdit.getText().length()==0){
-			Toast.makeText(getActivity().getApplicationContext(), R.string.warning_not_hour, Toast.LENGTH_LONG).show();
-		}
-		else{
-		
-		if(!comprobarHoraFinPosterior()){
-			Toast.makeText(getActivity().getApplicationContext(), R.string.warning_hour_not_posterior, Toast.LENGTH_LONG).show();
-		}
-		else{
-		recordatorio.setHoraInicio(horaInicioEdit.getText().toString());
-		recordatorio.setHoraFin(horaFinEdit.getText().toString());
-		
-		if (diasSemana==0){
-			Toast.makeText(getActivity().getApplicationContext(), R.string.warning_not_day, Toast.LENGTH_LONG).show();
-		}
-		else{
-		recordatorio.setDiasSemana(diasSemana);
-		recordatorio.activar();
+		if (recordatorio.getNombre() == "") {
+			Toast.makeText(getActivity().getApplicationContext(),
+					R.string.warning_not_name, Toast.LENGTH_LONG).show();
+		} else {
+			recordatorio.setDescripcion("" + textodescripcion.getText());
+			String nomCategoria = (String) categoriasSpinner.getSelectedItem();
 
-		// CON RESPECTO AL MAPFRAGMENT
-		
-		MapFragment mf=((NuevoRecordatorio)getActivity()).getTabMap();
-		
-		if(mf.getLatitud()==-200){
-			Toast.makeText(getActivity().getApplicationContext(), R.string.warning_not_location, Toast.LENGTH_LONG).show();
+			// control de la categoria
+			if (hay_categoria(nomCategoria)) {
+				Categoria categoriaInsertar = categoriasDB
+						.getCategoriaPorString(nomCategoria);
+				int idCat = categoriaInsertar.getId();
+				recordatorio.setCategoria(categoriaInsertar);
+				recordatorio.setCategoriaId(idCat);
+			} else {
+				recordatorio.setCategoriaId(-1);
 			}
-		else{
-		recordatorio.setLatitud(mf.getLatitud());
-		recordatorio.setLongitud(mf.getLongitud());
-		recordatorio.setRadius(mf.getRadio());
-		recordatorio.setDireccion(mf.getDireccion()); 
+			// recordatorio.setCategoriaId(idCat);
 
+			if (horaInicioEdit.getText().length() == 0
+					|| horaFinEdit.getText().length() == 0) {
+				Toast.makeText(getActivity().getApplicationContext(),
+						R.string.warning_not_hour, Toast.LENGTH_LONG).show();
+			} else {
 
-//		 recordatorio.setIdGeofence(idGeofence);
-		 
-//		Toast.makeText(getActivity().getApplicationContext(),"catID seleccionada:"+categoriaInsertar.getId()+"\ncatNombre seleccionada:"+categoriaInsertar.getNombre(),Toast.LENGTH_LONG).show();
-//		 Toast.makeText(getActivity().getApplicationContext(),"punt:"+diasSemana,Toast.LENGTH_LONG).show();
-		
-		recordatoriosDB.insertar(recordatorio);
-		Intent intent = new Intent(getActivity(),MainActivity.class);
-		startActivity(intent);
-	    }
-		
-		}	
-		}
-		}
+				if (!comprobarHoraFinPosterior()) {
+					Toast.makeText(getActivity().getApplicationContext(),
+							R.string.warning_hour_not_posterior,
+							Toast.LENGTH_LONG).show();
+				} else {
+					recordatorio.setHoraInicio(horaInicioEdit.getText()
+							.toString());
+					recordatorio.setHoraFin(horaFinEdit.getText().toString());
+
+					if (diasSemana == 0) {
+						Toast.makeText(getActivity().getApplicationContext(),
+								R.string.warning_not_day, Toast.LENGTH_LONG)
+								.show();
+					} else {
+						recordatorio.setDiasSemana(diasSemana);
+						recordatorio.activar();
+
+						// CON RESPECTO AL MAPFRAGMENT
+
+						MapFragment mf = ((NuevoRecordatorio) getActivity())
+								.getTabMap();
+
+						if (mf.getLatitud() == -200) {
+							Toast.makeText(
+									getActivity().getApplicationContext(),
+									R.string.warning_not_location,
+									Toast.LENGTH_LONG).show();
+						} else {
+							recordatorio.setLatitud(mf.getLatitud());
+							recordatorio.setLongitud(mf.getLongitud());
+							recordatorio.setRadius(mf.getRadio());
+							recordatorio.setDireccion(mf.getDireccion());
+							if(modificar){
+							recordatoriosDB.modificar(((NuevoRecordatorio)getActivity()).getRecId(), recordatorio);
+							}
+							else{
+								recordatoriosDB.insertar(recordatorio);	
+							}
+							
+							recordatoriosDB.close();
+							Intent intent = new Intent(getActivity(),
+									MainActivity.class);
+							startActivity(intent);
+						}
+
+					}
+				}
+			}
 		}
 	}
 	
 	private boolean hay_categoria(String nomCategoria) {
-				
+		
 		if (nomCategoria.compareTo("Sin categoria")==0){
 			return false;
 		}
@@ -384,6 +503,11 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		
 		return true;
 	}
+
+	
+	
+	
+	
 	}
 
 

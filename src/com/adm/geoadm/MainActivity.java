@@ -217,10 +217,24 @@ public class MainActivity extends ActivityMenuLateral {
 			Radapter.notifyDataSetChanged();
 			actualizar_interfaz();
 		}
+		else if(menuItemIndex == 1) {
+		Recordatorio r = recordatorios.get(info.position);
+		Intent intent = new Intent(MainActivity.this, NuevoRecordatorio.class);
+        intent.putExtras(bundle_modificar_recordatorio(r));
+        startActivity(intent);
+			
+			
+			
+		}
 
 		return true;
 
 	}
+	  private Bundle bundle_modificar_recordatorio(Recordatorio r) {
+          Bundle b = new Bundle();
+          b.putInt("recId", r.getId());              
+          return b;
+  }
 
 	// Carga el men� de opciones del action bar
 	@Override
@@ -382,7 +396,7 @@ public class MainActivity extends ActivityMenuLateral {
 					if(cid!=-1){					
 					c = catDB.getCategoria(rec.getCategoriaId());
 					categoria.setTextColor(c.getColor());
-					categoria.setText("#" + c.getNombre());
+					categoria.setText(c.getNombre());
 					catDB.close();
 					}
 				}

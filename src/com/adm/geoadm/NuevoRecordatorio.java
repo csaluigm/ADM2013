@@ -25,7 +25,7 @@ import com.adm.geoadm.fragments.MapFragment;
 public class NuevoRecordatorio extends ActionBarActivity implements OnClickListener{
 	
 	
-	
+	int recId=-1;
 	//-------  TABS  ----------------
 	MapFragment tabMap;
 	DetailsFragment tabDetails;
@@ -43,6 +43,11 @@ public class NuevoRecordatorio extends ActionBarActivity implements OnClickListe
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_my_view_pager_action_bar);
+		Bundle datos = getIntent().getExtras();
+		if (datos!=null){			
+		recId=datos.getInt("recId",-1);
+		getSupportActionBar().setTitle("Modificar Recordatorio");
+		}
 		
 		//Initialize tabs
 		tabMap = new MapFragment();
@@ -143,6 +148,14 @@ public class NuevoRecordatorio extends ActionBarActivity implements OnClickListe
 //		getSupportActionBar().addTab(tab);
 	}
 
+	public int getRecId() {
+		return recId;
+	}
+
+	public void setRecId(int recId) {
+		this.recId = recId;
+	}
+
 	public MapFragment getTabMap() {
 		return tabMap;
 	}
@@ -221,7 +234,7 @@ public class NuevoRecordatorio extends ActionBarActivity implements OnClickListe
 			case 0:
 				return tabMap;
 			case 1:
-				//Cambio esta linea porque creo que la segunda pestaña debe ser
+				//Cambio esta linea porque creo que la segunda pestaï¿½a debe ser
 				//el DetailsFragment que son los detalles del Recordatorio
 				//Angel y Antonio
 				//return new ListViewStringSupportFragment();
@@ -253,6 +266,14 @@ public class NuevoRecordatorio extends ActionBarActivity implements OnClickListe
 			return null;
 		}
 
+	}
+	
+	@Override
+	public void onStop() {
+		
+		super.onStop();
+		finish();
+		
 	}
 
 	@Override

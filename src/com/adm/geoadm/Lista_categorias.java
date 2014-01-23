@@ -76,7 +76,7 @@ public class Lista_categorias extends ActionBarActivity {
 
 			cabecera.setText("Tienes " + categorias.size() + " categorias");
 		} else {
-			cabecera.setText("No tienes ninguna categoría para clasificar tus recordatorios");
+			cabecera.setText("No tienes ninguna categorï¿½a para clasificar tus recordatorios");
 		}
 	}
 
@@ -112,7 +112,7 @@ public class Lista_categorias extends ActionBarActivity {
 				// v.findViewById(R.id.categoria);
 
 				if (nombre_cat != null) {
-					nombre_cat.setText("#" + cat.getNombre());
+					nombre_cat.setText(cat.getNombre());
 					nombre_cat.setTextColor(cat.getColor());
 				}
 				if (cantidad_cat != null) {
