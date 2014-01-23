@@ -31,8 +31,8 @@ import com.adm.geoadm.db.RecordatoriosDB;
 import com.adm.geoadm.services.NotificationService;
 
 /**
- * Activity principal de la aplicaciï¿½n , muestra los recordatorios
- * creados.Puedes crear nuevos,borrar, filtrar por categorï¿½a y editar las
+ * Activity principal de la aplicación , muestra los recordatorios
+ * creados.Puedes crear nuevos,borrar,modificar y  filtrar por categoría.También puedes editar las
  * categorias.
  * 
  * @author cesar
@@ -100,8 +100,8 @@ public class MainActivity extends ActivityMenuLateral {
 
 	/**
 	 * Refresca la interfaz : cambia la cabecera del listview para mostrar la
-	 * cuenta de items, ademï¿½s se encarga de cambiar la interfaz si no tenemos
-	 * ningï¿½n recordatorio creado para que creemos el primero.
+	 * cuenta de items, además se encarga de cambiar la interfaz si no tenemos
+	 * ningún recordatorio creado para que creemos el primero.
 	 */
 	public void actualizar_interfaz() {
 
@@ -135,7 +135,7 @@ public class MainActivity extends ActivityMenuLateral {
 	}
 
 	/**
-	 * Lista todos los recordatorios de la DB de forma grï¿½fica
+	 * Lista todos los recordatorios de la DB de forma gráfica
 	 */
 	public void listar() {
 		RecordatoriosDB recDB = new RecordatoriosDB(this);
@@ -150,10 +150,9 @@ public class MainActivity extends ActivityMenuLateral {
 	}
 
 	/**
-	 * Lista los recordatorios pertenecientes a una categorï¿½a de forma grï¿½fica
+	 * Lista los recordatorios pertenecientes a una categoría de forma gráfica
 	 * 
-	 * @param cat
-	 *            el nombre de la categorï¿½a que hace de filtro
+	 * @param cat el nombre de la categoría que hace de filtro
 	 */
 	public void listar_por_categoria(int cid) {
 		RecordatoriosDB recDB = new RecordatoriosDB(this);
@@ -236,7 +235,7 @@ public class MainActivity extends ActivityMenuLateral {
           return b;
   }
 
-	// Carga el menï¿½ de opciones del action bar
+	// Carga el menú de opciones del action bar
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -244,7 +243,7 @@ public class MainActivity extends ActivityMenuLateral {
 		return true;
 	}
 
-	// Gestiona los clicks que se realicen en el NavigationDrawer (Menï¿½
+	// Gestiona los clicks que se realicen en el NavigationDrawer (Menú
 	// lateral).
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -319,7 +318,7 @@ public class MainActivity extends ActivityMenuLateral {
 			Categoria c=new Categoria();
 			View v = convertView;
 			if (v == null) {
-				Log.d("indice", "indice " + position);
+				//Log.d("indice", "indice " + position);
 				LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				v = vi.inflate(R.layout.elemento_fila, null);
 
@@ -372,10 +371,10 @@ public class MainActivity extends ActivityMenuLateral {
 					});
 				}
 				
-				Log.d("Semana", ""+rec.getDiasSemana());
+				//Log.d("Semana", ""+rec.getDiasSemana());
 				ArrayList<Boolean> dias = enterotodias(rec.getDiasSemana());
 				
-				Log.d("Semana", ""+" "+dias.get(0)+" "+dias.get(1)+" "+dias.get(2)+" "+dias.get(3)+" "+dias.get(4)+" "+dias.get(5)+" "+dias.get(6));
+				//Log.d("Semana", ""+" "+dias.get(0)+" "+dias.get(1)+" "+dias.get(2)+" "+dias.get(3)+" "+dias.get(4)+" "+dias.get(5)+" "+dias.get(6));
 				if (nombre != null) {
 					nombre.setText(rec.getNombre());
 				}
@@ -453,8 +452,7 @@ public class MainActivity extends ActivityMenuLateral {
 	/**
 	 * Cambia el color y pone en negrita el TexView que le pasemos
 	 * 
-	 * @param dia
-	 *            el textview con el dia de la semana para resaltar
+	 * @param dia el textview con el dia de la semana para resaltar
 	 */
 	public void resaltar_dia(TextView dia,int color) {
 		dia.setTextColor(color);
@@ -465,9 +463,7 @@ public class MainActivity extends ActivityMenuLateral {
 	 * Transforma un entero en un vector de 7 bools donde cada bool representa
 	 * una unidad del entero convertido a binario.true si es 1 false si es 0
 	 * 
-	 * @param binario
-	 *            entero que queremos convertir a binario y despues a vector de
-	 *            bools
+	 * @param binario entero que queremos convertir a binario y despues a vector de bools
 	 * @return vector de bools
 	 */
 	public ArrayList<Boolean> enterotodias(int binario) {
@@ -490,12 +486,11 @@ public class MainActivity extends ActivityMenuLateral {
 	}
 
 	/**
-	 * aï¿½ade ceros por la izquierda para rellenar un numero binario en forma de
+	 * añade ceros por la izquierda para rellenar un numero binario en forma de
 	 * string
 	 * 
-	 * @param b
-	 *            String al que queremos aï¿½adir ceros por la izquierda
-	 * @return el String con los ceros aï¿½adidos
+	 * @param b String al que queremos añadir ceros por la izquierda
+	 * @return el String con los ceros añadidos
 	 */
 	public String addceros(String b) {
 		String ceros = "";
@@ -505,7 +500,7 @@ public class MainActivity extends ActivityMenuLateral {
 		return ceros + b;
 	}
 
-	// Refrescar el menï¿½ lateral
+	// Refrescar el menú lateral
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -514,7 +509,7 @@ public class MainActivity extends ActivityMenuLateral {
 
 	@Override
 	protected void onPause() {
-		// TODO Auto-generated method stub
+		
 		super.onPause();
 		// finish();
 	}

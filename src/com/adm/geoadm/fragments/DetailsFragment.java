@@ -241,8 +241,7 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 	/**
 	 * Cambia el color y pone en negrita el TexView que le pasemos
 	 * 
-	 * @param dia
-	 *            el textview con el dia de la semana para resaltar
+	 * @param dia el textview con el dia de la semana para resaltar
 	 */
 	public void resaltar_dia(TextView dia,int color) {
 		dia.setTextColor(color);
@@ -253,9 +252,7 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 	 * Transforma un entero en un vector de 7 bools donde cada bool representa
 	 * una unidad del entero convertido a binario.true si es 1 false si es 0
 	 * 
-	 * @param binario
-	 *            entero que queremos convertir a binario y despues a vector de
-	 *            bools
+	 * @param binario entero que queremos convertir a binario y despues a vector de bools
 	 * @return vector de bools
 	 */
 	public ArrayList<Boolean> enterotodias(int binario) {
@@ -278,12 +275,11 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 	}
 
 	/**
-	 * aï¿½ade ceros por la izquierda para rellenar un numero binario en forma de
+	 * añade ceros por la izquierda para rellenar un numero binario en forma de
 	 * string
 	 * 
-	 * @param b
-	 *            String al que queremos aï¿½adir ceros por la izquierda
-	 * @return el String con los ceros aï¿½adidos
+	 * @param b String al que queremos añadir ceros por la izquierda
+	 * @return el String con los ceros añadidos
 	 */
 	public String addceros(String b) {
 		String ceros = "";
@@ -297,7 +293,7 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		
 		ArrayList<Categoria> categorias = new ArrayList<Categoria>();
 		ArrayList<String> nombresCategorias = new ArrayList<String>();
-		nombresCategorias.add("Sin categoria");
+		nombresCategorias.add("Sin categoría");
 		categorias = categoriasDB.listarCategorias();
 
 		for (int i = 0; i < categorias.size(); i++) {
@@ -312,7 +308,7 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 	}
 
 /**
- * Si marca uno de los dï¿½as, lo pinta en negrita y azul.
+ * Si marca uno de los días, lo pinta en negrita y azul.
  * Si es horaInicio, horaFin, lanza un TimePicker para que seleccione la hora.
  */
 
@@ -382,13 +378,13 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 	}
 
 /**
- * Recorre todos los dias para ver los que estï¿½n marcados.
+ * Recorre todos los dias para ver los que están marcados.
  * De estar en negrita, suma su correspondiente valor para tener los dias de la semana en un entero. 
- * Mï¿½s tarde este entero se traducirï¿½ en binario para poder saber los dï¿½as escogidos.
+ * Más tarde este entero se traducirá en binario para poder saber los días escogidos.
  * 
  */
 	private int obtenerValorDias() {
-		// TODO Auto-generated method stub
+	
 		int valor = 0;
 		if(lunes.getTypeface() == Typeface.DEFAULT_BOLD) valor+=64;
 		if(martes.getTypeface() == Typeface.DEFAULT_BOLD) valor+=32;
@@ -401,7 +397,7 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 	}
 	
 	/**
-	 * Cuando se selecciona agregar recordatorio desde el botï¿½n, se crea un recordatorio nuevo y se rellenan los campos.
+	 * Cuando se selecciona agregar recordatorio desde el botón, se crea un recordatorio nuevo y se rellenan los campos.
 	 * Crea una instancia del mapFragment para recibir los datos relativos al mapa del otro fragment.
 	 * Cuando inserta el recordatorio en la DB, lanza la activity principal.
 	 */
@@ -432,7 +428,7 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 			} else {
 				recordatorio.setCategoriaId(-1);
 			}
-			// recordatorio.setCategoriaId(idCat);
+			
 
 			if (horaInicioEdit.getText().length() == 0
 					|| horaFinEdit.getText().length() == 0) {
@@ -491,9 +487,15 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		}
 	}
 	
+	
+	/**
+	 * contrasta si se ha elegido una categoría en el spinner ya que hay una opción sin categoría
+	 * @param nomCategoria el string del elemento seleccionado en el spinner
+	 * @return true si coincide con el String acordado para decir que no hay categoría
+	 */
 	private boolean hay_categoria(String nomCategoria) {
 		
-		if (nomCategoria.compareTo("Sin categoria")==0){
+		if (nomCategoria.compareTo("Sin categoría")==0){
 			return false;
 		}
 		else {

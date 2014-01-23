@@ -76,7 +76,7 @@ public class Lista_categorias extends ActionBarActivity {
 
 			cabecera.setText("Tienes " + categorias.size() + " categorias");
 		} else {
-			cabecera.setText("No tienes ninguna categorï¿½a para clasificar tus recordatorios");
+			cabecera.setText("No tienes ninguna categoría para clasificar tus recordatorios");
 		}
 	}
 
@@ -96,7 +96,7 @@ public class Lista_categorias extends ActionBarActivity {
 
 			View v = convertView;
 			if (v == null) {
-				Log.d("indice", "indice " + position);
+				//Log.d("indice", "indice " + position);
 				LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				v = vi.inflate(R.layout.fila_categoria, null);
 
@@ -108,9 +108,7 @@ public class Lista_categorias extends ActionBarActivity {
 						.findViewById(R.id.name_category);
 				TextView cantidad_cat = (TextView) v
 						.findViewById(R.id.count_cat);
-				// TextView categoria = (TextView)
-				// v.findViewById(R.id.categoria);
-
+				
 				if (nombre_cat != null) {
 					nombre_cat.setText(cat.getNombre());
 					nombre_cat.setTextColor(cat.getColor());
@@ -260,7 +258,7 @@ public class Lista_categorias extends ActionBarActivity {
 					new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog,
 								int whichButton) {
-							Log.d("color", ""+colores.getColor());
+							//Log.d("color", ""+colores.getColor());
 							int color=colores.getColor();
 							Categoria c = categorias.get(info.position);
 							c.setColor(color);
@@ -293,7 +291,7 @@ public class Lista_categorias extends ActionBarActivity {
 			catDB.close();
 			Cadapter.notifyDataSetChanged();
 			actualizar_interfaz();
-			//((MainActivity)getParent()).menu_lateral_categorias();
+			
 		}
 
 		return true;

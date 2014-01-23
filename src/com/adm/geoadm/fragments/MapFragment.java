@@ -536,7 +536,7 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 				Toast.makeText(getActivity(), "No se ha encontrado la ubicacion", Toast.LENGTH_SHORT).show();
 			}
 			else if (address==null){
-			Toast.makeText(getActivity(), "Problema de conexiï¿½n", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getActivity(), "Problema de conexión", Toast.LENGTH_SHORT).show();
 			}
 		}
 

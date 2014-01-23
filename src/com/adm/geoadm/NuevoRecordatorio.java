@@ -14,15 +14,13 @@ import android.support.v7.app.ActionBar.TabListener;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
 
 import com.adm.geoadm.db.Recordatorio;
 import com.adm.geoadm.db.RecordatoriosDB;
 import com.adm.geoadm.fragments.DetailsFragment;
 import com.adm.geoadm.fragments.MapFragment;
 
-public class NuevoRecordatorio extends ActionBarActivity implements OnClickListener{
+public class NuevoRecordatorio extends ActionBarActivity {
 	
 	
 	int recId=-1;
@@ -137,15 +135,6 @@ public class NuevoRecordatorio extends ActionBarActivity implements OnClickListe
 		tab.setTabListener(tabListener);
 		getSupportActionBar().addTab(tab);
 
-//		tab = getSupportActionBar().newTab();
-//		tab.setText("tab3");
-//		tab.setTabListener(tabListener);
-//		getSupportActionBar().addTab(tab);
-//
-//		tab = getSupportActionBar().newTab();
-//		tab.setText("tab4");
-//		tab.setTabListener(tabListener);
-//		getSupportActionBar().addTab(tab);
 	}
 
 	public int getRecId() {
@@ -234,28 +223,22 @@ public class NuevoRecordatorio extends ActionBarActivity implements OnClickListe
 			case 0:
 				return tabMap;
 			case 1:
-				//Cambio esta linea porque creo que la segunda pesta�a debe ser
-				//el DetailsFragment que son los detalles del Recordatorio
-				//Angel y Antonio
-				//return new ListViewStringSupportFragment();
+				
 				return tabDetails; 
-//			case 2:
-//				return new ListViewStringSupportFragment();
-//			case 3:
-//				return new MapFragment();	
+
 				}
 			return null;
 		}
 
 		@Override
 		public int getCount() {
-			// TODO Auto-generated method stub
+		
 			return 2;
 		}
 
 		@Override
 		public CharSequence getPageTitle(int position) {
-			// TODO Auto-generated method stub
+			
 			switch(position) {
 			case 0:
 				return getResources().getString(R.string.tab_map);
@@ -276,9 +259,5 @@ public class NuevoRecordatorio extends ActionBarActivity implements OnClickListe
 		
 	}
 
-	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		
-	}
+
 }
