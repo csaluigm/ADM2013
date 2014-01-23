@@ -28,7 +28,7 @@
                     android:id="@+id/fd_textView_nombre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Título: "
+                    android:text="@string/fragment_details_titulo"
                     android:textSize="16sp" />
 
                 <EditText
@@ -77,8 +77,8 @@
                     android:id="@+id/fd_textView_categoria"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:text="Categoría:" />
+                    android:text="@string/fragment_details_categoria"
+                    android:textSize="16sp" />
 
                 <Spinner
                     android:id="@+id/fragment_details_spinnerCategorias"
@@ -101,9 +101,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:textSize="16sp"
-                    android:hint="Hora inicio" 
-                    android:focusableInTouchMode="false"/>
+                    android:focusableInTouchMode="false"
+                    android:hint="@string/fragment_details_horainicio"
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/fragment_details_horaFin"
@@ -111,9 +111,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:textSize="16sp"
-                    android:hint="Hora fin"
-                    android:focusableInTouchMode="false" />
+                    android:focusableInTouchMode="false"
+                    android:hint="@string/fragment_details_finHora"
+                    android:textSize="16sp" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -198,7 +199,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Agregar Recordatorio" />
+            android:text="@string/fragment_details_agregarRecordatorio" />
     </LinearLayout>
 
 </LinearLayout>

@@ -100,12 +100,7 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		horaFinEdit.setOnClickListener(this);
 		horaInicioEdit.setOnClickListener(this);
 		
-
-		
 		categoriasDB = new CategoriasDB(getActivity().getApplicationContext());
-				
-		
-		
 		rellenarSpinner();
 		
 		categoriasSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -118,7 +113,9 @@ public class DetailsFragment extends Fragment implements OnClickListener {
                 if(nueva.equals("Nueva...")) dialogoNuevaCategoria();
 
             }
-
+/**
+ * Se abre un Dialog similar al de nueva Categoria para a�adir una nueva.
+ */
             private void dialogoNuevaCategoria() {
 				// TODO Auto-generated method stub
             	AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
@@ -147,18 +144,11 @@ public class DetailsFragment extends Fragment implements OnClickListener {
     								Categoria c = new Categoria();
     								c.setNombre("#"+input.getText().toString());
     								catDB.insertar(c);
-    								// categorias=catDB.listarCategorias();
     								catDB.close();
-//    								adapter.add((String) input.getText().toString());
     								rellenarSpinner();
     								categoriasSpinner.setSelection(categoriasSpinner.getCount()-2);
     								
     							}
-
-    							// ocultar teclado
-//    							InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//    							imm.hideSoftInputFromWindow(input.getWindowToken(),
-//    									0);
     						}
     					});
 
@@ -321,6 +311,10 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		adapter.notifyDataSetChanged();
 	}
 
+/**
+ * Si marca uno de los d�as, lo pinta en negrita y azul.
+ * Si es horaInicio, horaFin, lanza un TimePicker para que seleccione la hora.
+ */
 
 
 	@Override
@@ -387,6 +381,12 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		
 	}
 
+/**
+ * Recorre todos los dias para ver los que est�n marcados.
+ * De estar en negrita, suma su correspondiente valor para tener los dias de la semana en un entero. 
+ * M�s tarde este entero se traducir� en binario para poder saber los d�as escogidos.
+ * 
+ */
 	private int obtenerValorDias() {
 		// TODO Auto-generated method stub
 		int valor = 0;
@@ -399,7 +399,12 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		if(domingo.getTypeface() == Typeface.DEFAULT_BOLD) valor+=1;
 		return valor;
 	}
-
+	
+	/**
+	 * Cuando se selecciona agregar recordatorio desde el bot�n, se crea un recordatorio nuevo y se rellenan los campos.
+	 * Crea una instancia del mapFragment para recibir los datos relativos al mapa del otro fragment.
+	 * Cuando inserta el recordatorio en la DB, lanza la activity principal.
+	 */
 	private void agregarRecordatorio() {
 	
 		recordatoriosDB = new RecordatoriosDB(getActivity()
@@ -495,7 +500,11 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 			return true;
 		}		
 	}
-
+/**
+	 * Comprueba si es coherente las horas marcadas
+	 * @return true si es coherente
+	 * 		   false si no
+	 */
 	private boolean comprobarHoraFinPosterior() {
 		if(horaFin<=horaInicio)
 			if(minutoFin<=minutoInicio)

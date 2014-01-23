@@ -31,8 +31,8 @@
     <string name="fragment_maps_plus">+</string>
     <string name="fragment_maps_minus">-</string>
     
-    <string name="fragment_details_categoria">Category</string>
-    <string name="fragment_details_descripcion">Description</string>
+    <string name="fragment_details_categoria">Category: </string>
+    <string name="fragment_details_descripcion">Description: </string>
     
     <!-- Tittles -->
     <string name="title_activity_nuevo_recordatoio">New Reminder</string>
@@ -50,5 +50,8 @@
 	<string name="fryday">F</string>
 	<string name="saturday">S</string>
 	<string name="sunday">U</string>
-	
+	<string name="fragment_details_titulo">Title: </string>
+	<string name="fragment_details_horainicio">From</string>
+	<string name="fragment_details_finHora">Until</string>
+	<string name="fragment_details_agregarRecordatorio">Add</string>	
 </resources>

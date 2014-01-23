@@ -105,7 +105,10 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 		return etAddress.getText().toString();
 	}
 	
-	//funcion de recordatorio
+	/**funcion de recordatorio
+	 * 
+	 * @param rec
+	 */
 	public void setRecordatorioenmapa(Recordatorio rec){
 		center= new LatLng(rec.getLatitud(),rec.getLongitud());
 		etRadius.setText(String.valueOf((int)rec.getRadius()));
@@ -162,7 +165,9 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 		}
 
 
-		//Metodo sobreescrito para cuando se haga un click en el mapa
+		/**Metodo sobreescrito para cuando se haga un click en el mapa
+		 * 
+		 */
 		map.setOnMapClickListener(new OnMapClickListener() {
 			public void onMapClick(LatLng lat) {
 				if(center==null){
@@ -302,7 +307,10 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 		
 	}
 
-	//funcion para ocultar teclado
+	/**funcion para ocultar teclado
+	 * 
+	 * @param view
+	 */
 	public void hidekeyboard(View view){
 		 InputMethodManager imm = (InputMethodManager) view.getContext()
 			        .getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -310,7 +318,10 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 	}
 
 	
-	//quita el marker que haya y uno nuevo en latlng indicada
+	/**quita el marker que haya y uno nuevo en latlng indicada
+	 * 
+	 * @param center
+	 */
 	public void putMarker(LatLng center){
 		if (marker != null){
 			marker.remove();
@@ -321,7 +332,11 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 
 	}
 
-	//quita el circulo que haya y uno nuevo en latlng indicada
+	/**quita el circulo que haya y uno nuevo en latlng indicada
+	 * 
+	 * @param lat
+	 * @param radius
+	 */
 	public void paintCircle(LatLng lat, int radius){
 		if (circle!=null){
 			circle.remove();
