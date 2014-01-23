@@ -185,7 +185,9 @@ public class NuevoRecordatorio extends ActionBarActivity {
 		rec.setActiva(true);
 		//...
 	}
-	
+	/**
+	 * Guardar un recordatorio en la base de datos
+	 */
 	private void saveRecordatorio() {
 		Intent intent = getIntent();
 		if (!intent.hasExtra(KEY_EDIT_RECORDATORIO) && !intent.hasExtra(KEY_NOTIFY_RECORDATORIO)) {

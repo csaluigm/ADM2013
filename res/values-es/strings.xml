@@ -55,6 +55,6 @@
 	<string name="thursday">J</string>
 	<string name="fryday">V</string>
 	<string name="saturday">S</string>
-	<string name="sunday">D</string>
+	<string name="sunday">D</string><string name="tienes">Tienes </string><string name="recordatorios"> recordatorios</string><string name="acciones">Acciones</string><string name="borrar">Borrar</string><string name="Modificar">Modificar</string>
     
 </resources>
