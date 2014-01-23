@@ -13,7 +13,7 @@
         android:id="@+id/cabecera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Categorias" />
+        android:text="@string/fragment_details_categoria" />
  
 
 

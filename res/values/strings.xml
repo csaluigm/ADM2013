@@ -53,5 +53,10 @@
 	<string name="fragment_details_titulo">Title: </string>
 	<string name="fragment_details_horainicio">From</string>
 	<string name="fragment_details_finHora">Until</string>
-	<string name="fragment_details_agregarRecordatorio">Add</string>	
+	<string name="fragment_details_agregarRecordatorio">Add</string>
+	<string name="tienes">You have </string>
+	<string name="recordatorios"> reminders</string>
+	<string name="acciones">Actions</string>
+	<string name="borrar">Delete</string>
+	<string name="Modificar">Edit</string>	
 </resources>

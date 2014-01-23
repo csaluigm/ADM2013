@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Categorias"
+        android:text="@string/fragment_details_categoria"
         android:textColor="@color/Black"
         android:textSize="16sp"
         android:textStyle="italic" />

@@ -115,8 +115,8 @@ public class MainActivity extends ActivityMenuLateral {
 
 		if (recordatorios.size() > 0) {
 
-			cabecera.setText("Tienes " + recordatorios.size()
-					+ " recordatorios");
+			cabecera.setText(getResources().getString(R.string.tienes)+ recordatorios.size()
+					+ getResources().getString(R.string.recordatorios));
 			RecView.setVisibility(View.VISIBLE);
 			cabecera.setVisibility(View.VISIBLE);
 			aviso.setVisibility(View.GONE);
@@ -198,9 +198,9 @@ public class MainActivity extends ActivityMenuLateral {
 
 		if (v.getId() == R.id.lista_recordatorios) {
 
-			menu.setHeaderTitle("Acciones");
-			menu.add(Menu.NONE, 0, 0, "Borrar");
-			menu.add(Menu.NONE, 1, 1, "Modificar");
+			menu.setHeaderTitle(getResources().getString(R.string.acciones));
+			menu.add(Menu.NONE, 0, 0, getResources().getString(R.string.borrar));
+			menu.add(Menu.NONE, 1, 1, getResources().getString(R.string.Modificar));
 		}
 	}
 
