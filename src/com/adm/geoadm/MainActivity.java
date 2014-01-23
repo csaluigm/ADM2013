@@ -115,8 +115,8 @@ public class MainActivity extends ActivityMenuLateral {
 
 		if (recordatorios.size() > 0) {
 
-			cabecera.setText(getResources().getString(R.string.tienes)+ recordatorios.size()
-					+ getResources().getString(R.string.recordatorios));
+			cabecera.setText(getResources().getString(R.string.tienes)+" " +recordatorios.size()
+					+" " + getResources().getString(R.string.recordatorios));
 			RecView.setVisibility(View.VISIBLE);
 			cabecera.setVisibility(View.VISIBLE);
 			aviso.setVisibility(View.GONE);
