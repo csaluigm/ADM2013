@@ -146,6 +146,7 @@ public class DetailsFragment extends Fragment implements OnClickListener {
     								catDB.insertar(c);
     								catDB.close();
     								rellenarSpinner();
+    								categoriasSpinner.setSelection(categoriasSpinner.getCount()-2);
     								
     							}
     						}
@@ -185,7 +186,7 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		// TODO Auto-generated method stub
 		ArrayList<Categoria> categorias = new ArrayList<Categoria>();
 		ArrayList<String> nombresCategorias = new ArrayList<String>();
-
+		nombresCategorias.add("Sin categoria");
 		categorias = categoriasDB.listarCategorias();
 
 		for (int i = 0; i < categorias.size(); i++) {
@@ -308,8 +309,19 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 		}
 		else{
 		recordatorio.setDescripcion("" + textodescripcion.getText());
-		recordatorio.setCategoria(categoriaInsertar);
+		String nomCategoria = (String) categoriasSpinner.getSelectedItem();
+		
+		//control de la categoria
+		if(hay_categoria(nomCategoria)){
+		Categoria categoriaInsertar = categoriasDB.getCategoriaPorString(nomCategoria);
+		int idCat = categoriaInsertar.getId();
+		recordatorio.setCategoria(categoriaInsertar);	
 		recordatorio.setCategoriaId(idCat);
+		}
+		else{
+		recordatorio.setCategoriaId(-1);	
+		}
+		//recordatorio.setCategoriaId(idCat);
 	
 		if(horaInicioEdit.getText().length()==0 || horaFinEdit.getText().length()==0){
 			Toast.makeText(getActivity().getApplicationContext(), R.string.warning_not_hour, Toast.LENGTH_LONG).show();
@@ -364,6 +376,16 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 	 * @return true si es coherente
 	 * 		   false si no
 	 */
+	private boolean hay_categoria(String nomCategoria) {
+				
+		if (nomCategoria.compareTo("Sin categoria")==0){
+			return false;
+		}
+		else {
+			return true;
+		}		
+	}
+
 	private boolean comprobarHoraFinPosterior() {
 		if(horaFin<=horaInicio)
 			if(minutoFin<=minutoInicio)

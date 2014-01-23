@@ -31,8 +31,8 @@ import com.adm.geoadm.db.RecordatoriosDB;
 import com.adm.geoadm.services.NotificationService;
 
 /**
- * Activity principal de la aplicación , muestra los recordatorios
- * creados.Puedes crear nuevos,borrar, filtrar por categoría y editar las
+ * Activity principal de la aplicaciï¿½n , muestra los recordatorios
+ * creados.Puedes crear nuevos,borrar, filtrar por categorï¿½a y editar las
  * categorias.
  * 
  * @author cesar
@@ -100,8 +100,8 @@ public class MainActivity extends ActivityMenuLateral {
 
 	/**
 	 * Refresca la interfaz : cambia la cabecera del listview para mostrar la
-	 * cuenta de items, además se encarga de cambiar la interfaz si no tenemos
-	 * ningún recordatorio creado para que creemos el primero.
+	 * cuenta de items, ademï¿½s se encarga de cambiar la interfaz si no tenemos
+	 * ningï¿½n recordatorio creado para que creemos el primero.
 	 */
 	public void actualizar_interfaz() {
 
@@ -135,7 +135,7 @@ public class MainActivity extends ActivityMenuLateral {
 	}
 
 	/**
-	 * Lista todos los recordatorios de la DB de forma gráfica
+	 * Lista todos los recordatorios de la DB de forma grï¿½fica
 	 */
 	public void listar() {
 		RecordatoriosDB recDB = new RecordatoriosDB(this);
@@ -150,10 +150,10 @@ public class MainActivity extends ActivityMenuLateral {
 	}
 
 	/**
-	 * Lista los recordatorios pertenecientes a una categoría de forma gráfica
+	 * Lista los recordatorios pertenecientes a una categorï¿½a de forma grï¿½fica
 	 * 
 	 * @param cat
-	 *            el nombre de la categoría que hace de filtro
+	 *            el nombre de la categorï¿½a que hace de filtro
 	 */
 	public void listar_por_categoria(int cid) {
 		RecordatoriosDB recDB = new RecordatoriosDB(this);
@@ -222,7 +222,7 @@ public class MainActivity extends ActivityMenuLateral {
 
 	}
 
-	// Carga el menú de opciones del action bar
+	// Carga el menï¿½ de opciones del action bar
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -230,7 +230,7 @@ public class MainActivity extends ActivityMenuLateral {
 		return true;
 	}
 
-	// Gestiona los clicks que se realicen en el NavigationDrawer (Menú
+	// Gestiona los clicks que se realicen en el NavigationDrawer (Menï¿½
 	// lateral).
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -248,7 +248,7 @@ public class MainActivity extends ActivityMenuLateral {
 		
 		else {
 			Categoria c = cats.get(i-1);
-			Log.d("Filtro", "nombre de la categoría: " + c.getNombre() + "Id: "
+			Log.d("Filtro", "nombre de la categorï¿½a: " + c.getNombre() + "Id: "
 					+ c.getId());
 			listar_por_categoria(c.getId());
 		}
@@ -377,11 +377,14 @@ public class MainActivity extends ActivityMenuLateral {
 				}
 				if (categoria != null) {
 					//Categoria cat;
-					CategoriasDB catDB = new CategoriasDB(MainActivity.this);
+					CategoriasDB catDB = new CategoriasDB(MainActivity.this);					
+					int cid=rec.getCategoriaId();
+					if(cid!=-1){					
 					c = catDB.getCategoria(rec.getCategoriaId());
 					categoria.setTextColor(c.getColor());
 					categoria.setText("#" + c.getNombre());
 					catDB.close();
+					}
 				}
 				
 				if(separador!=null){
@@ -473,12 +476,12 @@ public class MainActivity extends ActivityMenuLateral {
 	}
 
 	/**
-	 * añade ceros por la izquierda para rellenar un numero binario en forma de
+	 * aï¿½ade ceros por la izquierda para rellenar un numero binario en forma de
 	 * string
 	 * 
 	 * @param b
-	 *            String al que queremos añadir ceros por la izquierda
-	 * @return el String con los ceros añadidos
+	 *            String al que queremos aï¿½adir ceros por la izquierda
+	 * @return el String con los ceros aï¿½adidos
 	 */
 	public String addceros(String b) {
 		String ceros = "";
@@ -488,7 +491,7 @@ public class MainActivity extends ActivityMenuLateral {
 		return ceros + b;
 	}
 
-	// Refrescar el menú lateral
+	// Refrescar el menï¿½ lateral
 	@Override
 	protected void onResume() {
 		super.onResume();
