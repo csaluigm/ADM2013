@@ -11,6 +11,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -194,8 +195,20 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 	horaFin=Integer.parseInt(rmod.getHoraFin().split(":")[0]);
 	minutoFin=Integer.parseInt(rmod.getHoraFin().split(":")[1]);
 	
-	agregarButton.setText("Modificar");	
-	categoriasSpinner.setSelection(rmod.getCategoriaId());
+	agregarButton.setText("Modificar");
+	Log.d("DEBUG spinner", "apuntar a posicion: "+rmod.getCategoriaId());
+	categoriasSpinner.setSelection(0);
+	for (int i = 0; i < categorias.size(); i++) {
+		Categoria comp=categorias.get(i);
+		if (rmod.getCategoriaId()==comp.getId()){
+			categoriasSpinner.setSelection(i+1);
+			break;
+		}
+		
+		
+	}
+	
+	
 	rellenar_dias(rmod.getDiasSemana());
 	}
 	public void rellenar_dias(int valor){
@@ -291,7 +304,7 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 	
 	private void rellenarSpinner() {
 		
-		ArrayList<Categoria> categorias = new ArrayList<Categoria>();
+	    categorias = new ArrayList<Categoria>();
 		ArrayList<String> nombresCategorias = new ArrayList<String>();
 		nombresCategorias.add("Sin categoría");
 		categorias = categoriasDB.listarCategorias();
