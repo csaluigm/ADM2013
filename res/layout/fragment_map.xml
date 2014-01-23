@@ -41,6 +41,7 @@
 
 	    <TextView
 	        android:id="@+id/fd_textView_categoria"
+	        android:textSize="20sp"
 	        android:layout_width="wrap_content"
 	        android:layout_height="match_parent"
 	        android:gravity="center_vertical"
@@ -52,7 +53,7 @@
 
 	        <EditText
 	            android:id="@+id/etRadius"
-	            android:minWidth="200dp"
+	            android:minWidth="220dp"
 	            android:layout_width="0dp"
 	             android:layout_weight="1"
 	            android:layout_height="match_parent"
