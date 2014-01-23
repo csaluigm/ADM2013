@@ -72,8 +72,16 @@ public class MainActivity extends ActivityMenuLateral {
 		RecView = (ListView) findViewById(R.id.lista_recordatorios);
 		registerForContextMenu(RecView);
 
-		listar();
+		//listar();
 	}
+	
+	// Refrescar info cuando recuperemos la visibilidad
+	@Override
+	protected void onResume() {
+		super.onResume();
+		listar();
+		menu_lateral_categorias();
+	};
 
 	public void menu_lateral_categorias() {
 		latnames = new ArrayList<String>();
@@ -500,12 +508,7 @@ public class MainActivity extends ActivityMenuLateral {
 		return ceros + b;
 	}
 
-	// Refrescar el menú lateral
-	@Override
-	protected void onResume() {
-		super.onResume();
-		menu_lateral_categorias();
-	};
+
 
 	@Override
 	protected void onPause() {

@@ -166,7 +166,7 @@ public class Lista_categorias extends ActionBarActivity {
 								CategoriasDB catDB = new CategoriasDB(
 										Lista_categorias.this);
 								Categoria c = new Categoria();
-								c.setNombre(input.getText().toString());
+								c.setNombre("#"+input.getText().toString());
 								catDB.insertar(c);
 								// categorias=catDB.listarCategorias();
 								catDB.close();
@@ -258,15 +258,17 @@ public class Lista_categorias extends ActionBarActivity {
 					new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog,
 								int whichButton) {
-							//Log.d("color", ""+colores.getColor());
+							//Log.d("color", "cambiando color "+colores.getColor()+"posicion: "+info.position);
 							int color=colores.getColor();
 							Categoria c = categorias.get(info.position);
+							//Log.d("color", "cambiando color "+colores.getColor()+"a: "+c.getNombre());
 							c.setColor(color);
 							CategoriasDB catDB = new CategoriasDB(Lista_categorias.this);
 							catDB.modificar(c.getId(), c);
 							catDB.close();
 							listar();
-						
+							
+							Cadapter.notifyDataSetChanged();
 						}
 					});
 

@@ -476,9 +476,10 @@ public class DetailsFragment extends Fragment implements OnClickListener {
 							}
 							
 							recordatoriosDB.close();
-							Intent intent = new Intent(getActivity(),
-									MainActivity.class);
-							startActivity(intent);
+							getActivity().finish();
+//							Intent intent = new Intent(getActivity(),
+//									MainActivity.class);
+//							startActivity(intent);
 						}
 
 					}
