@@ -112,6 +112,7 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 	public void setRecordatorioenmapa(Recordatorio rec){
 		center= new LatLng(rec.getLatitud(),rec.getLongitud());
 		etRadius.setText(String.valueOf((int)rec.getRadius()));
+		auxRadius=(int)rec.getRadius();
 		etAddress.setText(rec.getDireccion());
 		putMarker(center);
 		paintCircle(center, (int)rec.getRadius());
@@ -292,6 +293,7 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 			 etRadius.setEnabled(true);
 			   btPlus.setEnabled(true);
 			   btMinus.setEnabled(true);
+			   inicializa_camara_mod(auxRadius);
 		}
 
 		return view;
@@ -303,8 +305,50 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 		recordatoriosDB = new RecordatoriosDB(getActivity().getApplicationContext());
 		Recordatorio rmod=recordatoriosDB.getRecordatorio(((NuevoRecordatorio)getActivity()).getRecId());
 		setRecordatorioenmapa(rmod);
-		
-		
+	}
+	
+	//inicializamos la camara centrandola en el recordatorio ajustando el zoom
+	private void inicializa_camara_mod(int radio){
+		if(radio>=100 && radio<200){
+		map.animateCamera(CameraUpdateFactory.newLatLngZoom(center,16));
+		}
+		else if(radio>=200 && radio<500){
+		map.animateCamera(CameraUpdateFactory.newLatLngZoom(center,15));
+			}
+		else if(radio>=500 && radio<1020){
+			map.animateCamera(CameraUpdateFactory.newLatLngZoom(center,14));
+			}
+		else if(radio>=1020 && radio<2220){
+			map.animateCamera(CameraUpdateFactory.newLatLngZoom(center,13));
+			}
+		else if(radio>=2220 && radio<4300){
+			map.animateCamera(CameraUpdateFactory.newLatLngZoom(center,12));
+			}
+		else if(radio>=4300 && radio<8000){
+			map.animateCamera(CameraUpdateFactory.newLatLngZoom(center,11));
+			}
+		else if(radio>=8000 && radio<19000){
+			map.animateCamera(CameraUpdateFactory.newLatLngZoom(center,10));
+			}
+		else if(radio>=19000 && radio<35000){
+			map.animateCamera(CameraUpdateFactory.newLatLngZoom(center,9));
+			}
+		else if(radio>=35000 && radio<71000){
+			map.animateCamera(CameraUpdateFactory.newLatLngZoom(center,8));
+			}
+		else if(radio>=71000 && radio<145000){
+			map.animateCamera(CameraUpdateFactory.newLatLngZoom(center,7));
+			}
+		else if(radio>=145000 && radio<300000){
+			map.animateCamera(CameraUpdateFactory.newLatLngZoom(center,6));
+			}
+		else if(radio>=300000 && radio<600000){
+			map.animateCamera(CameraUpdateFactory.newLatLngZoom(center,5));
+			}
+		else if(radio>=600000 && radio<=1000000){
+			map.animateCamera(CameraUpdateFactory.newLatLngZoom(center,4));
+			}
+	
 	}
 
 	/**funcion para ocultar teclado
@@ -530,7 +574,7 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 					   btMinus.setEnabled(true);
 				}
 				center= new LatLng(address.get(0).getLatitude(),address.get(0).getLongitude());
-				map.animateCamera(CameraUpdateFactory.newLatLngZoom(center,17));
+				map.animateCamera(CameraUpdateFactory.newLatLngZoom(center,16));
 				putMarker(center);
 				paintCircle(center, Integer.parseInt(etRadius.getText().toString()));
 
