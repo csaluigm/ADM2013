@@ -425,7 +425,7 @@ public class MainActivity extends ActivityMenuLateral {
 					}
 				}
 				if (hora != null) {
-					hora.setText(rec.getHoraInicio() + " a " + rec.getHoraFin());
+					 hora.setText(rec.getHoraInicio() + " a " + rec.getHoraFin());
 				}
 
 			}
