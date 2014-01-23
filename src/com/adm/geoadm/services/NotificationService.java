@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.adm.geoadm.MainActivity;
 import com.adm.geoadm.NuevoRecordatorio;
 import com.adm.geoadm.R;
 import com.adm.geoadm.db.Recordatorio;
@@ -140,9 +141,11 @@ public class NotificationService extends Service {
 				System.currentTimeMillis());
 
 		//Create Pending Intent what start Activity associated to Notification
-		Intent intent = new Intent(getApplicationContext(), NuevoRecordatorio.class);
-		intent.putExtra(NuevoRecordatorio.KEY_NOTIFY_RECORDATORIO, rec.getId());
+		//Intent intent = new Intent(getApplicationContext(), NuevoRecordatorio.class);
+		//intent.putExtra(NuevoRecordatorio.KEY_EDIT_RECORDATORIO, rec.getId());
+		Intent intent = new Intent(getApplicationContext(),MainActivity.class);
 		PendingIntent pendInt = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
+		notif.flags=Notification.FLAG_AUTO_CANCEL;
 		notif.setLatestEventInfo(getApplicationContext(), rec.getNombre(), rec.getDescripcion(), pendInt);
 		
 		Log.d(LOG_TAG,"Sending notification for Recordatorio with name: " + rec.getNombre() + " and id: " + rec.getId() + " and address: " + rec.getDireccion());
