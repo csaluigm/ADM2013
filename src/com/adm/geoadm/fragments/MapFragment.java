@@ -457,8 +457,11 @@ public class MapFragment  extends Fragment implements InfoWindowAdapter, OnInfoW
 			while(pressedUp) {
 				auxRadius=Integer.parseInt(etRadius.getText().toString());
 				auxRadius= auxRadius + increment;
-				if (auxRadius<30){
-					auxRadius=30;
+				if (auxRadius<100){
+					auxRadius=100;
+				}
+				if(auxRadius>1000000){
+					auxRadius=1000000;
 				}
 				publishProgress(auxRadius);
 				try {
